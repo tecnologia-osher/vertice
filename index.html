@@ -9,26 +9,27 @@
   <link rel="icon" sizes="32x32" href="vertice-favicon-32.png">
   <link rel="apple-touch-icon" href="vertice-favicon-180.png">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600&display=swap">
 </head>
 <body>
 <style>
   :root{
-    --bg:#0F1714; --surface:#17211D; --surface2:#1E2A25; --inset:#0C1512;
-    --fg:#EBEFEC; --muted:#93A49B; --line:#293832;
-    --emerald:#2BBD86; --emerald-ink:#15A071; --pine:#0B3A2B;
-    --red:#E0806F; --gold:#C7A86A; --azul:#6FA8D6;
-    --display:'Archivo',system-ui,sans-serif; --text:'Hanken Grotesk',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
-    color-scheme:dark;
+    --bg:#FBF9F5; --surface:#FFFFFF; --surface2:#F2EFE9; --inset:#FFFFFF;
+    --fg:#1B2A24; --muted:#6B7A72; --line:#E8E3DA;
+    --emerald:#13915F; --emerald-ink:#0C6A45; --pine:#0B3A2B;
+    --red:#B4472E; --gold:#9B7726; --azul:#2E6A9E;
+    --display:'Figtree',system-ui,sans-serif; --text:'Hanken Grotesk',system-ui,sans-serif; --mono:'Hanken Grotesk',ui-sans-serif,system-ui,sans-serif;
+    color-scheme:light;
   }
-  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
-    --bg:#EBEFEC;--surface:#F7F9F7;--surface2:#E4EAE6;--inset:#FFFFFF;--fg:#0F1714;--muted:#51615B;--line:#D3DAD6;--emerald:#13915F;--emerald-ink:#0C6A45;--pine:#0B3A2B;--red:#A4402F;--gold:#9B7726;--azul:#2E6A9E;color-scheme:light;}}
-  :root[data-theme="light"]{--bg:#EBEFEC;--surface:#F7F9F7;--surface2:#E4EAE6;--inset:#FFFFFF;--fg:#0F1714;--muted:#51615B;--line:#D3DAD6;--emerald:#13915F;--emerald-ink:#0C6A45;--pine:#0B3A2B;--red:#A4402F;--gold:#9B7726;--azul:#2E6A9E;color-scheme:light;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0F1714;--surface:#17211D;--surface2:#1E2A25;--inset:#0C1512;--fg:#EBEFEC;--muted:#93A49B;--line:#293832;--emerald:#2BBD86;--emerald-ink:#15A071;--pine:#0B3A2B;--red:#E0806F;--gold:#C7A86A;--azul:#6FA8D6;color-scheme:dark;}}
+  :root[data-theme="dark"]{--bg:#0F1714;--surface:#17211D;--surface2:#1E2A25;--inset:#0C1512;--fg:#EBEFEC;--muted:#93A49B;--line:#293832;--emerald:#2BBD86;--emerald-ink:#15A071;--pine:#0B3A2B;--red:#E0806F;--gold:#C7A86A;--azul:#6FA8D6;color-scheme:dark;}
 
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--fg);font-family:var(--text);line-height:1.5}
   .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .cc .tot,.cc .parc b,.headline,.met .v,.flow .big,.rlab b,.fb .amt,.cc .tot,input[type=number]{font-variant-numeric:tabular-nums}
   .hide{display:none!important}
 
   .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
@@ -66,7 +67,7 @@
   .lede{color:var(--muted);font-size:1rem;margin:0 0 24px;max-width:52ch}
 
   /* intro */
-  .intro h1{font-size:clamp(2rem,6vw,3.1rem);max-width:17ch}
+  .intro h1{font-size:clamp(1.8rem,5.2vw,2.6rem);max-width:18ch;line-height:1.08}
   .intro .eyebrow{font-family:var(--mono);font-size:.76rem;color:var(--emerald-ink);margin:0 0 15px}
   .intro .sub{font-size:clamp(1.02rem,2.3vw,1.25rem);color:var(--fg);max-width:46ch;margin:18px 0 0;line-height:1.45}
   .intro .sub b{color:var(--emerald-ink);font-weight:600}
@@ -412,7 +413,7 @@ function renderAnalise(){
   /* investidor */
   var valoriz=num("valorizAnual"), co=custoOportunidade(d.ent,d.im,d.cdi,valoriz,d.mesC), difParcela=d.sac.p1-d.cons.p1;
   document.getElementById("investOut").innerHTML=
-    '<div class="box"><h5>Custo de oportunidade da espera</h5><div class="bd">Enquanto você espera a contemplação (mês '+d.mesC+'), o imóvel comprado hoje valorizaria — mas a sua entrada, aplicada no CDI, também rende. O líquido é o que está em jogo.</div>'+
+    '<div class="box"><h5>Custo de oportunidade da espera</h5><div class="bd">Enquanto você espera, o imóvel valoriza — mas a sua entrada, aplicada, também rende. O líquido é o que pesa.</div>'+
       '<div class="mini">'+met("Valorização perdida",brl(co.valoriz),"cost")+met("Entrada rendendo no CDI",brl(co.rendEntrada),"profit")+'</div>'+
       '<div class="patrow" style="margin-top:12px"><span class="q">Custo de oportunidade líquido</span><span class="a '+(co.liquido>0?'red':'grn')+'">'+brl(co.liquido)+(co.liquido>0?' (pesa a antecipar)':' (pesa ao consórcio)')+'</span></div></div>'+
     '<div class="dgrid">'+
