@@ -289,9 +289,9 @@
 <!-- COFRE -->
 <div class="over" id="over">
   <form class="lead" id="leadForm">
-    <h4>Veja a análise completa</h4>
+    <h4>Falta um passo para a sua análise completa</h4>
     <p>Impacto no patrimônio, lance embutido e engenharia de ágio — o seu cenário completo, na hora.</p>
-    <ul class="proof"><li>Sem conflito de interesse</li><li>Dados protegidos (LGPD)</li></ul>
+    <ul class="proof"><li>Grátis, leva 20 segundos</li><li>Sem conflito de interesse</li><li>Dados protegidos (LGPD)</li></ul>
     <p class="err" id="err"></p>
     <div class="f"><input type="text" id="lNome" placeholder="Seu nome" aria-label="Nome"></div>
     <div class="f"><input type="text" id="lTel" placeholder="WhatsApp" aria-label="WhatsApp"></div>
@@ -400,9 +400,11 @@ function renderResultado(){
   var mx=Math.max(d.sacTot,d.prTot,d.cons.total,1);
   function bar(l,v,c){return '<div class="fb"><span>'+l+'</span><span class="track"><span class="fill" style="width:'+(v/mx*100)+'%;background:'+c+'"></span></span><span class="amt">'+brl(v)+'</span></div>';}
   document.getElementById("freebars").innerHTML=bar("Financ. SAC",d.sacTot,"var(--red)")+bar("Financ. PRICE",d.prTot,"var(--red)")+bar("Consórcio",d.cons.total,"var(--emerald)");
-  document.getElementById("teaser").innerHTML=unlocked||mode==="corretor"
+  var destravado=unlocked||mode==="corretor";
+  document.getElementById("teaser").innerHTML=destravado
     ? '<b>Análise completa liberada.</b> Veja o impacto no patrimônio, o lance embutido e a engenharia de ágio no próximo passo.'
-    : '<b>Esse é o começo.</b> A análise completa mostra o impacto no seu patrimônio, o custo de oportunidade da espera, o lance embutido e a engenharia de ágio.';
+    : '<b>Esse é só o começo.</b> A análise completa destrava o impacto no seu patrimônio, o custo de oportunidade da espera, o lance embutido e a engenharia de ágio — de graça, em 20 segundos.';
+  var ta=document.getElementById("toAnalise"); if(ta) ta.textContent=destravado?"Ver a análise completa →":"Desbloquear minha análise →";
 }
 
 function renderAnalise(){
