@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Leads Vértice</title>
+  <meta name="description" content="Painel de leads do terminal Vértice: quem simulou, com etiqueta VIP.">
+  <link rel="icon" href="vertice-favicon.svg" type="image/svg+xml">
+  <link rel="icon" sizes="32x32" href="vertice-favicon-32.png">
+  <link rel="apple-touch-icon" href="vertice-favicon-180.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<style>
+  :root{
+    --bg:#0F1714; --surface:#17211D; --surface2:#1E2A25; --inset:#0C1512;
+    --fg:#EBEFEC; --muted:#93A49B; --line:#293832;
+    --emerald:#2BBD86; --emerald-ink:#15A071; --gold:#C7A86A; --red:#E0806F;
+    --display:'Archivo',system-ui,sans-serif; --text:'Hanken Grotesk',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+    color-scheme:dark;
+  }
+  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
+    --bg:#EBEFEC;--surface:#F7F9F7;--surface2:#E4EAE6;--inset:#FFFFFF;--fg:#0F1714;--muted:#51615B;--line:#D3DAD6;--emerald:#13915F;--emerald-ink:#0C6A45;--gold:#9B7726;--red:#A4402F;color-scheme:light;}}
+  :root[data-theme="light"]{--bg:#EBEFEC;--surface:#F7F9F7;--surface2:#E4EAE6;--inset:#FFFFFF;--fg:#0F1714;--muted:#51615B;--line:#D3DAD6;--emerald:#13915F;--emerald-ink:#0C6A45;--gold:#9B7726;--red:#A4402F;color-scheme:light;}
+
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--fg);font-family:var(--text);line-height:1.5}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .hide{display:none!important}
+  .wrap{max-width:1000px;margin-inline:auto;padding:clamp(18px,4vw,34px) clamp(16px,4vw,32px) 48px}
+  .brand{display:flex;align-items:center;gap:11px}
+  .brand svg{width:26px;height:26px}
+  .brand .wm{font-family:var(--display);font-weight:800;letter-spacing:.12em;font-size:.95rem}
+
+  /* login */
+  .login-wrap{min-height:70vh;display:flex;align-items:center;justify-content:center}
+  .login{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:28px;max-width:360px;width:100%}
+  .login .brand{justify-content:center;margin-bottom:18px}
+  .login h1{font-family:var(--display);font-weight:700;font-size:1.15rem;margin:0 0 4px;text-align:center}
+  .login p{font-size:.82rem;color:var(--muted);margin:0 0 20px;text-align:center}
+  .f{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+  .f label{font-size:.78rem;font-weight:500}
+  input{width:100%;background:var(--inset);border:1px solid var(--line);border-radius:5px;color:var(--fg);padding:11px;font:inherit;font-size:.92rem}
+  input:focus-visible,button:focus-visible{outline:2px solid var(--emerald);outline-offset:2px}
+  .btn{background:var(--emerald);color:#06231a;border:0;border-radius:5px;padding:12px;font:inherit;font-weight:700;cursor:pointer;width:100%;font-size:.92rem}
+  .btn:hover{background:var(--emerald-ink);color:#fff}
+  .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);width:auto;padding:8px 14px;font-weight:500;font-size:.8rem}
+  .btn.ghost:hover{color:var(--fg);border-color:var(--muted);background:transparent}
+  .err{color:var(--red);font-size:.78rem;min-height:1em;margin:0 0 10px}
+
+  /* app */
+  .top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .top .sub{font-size:.8rem;color:var(--muted)}
+  .tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 18px}
+  .stat{display:flex;gap:16px;flex-wrap:wrap}
+  .stat .s{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px;min-width:92px}
+  .stat .k{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .stat .v{font-family:var(--mono);font-size:1.4rem;font-weight:600;margin-top:2px}
+  .stat .v.vip{color:var(--gold)}
+  .filterbtn{margin-left:auto}
+  .chk{display:flex;align-items:center;gap:7px;font-size:.82rem;color:var(--muted);cursor:pointer}
+
+  table{width:100%;border-collapse:collapse;font-size:.86rem}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;background:var(--surface)}
+  tr:last-child td{border-bottom:0}
+  tbody tr.vip{background:color-mix(in srgb,var(--gold) 9%,transparent)}
+  td.money{font-family:var(--mono)}
+  .badge{display:inline-block;font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:999px}
+  .badge.vip{background:color-mix(in srgb,var(--gold) 20%,transparent);color:var(--gold)}
+  .badge.std{background:var(--surface2);color:var(--muted)}
+  .empty{text-align:center;color:var(--muted);padding:48px 20px;font-size:.9rem}
+  .toggle{font:inherit;font-size:.72rem;color:var(--muted);background:none;border:1px solid var(--line);padding:7px 12px;cursor:pointer;border-radius:3px}
+  @media (max-width:560px){.stat .v{font-size:1.2rem}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="vx" viewBox="0 0 100 100">
+    <path d="M20 82 L50 30" fill="none" style="stroke:var(--fg)" stroke-width="9.5" stroke-linecap="round"/>
+    <path d="M80 82 L50 30 L67 13" fill="none" style="stroke:var(--emerald)" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="miter"/>
+    <circle cx="50" cy="30" r="3.4" style="fill:var(--fg)"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+  <!-- LOGIN -->
+  <div class="login-wrap" id="loginView">
+    <form class="login" id="loginForm">
+      <div class="brand"><svg><use href="#vx"/></svg><span class="wm">VÉRTICE</span></div>
+      <h1>Painel de Leads</h1>
+      <p>Entre com as credenciais do seu acesso.</p>
+      <p class="err" id="loginErr"></p>
+      <div class="f"><label for="email">E-mail</label><input type="email" id="email" autocomplete="username"></div>
+      <div class="f"><label for="senha">Senha</label><input type="password" id="senha" autocomplete="current-password"></div>
+      <button class="btn" type="submit" id="loginBtn">Entrar</button>
+    </form>
+  </div>
+
+  <!-- APP -->
+  <div class="hide" id="appView">
+    <div class="top">
+      <div class="brand"><svg><use href="#vx"/></svg><span class="wm">VÉRTICE</span><span class="sub">· Leads</span></div>
+      <div style="display:flex;gap:8px"><button class="toggle" id="tgl" type="button">Tema</button><button class="btn ghost" id="logout" type="button">Sair</button></div>
+    </div>
+    <div class="stat" id="stat"></div>
+    <div class="tools">
+      <button class="btn ghost" id="refresh" type="button">Atualizar</button>
+      <label class="chk filterbtn"><input type="checkbox" id="onlyVip"> Só VIP (≥ R$ 1 mi)</label>
+    </div>
+    <div class="tablewrap"><table id="tbl"><thead><tr>
+      <th>Quando</th><th>Nome</th><th>WhatsApp</th><th>E-mail</th><th>Valor imóvel</th><th>Crédito</th><th>Corretor</th><th>Etiqueta</th>
+    </tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="empty hide" id="empty">Nenhum lead ainda. Faça uma simulação no terminal e desbloqueie para vê-lo cair aqui.</div>
+  </div>
+</div>
+
+<script>
+var SB_URL="https://pidzzwlpsffjznbzukhj.supabase.co";
+var SB_KEY="sb_publishable_P1IyQB54v9tdmUIKR5L44w_uTbs8yzJ";
+var TABLE="leads_calc", TOKKEY="vertice-leads-token";
+var token=null, data=[];
+
+var brl=function(n){return n==null||!isFinite(n)?"—":Number(n).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});};
+function fmtDate(s){try{var d=new Date(s);return d.toLocaleDateString("pt-BR")+" "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});}catch(e){return s||"";}}
+function esc(s){return (s==null?"":String(s)).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function show(v){document.getElementById("loginView").classList.toggle("hide",v==="app");document.getElementById("appView").classList.toggle("hide",v!=="app");}
+
+function themeInit(){var root=document.documentElement,btn=document.getElementById("tgl");
+  function sys(){return matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";}
+  try{var s=localStorage.getItem("vertice-tema");if(s)root.setAttribute("data-theme",s);}catch(e){}
+  btn.onclick=function(){var cur=root.getAttribute("data-theme")||sys();var next=cur==="light"?"dark":"light";root.setAttribute("data-theme",next);try{localStorage.setItem("vertice-tema",next);}catch(e){}};}
+themeInit();
+
+document.getElementById("loginForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var email=document.getElementById("email").value.trim(),senha=document.getElementById("senha").value,err=document.getElementById("loginErr"),btn=document.getElementById("loginBtn");
+  err.textContent="";btn.textContent="Entrando…";btn.disabled=true;
+  fetch(SB_URL+"/auth/v1/token?grant_type=password",{method:"POST",headers:{"apikey":SB_KEY,"Content-Type":"application/json"},body:JSON.stringify({email:email,password:senha})})
+   .then(function(r){return r.json();})
+   .then(function(j){
+     btn.textContent="Entrar";btn.disabled=false;
+     if(j.access_token){token=j.access_token;try{localStorage.setItem(TOKKEY,token);}catch(e){}show("app");load();}
+     else{err.textContent=j.error_description||j.msg||"E-mail ou senha inválidos.";}
+   }).catch(function(){btn.textContent="Entrar";btn.disabled=false;err.textContent="Falha de conexão. Tente de novo.";});
+});
+
+function load(){
+  if(!token)return;
+  fetch(SB_URL+"/rest/v1/"+TABLE+"?select=*&order=created_at.desc&limit=300",{headers:{"apikey":SB_KEY,"Authorization":"Bearer "+token}})
+   .then(function(r){ if(r.status===401){token=null;try{localStorage.removeItem(TOKKEY);}catch(e){}show("login");document.getElementById("loginErr").textContent="Sessão expirada, entre de novo.";return null;} return r.json();})
+   .then(function(j){ if(!j)return; data=Array.isArray(j)?j:[]; renderRows(); })
+   .catch(function(){ document.getElementById("empty").classList.remove("hide"); document.getElementById("empty").textContent="Não consegui carregar os leads. Tente Atualizar."; });
+}
+
+function renderRows(){
+  var onlyVip=document.getElementById("onlyVip").checked;
+  var rows=data.filter(function(l){return onlyVip?l.is_vip:true;});
+  var vipCount=data.filter(function(l){return l.is_vip;}).length;
+  document.getElementById("stat").innerHTML=
+    '<div class="s"><div class="k">Leads</div><div class="v">'+data.length+'</div></div>'+
+    '<div class="s"><div class="k">VIP</div><div class="v vip">'+vipCount+'</div></div>';
+  var tb=document.getElementById("rows");
+  document.getElementById("empty").classList.toggle("hide",rows.length>0);
+  tb.innerHTML=rows.map(function(l){
+    return '<tr class="'+(l.is_vip?'vip':'')+'">'+
+      '<td>'+esc(fmtDate(l.created_at))+'</td>'+
+      '<td>'+esc(l.nome)+'</td>'+
+      '<td>'+esc(l.telefone)+'</td>'+
+      '<td>'+esc(l.email)+'</td>'+
+      '<td class="money">'+brl(l.valor_imovel)+'</td>'+
+      '<td class="money">'+brl(l.valor_credito)+'</td>'+
+      '<td>'+esc(l.corretor)+'</td>'+
+      '<td><span class="badge '+(l.is_vip?'vip">VIP':'std">Padrão')+'</span></td>'+
+    '</tr>';
+  }).join("");
+}
+
+document.getElementById("refresh").onclick=load;
+document.getElementById("onlyVip").onchange=renderRows;
+document.getElementById("logout").onclick=function(){token=null;try{localStorage.removeItem(TOKKEY);}catch(e){}data=[];document.getElementById("email").value="";document.getElementById("senha").value="";show("login");};
+
+/* sessão lembrada */
+(function(){try{var t=localStorage.getItem(TOKKEY);if(t){token=t;show("app");load();}}catch(e){}})();
+</script>
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Vértice Terminal</title>
+  <meta name="description" content="Consórcio ou financiamento? Comparação honesta, em passos, de marca neutra — modo cliente e modo corretor.">
+  <link rel="icon" href="vertice-favicon.svg" type="image/svg+xml">
+  <link rel="icon" sizes="32x32" href="vertice-favicon-32.png">
+  <link rel="apple-touch-icon" href="vertice-favicon-180.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<style>
+  :root{
+    --bg:#0F1714; --surface:#17211D; --surface2:#1E2A25; --inset:#0C1512;
+    --fg:#EBEFEC; --muted:#93A49B; --line:#293832;
+    --emerald:#2BBD86; --emerald-ink:#15A071; --pine:#0B3A2B;
+    --red:#E0806F; --gold:#C7A86A; --azul:#6FA8D6;
+    --display:'Archivo',system-ui,sans-serif; --text:'Hanken Grotesk',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+    color-scheme:dark;
+  }
+  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
+    --bg:#EBEFEC;--surface:#F7F9F7;--surface2:#E4EAE6;--inset:#FFFFFF;--fg:#0F1714;--muted:#51615B;--line:#D3DAD6;--emerald:#13915F;--emerald-ink:#0C6A45;--pine:#0B3A2B;--red:#A4402F;--gold:#9B7726;--azul:#2E6A9E;color-scheme:light;}}
+  :root[data-theme="light"]{--bg:#EBEFEC;--surface:#F7F9F7;--surface2:#E4EAE6;--inset:#FFFFFF;--fg:#0F1714;--muted:#51615B;--line:#D3DAD6;--emerald:#13915F;--emerald-ink:#0C6A45;--pine:#0B3A2B;--red:#A4402F;--gold:#9B7726;--azul:#2E6A9E;color-scheme:light;}
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:var(--text);line-height:1.5}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .hide{display:none!important}
+
+  .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
+  .bar-in{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:860px;margin-inline:auto;padding:11px clamp(16px,4vw,28px)}
+  .brand{display:flex;align-items:center;gap:10px;min-width:0}
+  .brand svg{width:25px;height:25px;flex:0 0 auto}
+  .brand .wm{font-family:var(--display);font-weight:800;letter-spacing:.12em;font-size:.92rem}
+  .cobrand{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);border-left:1px solid var(--line);padding-left:11px}
+  .cobrand input{font:inherit;font-size:.8rem;color:var(--fg);background:transparent;border:0;border-bottom:1px dashed var(--line);padding:2px;width:9em}
+  .cobrand input:focus{outline:none;border-bottom-color:var(--emerald)}
+  .barctl{display:flex;align-items:center;gap:8px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .seg button{background:transparent;border:0;color:var(--muted);padding:7px 11px;cursor:pointer;font:inherit;font-size:.76rem}
+  .seg button.on{background:var(--emerald);color:#06231a;font-weight:600}
+  .toggle{font:inherit;font-size:.72rem;color:var(--muted);background:none;border:1px solid var(--line);padding:7px 11px;cursor:pointer;border-radius:2px}
+  .toggle:hover{color:var(--fg);border-color:var(--muted)}
+  .toggle:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--emerald);outline-offset:2px}
+
+  .cbanner{background:color-mix(in srgb,var(--emerald) 14%,transparent);border-bottom:1px solid var(--line);font-size:.78rem;color:var(--emerald-ink);text-align:center;padding:7px 16px}
+
+  main{max-width:860px;margin-inline:auto;padding:clamp(18px,3vw,30px) clamp(16px,4vw,28px) 48px}
+
+  /* progress */
+  .steps{display:flex;align-items:center;gap:6px;justify-content:center;margin:0 0 26px;flex-wrap:wrap}
+  .steps .st{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--muted)}
+  .steps .st .n{width:24px;height:24px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.76rem;flex:0 0 auto}
+  .steps .st.on{color:var(--fg)} .steps .st.on .n{border-color:var(--emerald);background:color-mix(in srgb,var(--emerald) 14%,transparent);color:var(--emerald-ink);font-weight:700}
+  .steps .st.done .n{background:var(--emerald);border-color:var(--emerald);color:#06231a}
+  .steps .st.nav{cursor:pointer}
+  .steps .ln{width:20px;height:1px;background:var(--line)}
+
+  .screen{display:none} .screen.on{display:block}
+  h1{font-family:var(--display);font-weight:800;letter-spacing:-.015em;line-height:1.04;margin:0;text-wrap:balance}
+  h2.title{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,4vw,2rem);letter-spacing:-.01em;margin:0 0 6px}
+  .lede{color:var(--muted);font-size:1rem;margin:0 0 24px;max-width:52ch}
+
+  /* intro */
+  .intro h1{font-size:clamp(2rem,6vw,3.1rem);max-width:17ch}
+  .intro .eyebrow{font-family:var(--mono);font-size:.76rem;color:var(--emerald-ink);margin:0 0 15px}
+  .intro .sub{font-size:clamp(1.02rem,2.3vw,1.25rem);color:var(--fg);max-width:46ch;margin:18px 0 0;line-height:1.45}
+  .intro .sub b{color:var(--emerald-ink);font-weight:600}
+  .proof{display:flex;flex-wrap:wrap;gap:8px 18px;margin:22px 0 0;padding:0;list-style:none}
+  .proof li{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:7px}
+  .proof li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--emerald);flex:0 0 auto}
+
+  /* inputs */
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:20px}
+  .card + .card{margin-top:14px}
+  .ctitle{font-family:var(--display);font-weight:700;font-size:.92rem;margin:0 0 14px;display:flex;align-items:center;gap:8px}
+  .ctitle .dot{width:8px;height:8px;border-radius:50%}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .f{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .f.wide{grid-column:1/-1}
+  .f label{font-size:.78rem;color:var(--fg);font-weight:500}
+  .f .hint{font-size:.69rem;color:var(--muted);line-height:1.3}
+  input[type=number],select,.f input[type=text]{width:100%;background:var(--inset);border:1px solid var(--line);border-radius:4px;color:var(--fg);padding:10px;font-family:var(--mono);font-size:.9rem}
+  select{font-family:var(--text)}
+  input[type=range]{width:100%;accent-color:var(--emerald)}
+  .rlab{display:flex;justify-content:space-between;font-size:.78rem;font-weight:500}
+  .rlab b{color:var(--emerald-ink);font-family:var(--mono)}
+  .adv-toggle{margin-top:14px;background:none;border:0;color:var(--muted);font:inherit;font-size:.82rem;cursor:pointer;display:flex;align-items:center;gap:7px;padding:0}
+  .adv-toggle:hover{color:var(--fg)}
+  .adv{margin-top:14px}
+
+  /* nav */
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+  .btn{background:var(--emerald);color:#06231a;border:0;border-radius:5px;padding:13px 22px;font:inherit;font-weight:700;cursor:pointer;font-size:.95rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+  .btn:hover{background:var(--emerald-ink);color:#fff}
+  .btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line);font-weight:500}
+  .btn.ghost:hover{background:transparent;border-color:var(--muted);color:var(--fg)}
+  .btn.block{width:100%}
+
+  /* result */
+  .cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+  .cc{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:15px;min-width:0}
+  .cc.win{border-color:var(--emerald);box-shadow:inset 0 0 0 1px var(--emerald)}
+  .cc .tag{font-size:.67rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .cc .parc{font-size:.77rem;color:var(--muted);margin-top:9px}
+  .cc .parc b{color:var(--fg);font-family:var(--mono);font-size:.95rem;display:block;margin-top:2px}
+  .cc .tot{font-size:1.3rem;font-weight:700;font-family:var(--mono);margin-top:11px;letter-spacing:-.01em}
+  .cc .cap{font-size:.67rem;color:var(--muted);margin-top:5px}
+  .red{color:var(--red)} .grn{color:var(--emerald-ink)}
+  .verdict{background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--emerald);border-radius:6px;padding:15px 17px;font-size:1rem;line-height:1.5;margin-top:12px}
+  .verdict b{color:var(--emerald-ink)}
+  .freebars{display:flex;flex-direction:column;gap:9px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:15px;margin-top:12px}
+  .fb{display:grid;grid-template-columns:110px 1fr auto;gap:10px;align-items:center;font-size:.79rem}
+  .fb .track{height:10px;background:var(--inset);border-radius:999px;overflow:hidden}
+  .fb .fill{height:100%;border-radius:999px}
+  .fb .amt{font-family:var(--mono);font-size:.8rem}
+  .teaser{margin-top:14px;background:var(--surface2);border:1px dashed var(--line);border-radius:6px;padding:14px 16px;font-size:.86rem;color:var(--muted)}
+  .teaser b{color:var(--fg)}
+
+  /* deep tabs */
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:14px}
+  .tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font:inherit;font-size:.85rem;font-weight:500;padding:9px 12px;cursor:pointer;margin-bottom:-1px}
+  .tabs button.on{color:var(--fg);border-bottom-color:var(--emerald)}
+  .tabpanel{display:none;flex-direction:column;gap:13px} .tabpanel.on{display:flex}
+  .ctrlrow{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:13px 15px}
+  .ctrlrow .f{flex:1;min-width:140px}
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:15px}
+  .box h5{margin:0 0 2px;font-size:.88rem;font-family:var(--display);font-weight:700}
+  .box .bd{font-size:.74rem;color:var(--muted);margin:0 0 12px}
+  .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .met{background:var(--inset);border:1px solid var(--line);border-radius:4px;padding:9px 10px}
+  .met .k{font-size:.67rem;color:var(--muted)} .met .v{font-size:1rem;font-weight:600;font-family:var(--mono);margin-top:2px}
+  .met .v.cost{color:var(--red)} .met .v.profit{color:var(--emerald-ink)}
+  .patrow{display:flex;justify-content:space-between;gap:12px;font-size:.8rem;padding:9px 0;border-bottom:1px solid var(--line)}
+  .patrow:last-child{border-bottom:0}.patrow .q{color:var(--muted)}.patrow .a{font-family:var(--mono);text-align:right}
+  .headline{font-family:var(--mono);font-size:1.8rem;font-weight:600;letter-spacing:-.02em}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:999px}
+  .badge.v{background:color-mix(in srgb,var(--emerald) 18%,transparent);color:var(--emerald-ink)}
+  .badge.a{background:color-mix(in srgb,var(--azul) 20%,transparent);color:var(--azul)}
+  .flag{font-size:.73rem;padding:8px 11px;border-radius:5px;border:1px solid var(--line);background:var(--inset);color:var(--muted);margin-top:4px}
+  .flag.warn{border-color:var(--gold);color:var(--gold)}
+  .flows{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .flow{background:var(--surface2);border:1px solid var(--line);border-radius:6px;padding:14px}
+  .flow h6{margin:0 0 3px;font-size:.84rem;font-family:var(--display);font-weight:700}
+  .flow .sub{font-size:.7rem;color:var(--muted);margin:0 0 11px}
+  .flow .big{font-family:var(--mono);font-size:1.2rem;font-weight:600}
+  .flow .note{font-size:.73rem;color:var(--muted);margin-top:5px}
+
+  /* cofre overlay */
+  .over{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:18px;background:color-mix(in srgb,#000 55%,transparent)}
+  .over.on{display:flex}
+  .lead{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px;max-width:380px;width:100%}
+  .lead h4{font-family:var(--display);font-weight:700;margin:0 0 4px;font-size:1.08rem}
+  .lead p{font-size:.84rem;color:var(--muted);margin:0 0 14px}
+  .lead .f{margin-bottom:11px}
+  .lead input{width:100%;background:var(--inset);border:1px solid var(--line);border-radius:4px;color:var(--fg);padding:10px;font:inherit;font-size:.9rem}
+  .consent{display:flex;gap:8px;align-items:flex-start;font-size:.73rem;color:var(--muted);margin:2px 0 13px;cursor:pointer}
+  .lead .proof{margin:0 0 13px;gap:6px 12px}.lead .proof li{font-size:.72rem}
+  .err{color:var(--red);font-size:.75rem;margin:0 0 9px;min-height:1em}
+  .leadclose{background:none;border:0;color:var(--muted);font:inherit;font-size:.8rem;cursor:pointer;margin-top:10px;width:100%}
+
+  footer{max-width:860px;margin-inline:auto;padding:22px clamp(16px,4vw,28px) 40px;color:var(--muted);font-size:.73rem;line-height:1.5;border-top:1px solid var(--line)}
+
+  @media (max-width:560px){.fields,.dgrid,.mini,.flows{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}.fb{grid-template-columns:84px 1fr auto}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="vx" viewBox="0 0 100 100">
+    <path d="M20 82 L50 30" fill="none" style="stroke:var(--fg)" stroke-width="9.5" stroke-linecap="round"/>
+    <path d="M80 82 L50 30 L67 13" fill="none" style="stroke:var(--emerald)" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="miter"/>
+    <circle cx="50" cy="30" r="3.4" style="fill:var(--fg)"/>
+  </symbol>
+</svg>
+
+<div class="bar"><div class="bar-in">
+  <div class="brand">
+    <svg><use href="#vx"/></svg><span class="wm">VÉRTICE</span>
+    <span class="cobrand">por <input id="corretor" type="text" value="Imobiliária Parceira" aria-label="Nome do corretor"></span>
+  </div>
+  <div class="barctl">
+    <span class="seg" id="modeSeg" role="group" aria-label="Modo"><button type="button" data-m="cliente" class="on">Cliente</button><button type="button" data-m="corretor">Corretor</button></span>
+    <button class="toggle" id="tgl" type="button">Tema</button>
+  </div>
+</div></div>
+<div class="cbanner hide" id="cbanner">Modo corretor — análise completa liberada, sem cadastro. Use na frente do cliente para fechar.</div>
+
+<main>
+  <div class="steps hide" id="steps">
+    <span class="st" data-s="2"><span class="n">1</span><span>Seus números</span></span><span class="ln"></span>
+    <span class="st" data-s="3"><span class="n">2</span><span>Resultado</span></span><span class="ln"></span>
+    <span class="st" data-s="4"><span class="n">3</span><span>Análise</span></span>
+  </div>
+
+  <!-- SCREEN 1 — INTRO -->
+  <section class="screen intro on" data-screen="1">
+    <p class="eyebrow">a conta aberta · sem conflito de interesse</p>
+    <h1>Consórcio ou financiamento? Veja a conta real antes de assinar.</h1>
+    <p class="sub">A comparação honesta, em números, de qual caminho <b>menos compromete o seu patrimônio</b> — custo total, liquidez e o que esperar realmente custa. Análise, não venda.</p>
+    <ul class="proof">
+      <li>Cálculo auditável, parcela a parcela</li>
+      <li>Sem conflito de interesse</li>
+      <li>Parâmetros de mercado (ABAC/BACEN)</li>
+      <li>Seus dados protegidos (LGPD)</li>
+    </ul>
+    <div class="nav" style="justify-content:flex-start"><button class="btn" type="button" data-go="2">Começar a comparação →</button></div>
+    <p class="hint" style="margin-top:12px">Grátis. Leva cerca de 1 minuto.</p>
+  </section>
+
+  <!-- SCREEN 2 — INPUTS -->
+  <section class="screen" data-screen="2">
+    <h2 class="title">Seus números</h2>
+    <p class="lede">Já preenchemos com um exemplo — troque pelos seus valores.</p>
+    <form id="form" autocomplete="off">
+      <div class="card">
+        <h3 class="ctitle"><span class="dot" style="background:var(--red)"></span>Financiamento</h3>
+        <div class="fields">
+          <div class="f"><label for="valorImovel">Valor do imóvel</label><input type="number" id="valorImovel" value="1000000" step="50000"></div>
+          <div class="f"><label for="valorEntrada">Entrada</label><input type="number" id="valorEntrada" value="200000" step="10000"></div>
+          <div class="f"><label for="objetivo">Objetivo</label><select id="objetivo"><option value="moradia">Moradia</option><option value="troca">Troca</option><option value="investimento">Investimento</option><option value="futura">Compra futura</option></select></div>
+          <div class="f"><label for="jurosAnual">Juros (% a.a.)</label><input type="number" id="jurosAnual" value="11.5" step="0.1"></div>
+          <div class="f wide"><div class="rlab"><span>Prazo do financiamento</span><b id="parcFinLab">360 meses</b></div><input type="range" id="parcelasFin" min="60" max="420" step="12" value="360"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="ctitle"><span class="dot" style="background:var(--emerald)"></span>Consórcio</h3>
+        <div class="fields">
+          <div class="f"><label for="valorCredito">Valor do crédito (carta)</label><input type="number" id="valorCredito" value="1000000" step="50000"></div>
+          <div class="f"><label for="taxaAdm">Taxa de adm. (%)</label><input type="number" id="taxaAdm" value="18" step="0.5"><span class="hint">Mercado: 9,5%–25%.</span></div>
+          <div class="f"><div class="rlab"><span>Prazo</span><b id="parcConsLab">200 meses</b></div><input type="range" id="parcelasCons" min="60" max="240" step="12" value="200"></div>
+          <div class="f"><div class="rlab"><span>Contemplação</span><b id="mesContLab">mês 24</b></div><input type="range" id="mesContempl" min="1" max="240" step="1" value="24"></div>
+        </div>
+        <button type="button" class="adv-toggle" id="advToggle">▸ Ajustes avançados</button>
+        <div class="adv hide" id="adv">
+          <div class="fields">
+            <div class="f"><label for="cdiAnual">CDI (% a.a.)</label><input type="number" id="cdiAnual" value="10.5" step="0.1"></div>
+            <div class="f"><label for="fundoReserva">Fundo reserva (%)</label><input type="number" id="fundoReserva" value="2" step="0.5"></div>
+            <div class="f"><label for="taxaAdesao">Adesão (%)</label><input type="number" id="taxaAdesao" value="1" step="0.5"></div>
+            <div class="f"><label for="inccAnual">Reajuste INCC (%)</label><input type="number" id="inccAnual" value="4.5" step="0.1"></div>
+            <div class="f"><label for="parcelaReduzida">Parcela reduzida (%)</label><input type="number" id="parcelaReduzida" value="0" step="5"></div>
+            <div class="f"><label for="lanceLiquido">Lance do bolso (R$)</label><input type="number" id="lanceLiquido" value="0" step="10000"></div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="nav"><button class="btn ghost" type="button" data-go="1">← Voltar</button><button class="btn" type="button" data-go="3">Ver o resultado →</button></div>
+  </section>
+
+  <!-- SCREEN 3 — RESULT -->
+  <section class="screen" data-screen="3">
+    <h2 class="title">O resultado</h2>
+    <p class="lede">O comparativo do custo total — a conta que o banco não abre.</p>
+    <div class="cmp" id="cmp"></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="freebars" id="freebars"></div>
+    <div class="teaser" id="teaser"></div>
+    <div class="nav"><button class="btn ghost" type="button" data-go="2">← Ajustar números</button><button class="btn" type="button" id="toAnalise">Ver a análise completa →</button></div>
+  </section>
+
+  <!-- SCREEN 4 — DEEP ANALYSIS -->
+  <section class="screen" data-screen="4">
+    <h2 class="title">Análise completa</h2>
+    <p class="lede">Além do custo: impacto no patrimônio, lance embutido e engenharia de ágio.</p>
+    <div class="tabs" id="tabs">
+      <button type="button" data-tab="investidor" class="on">Investidor</button>
+      <button type="button" data-tab="lance">Lance embutido</button>
+      <button type="button" data-tab="sorteado">O Sorteado</button>
+    </div>
+    <div class="tabpanel on" data-panel="investidor">
+      <div class="ctrlrow"><div class="f"><label for="valorizAnual">Valorização do imóvel (% a.a.)</label><input type="number" id="valorizAnual" value="6" step="0.5"><span class="hint">O argumento do gerente: o imóvel comprado hoje valoriza durante a espera.</span></div></div>
+      <div id="investOut"></div>
+    </div>
+    <div class="tabpanel" data-panel="lance">
+      <div class="ctrlrow"><div class="f"><label for="embutidoPct">Lance embutido (% da carta)</label><input type="number" id="embutidoPct" value="30" step="1" min="1" max="99"></div><div class="f" style="flex:2"><span class="hint">Você digita o imóvel que quer (o crédito líquido); o motor calcula a carta bruta para que, descontado o embutido, sobre exatamente o valor desejado.</span></div></div>
+      <div id="lanceOut"></div>
+    </div>
+    <div class="tabpanel" data-panel="sorteado">
+      <div class="ctrlrow"><div class="f"><label>Cenário de ágio</label><span class="seg" id="segAgio"><button type="button" data-v="20" class="on">Rápida 20%</button><button type="button" data-v="40">Máxima 40%</button></span></div><div class="f" style="max-width:110px"><label for="agioPct">Ágio (%)</label><input type="number" id="agioPct" value="20" step="1" min="1" max="60"></div><div class="f" style="flex:2"><div class="rlab"><span>Mês do sorteio</span><b id="agioMesLab">mês 18</b></div><input type="range" id="agioMes" min="1" max="240" step="1" value="18"></div></div>
+      <div id="sorteadoOut"></div>
+    </div>
+    <div class="nav"><button class="btn ghost" type="button" data-go="3">← Voltar ao resultado</button><button class="btn ghost" type="button" data-go="2">Novos números</button></div>
+  </section>
+</main>
+
+<!-- COFRE -->
+<div class="over" id="over">
+  <form class="lead" id="leadForm">
+    <h4>Veja a análise completa</h4>
+    <p>Impacto no patrimônio, lance embutido e engenharia de ágio — o seu cenário completo, na hora.</p>
+    <ul class="proof"><li>Sem conflito de interesse</li><li>Dados protegidos (LGPD)</li></ul>
+    <p class="err" id="err"></p>
+    <div class="f"><input type="text" id="lNome" placeholder="Seu nome" aria-label="Nome"></div>
+    <div class="f"><input type="text" id="lTel" placeholder="WhatsApp" aria-label="WhatsApp"></div>
+    <div class="f"><input type="email" id="lEmail" placeholder="E-mail" aria-label="E-mail"></div>
+    <label class="consent"><input type="checkbox" id="lConsent"> Autorizo o contato e o tratamento dos meus dados, conforme a LGPD.</label>
+    <button class="btn block" type="submit" id="unlock">Ver minha análise completa</button>
+    <button class="leadclose" type="button" id="leadClose">Agora não</button>
+  </form>
+</div>
+
+<footer>Material com finalidade educativa. Não constitui recomendação de investimento, crédito, consórcio ou financiamento, nem promessa de contemplação — o mês é estimativa. As alternativas dependem do seu contexto. Vértice · calculadora de marca neutra.</footer>
+
+<script>
+var CONFIG={ supabaseUrl:"https://pidzzwlpsffjznbzukhj.supabase.co", supabaseAnonKey:"sb_publishable_P1IyQB54v9tdmUIKR5L44w_uTbs8yzJ", supabaseTable:"leads_calc", webhookUrl:"" };
+var VIP_THRESHOLD=1000000, SEG=120, MES_INFLEXAO=36;
+var screen=1, mode="cliente", unlocked=false, tab="investidor", maxReached=1;
+
+var brl=function(n){return (isFinite(n)?n:0).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});};
+function mensal(p){return Math.pow(1+p/100,1/12)-1;}
+function num(id){var e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
+function val(id){var e=document.getElementById(id);return e?e.value:"";}
+function met(k,v,t){return '<div class="met"><div class="k">'+k+'</div><div class="v '+(t||'')+'">'+v+'</div></div>';}
+
+/* ===== Motor (fiel ao calculator.ts) ===== */
+function finCET(P,n,j,seg,sistema,aval){
+  var i=mensal(j),s=P,jt=0,sg=0,tot=0,p1=0,pn=0,A=P/n,meses=n;
+  var pmt=i===0?P/n:P*(i*Math.pow(1+i,n))/(Math.pow(1+i,n)-1);
+  var dias=Math.min(n/12*365,365),iof=0.0038*P+0.000082*P*dias;
+  for(var m=1;m<=n && s>0.01;m++){
+    var ju=s*i,am=sistema==="PRICE"?(pmt-ju):A; if(am>s)am=s;
+    var mip=s*0.00035,dfi=aval*0.000025,p=am+ju+seg+mip+dfi;
+    if(m==1)p1=p; jt+=ju;sg+=mip+dfi;tot+=p;s-=am;meses=m;pn=p;
+  }
+  return {p1:p1,pn:pn,total:tot,juros:jt,seguros:sg,iof:iof,meses:meses};
+}
+function consorcio(gross,n,mesCont,incc,adm,fundo,lanceLiq,adesao,reducao){
+  var adesaoEff=Math.min(Math.max(adesao||0,0),adm), admParc=adm-adesaoEff;
+  var adesaoVal=gross*adesaoEff/100, red=Math.min(Math.max(reducao||0,0),60)/100;
+  var custo=gross*(1+(admParc+fundo)/100),base=custo/n,p1=base*(1-red),t=0,s=custo,parcelaApos=base;
+  mesCont=Math.max(1,Math.min(mesCont||Math.floor(n/2),n));
+  for(var m=1;m<=n;m++){
+    if(m>1&&(m-1)%12===0){var r=n-(m-1);if(r>0){s*=(1+incc/100);base=s/r;}}
+    var pay;
+    if(m<mesCont){pay=base*(1-red);}
+    else{if(m===mesCont){if(lanceLiq>0){t+=lanceLiq;s=Math.max(s-lanceLiq,0);}var rem=n-(m-1);if(rem>0)base=s/rem;parcelaApos=base;}pay=base;}
+    t+=pay;s-=pay;
+  }
+  return {p1:p1,total:t+adesaoVal,custo:custo,adm:gross*(adm+fundo)/100,adesaoVal:adesaoVal,admParc:admParc,mesCont:mesCont,parcelaApos:parcelaApos,reduzida:red>0};
+}
+function custoOportunidade(entrada,valorImovel,cdi,valoriz,meses){
+  var anos=meses/12, r=entrada*(Math.pow(1+cdi/100,anos)-1), v=valorImovel*(Math.pow(1+valoriz/100,anos)-1);
+  return {rendEntrada:r,valoriz:v,liquido:v-r};
+}
+function lanceEmbutido(credLiq,lanceBolso,pctEmb,taxaAdmDec,prazo,mesCont){
+  var pct=Math.min(Math.max(pctEmb,0.01),0.99);
+  var carta=(credLiq-lanceBolso)/(1-pct);
+  var vLance=carta*pct, saldoRes=carta*(1+taxaAdmDec)-vLance-lanceBolso;
+  var parcOrig=carta*(1+taxaAdmDec)/prazo, mesesRest=Math.max(prazo-mesCont,1);
+  var novaParc=saldoRes/mesesRest, novoPrazoRest=Math.max(1,Math.ceil(saldoRes/parcOrig));
+  return {carta:carta,recebeLiq:carta*(1-pct),vLance:vLance,saldoRes:saldoRes,
+    alivio:{prazo:mesesRest,parcela:novaParc,reducao:parcOrig-novaParc},
+    quitacao:{parcela:parcOrig,novoPrazo:mesCont+novoPrazoRest,eliminados:prazo-(mesCont+novoPrazoRest)}};
+}
+function capitalAteMes(pb,mes,reaj){var t=0;for(var m=1;m<=mes;m++){t+=pb*Math.pow(1+reaj/100,Math.floor((m-1)/12));}return t;}
+function agioNoMes(mes,credito,prazo,taxaAdmDec,pctAgio,reaj,mesInfl){
+  var custoTotal=credito*(1+taxaAdmDec), parcelaBase=custoTotal/prazo;
+  var capital=capitalAteMes(parcelaBase,mes,reaj), saldoRes=Math.max(custoTotal-capital,0);
+  var lucro=credito*pctAgio, roiCap=capital>0?lucro/capital*100:0, anos=mes/12;
+  var roiAnual=capital>0?(Math.pow(1+lucro/capital,1/anos)-1)*100:0, roiConf=capital>=credito*0.05;
+  var excedente=capital+lucro+saldoRes-credito, zona=mes<=mesInfl?"VERDE":"AZUL";
+  return {capital:capital,saldoRes:saldoRes,lucro:lucro,roiCap:roiCap,roiAnual:roiAnual,roiConf:roiConf,excedente:excedente,zona:zona};
+}
+
+function syncLabels(){
+  document.getElementById("parcFinLab").textContent=num("parcelasFin")+" meses";
+  document.getElementById("parcConsLab").textContent=num("parcelasCons")+" meses";
+  var pc=num("parcelasCons");
+  ["mesContempl","agioMes"].forEach(function(id){var el=document.getElementById(id);el.max=pc;if(num(id)>pc)el.value=pc;});
+  document.getElementById("mesContLab").textContent="mês "+num("mesContempl");
+  document.getElementById("agioMesLab").textContent="mês "+num("agioMes");
+}
+
+function compute(){
+  var im=num("valorImovel"),ent=num("valorEntrada"),j=num("jurosAnual"),cdi=num("cdiAnual"),nf=num("parcelasFin"),obj=val("objetivo");
+  var cred=num("valorCredito"),nc=num("parcelasCons"),adm=num("taxaAdm"),fundo=num("fundoReserva"),incc=num("inccAnual"),mesC=num("mesContempl"),adesao=num("taxaAdesao");
+  var lanceLiq=num("lanceLiquido"),reducao=num("parcelaReduzida"),admDec=(adm+fundo)/100;
+  var P=Math.max(im-ent,0);
+  var sac=finCET(P,nf,j,SEG,"SAC",im), pr=finCET(P,nf,j,SEG,"PRICE",im);
+  var cons=consorcio(cred,nc,mesC,incc,adm,fundo,lanceLiq,adesao,reducao);
+  return {im:im,ent:ent,cdi:cdi,nf:nf,obj:obj,cred:cred,nc:nc,adm:adm,fundo:fundo,incc:incc,mesC:mesC,lanceLiq:lanceLiq,admDec:admDec,
+    sac:sac,pr:pr,sacTot:sac.total+ent,prTot:pr.total+ent,cons:cons};
+}
+
+function renderResultado(){
+  var d=compute();
+  var refFin=Math.min(d.sacTot,d.prTot), eco=refFin-d.cons.total;
+  var consSub=d.cons.reduzida?'reduzida · após: '+brl(d.cons.parcelaApos):(d.lanceLiq>0?'após lance: '+brl(d.cons.parcelaApos):(d.cons.adesaoVal>0?'adm '+d.cons.admParc+'% nas parcelas':'sem juros'));
+  document.getElementById("cmp").innerHTML=
+    '<div class="cc"><div class="tag">Financ. SAC</div><div class="parc">1ª parcela<b>'+brl(d.sac.p1)+'</b><span class="cap">cai até '+brl(d.sac.pn)+'</span></div><div class="tot red">'+brl(d.sacTot)+'</div><div class="cap">custo total · '+d.sac.meses+'m</div></div>'+
+    '<div class="cc"><div class="tag">Financ. PRICE</div><div class="parc">parcela fixa<b>'+brl(d.pr.p1)+'</b></div><div class="tot red">'+brl(d.prTot)+'</div><div class="cap">custo total · '+d.pr.meses+'m</div></div>'+
+    '<div class="cc win"><div class="tag">Consórcio</div><div class="parc">parcela<b>'+brl(d.cons.p1)+'</b><span class="cap">'+consSub+'</span></div><div class="tot grn">'+brl(d.cons.total)+'</div><div class="cap">custo total · '+d.nc+'m'+(d.cons.adesaoVal>0?' · +'+brl(d.cons.adesaoVal)+' adesão':'')+'</div></div>';
+  var objNote={moradia:"Para moradia, o que mais pesa é não comprometer a segurança da família: olhe a liquidez que sobra.",troca:"Numa troca, considere a venda do imóvel atual e a recomposição do caixa.",investimento:"Como investimento, o retorno precisa compensar o custo, a baixa liquidez e a concentração.",futura:"Para compra futura, o consórcio tende a organizar melhor a aquisição, com disciplina de aporte."}[d.obj]||"";
+  document.getElementById("verdict").innerHTML=(eco>0
+    ? 'O <b>consórcio</b> sai cerca de <b>'+brl(eco)+'</b> mais barato no total — sem juros, só taxa de administração. Em troca, você espera a contemplação (mês '+d.cons.mesCont+'). O financiamento entrega o imóvel agora.'
+    : 'Neste cenário o <b>financiamento</b> tende a sair melhor, sobretudo se você precisa do imóvel imediatamente.')+(objNote?' '+objNote:'');
+  var mx=Math.max(d.sacTot,d.prTot,d.cons.total,1);
+  function bar(l,v,c){return '<div class="fb"><span>'+l+'</span><span class="track"><span class="fill" style="width:'+(v/mx*100)+'%;background:'+c+'"></span></span><span class="amt">'+brl(v)+'</span></div>';}
+  document.getElementById("freebars").innerHTML=bar("Financ. SAC",d.sacTot,"var(--red)")+bar("Financ. PRICE",d.prTot,"var(--red)")+bar("Consórcio",d.cons.total,"var(--emerald)");
+  document.getElementById("teaser").innerHTML=unlocked||mode==="corretor"
+    ? '<b>Análise completa liberada.</b> Veja o impacto no patrimônio, o lance embutido e a engenharia de ágio no próximo passo.'
+    : '<b>Esse é o começo.</b> A análise completa mostra o impacto no seu patrimônio, o custo de oportunidade da espera, o lance embutido e a engenharia de ágio.';
+}
+
+function renderAnalise(){
+  var d=compute();
+  /* investidor */
+  var valoriz=num("valorizAnual"), co=custoOportunidade(d.ent,d.im,d.cdi,valoriz,d.mesC), difParcela=d.sac.p1-d.cons.p1;
+  document.getElementById("investOut").innerHTML=
+    '<div class="box"><h5>Custo de oportunidade da espera</h5><div class="bd">Enquanto você espera a contemplação (mês '+d.mesC+'), o imóvel comprado hoje valorizaria — mas a sua entrada, aplicada no CDI, também rende. O líquido é o que está em jogo.</div>'+
+      '<div class="mini">'+met("Valorização perdida",brl(co.valoriz),"cost")+met("Entrada rendendo no CDI",brl(co.rendEntrada),"profit")+'</div>'+
+      '<div class="patrow" style="margin-top:12px"><span class="q">Custo de oportunidade líquido</span><span class="a '+(co.liquido>0?'red':'grn')+'">'+brl(co.liquido)+(co.liquido>0?' (pesa a antecipar)':' (pesa ao consórcio)')+'</span></div></div>'+
+    '<div class="dgrid">'+
+      '<div class="box"><h5>SAC × PRICE</h5><div class="bd">O mesmo financiamento nos dois sistemas.</div><div class="mini">'+met("SAC · 1ª parcela",brl(d.sac.p1))+met("PRICE · fixa",brl(d.pr.p1))+met("SAC · total",brl(d.sacTot),"cost")+met("PRICE · total",brl(d.prTot),"cost")+'</div></div>'+
+      '<div class="box"><h5>Aporte preservado</h5><div class="bd">A diferença de parcela que sobra para investir.</div><div class="mini">'+met("Parcela financ. (SAC)",brl(d.sac.p1))+met("Parcela consórcio",brl(d.cons.p1))+met("Diferença/mês",(difParcela>0?brl(difParcela):"—"),difParcela>0?"profit":"")+met("Em 12m no CDI",brl(custoOportunidade(Math.max(difParcela,0),0,d.cdi,0,12).rendEntrada+Math.max(difParcela,0)*12))+'</div></div>'+
+    '</div>';
+  /* lance */
+  var embPct=num("embutidoPct")/100, le=lanceEmbutido(d.cred,d.lanceLiq,embPct,d.admDec,d.nc,d.mesC);
+  document.getElementById("lanceOut").innerHTML=
+    '<div class="box"><h5>Engenharia reversa da carta</h5><div class="bd">Para receber líquido '+brl(d.cred)+' com '+num("embutidoPct")+'% de lance embutido'+(d.lanceLiq>0?' e '+brl(d.lanceLiq)+' do bolso':'')+':</div>'+
+      '<div class="mini">'+met("Carta bruta a contratar",brl(le.carta))+met("Lance embutido",brl(le.vLance),"profit")+met("Recebe líquido",brl(le.recebeLiq))+met("Saldo residual pós-contempl.",brl(le.saldoRes),"cost")+'</div></div>'+
+    '<div class="flows">'+
+      '<div class="flow"><h6>Alívio de caixa</h6><p class="sub">mantém o prazo, derruba a parcela</p><div class="big grn">'+brl(le.alivio.parcela)+'</div><div class="note">nos '+le.alivio.prazo+' meses restantes · reduz '+brl(le.alivio.reducao)+'/mês</div></div>'+
+      '<div class="flow"><h6>Quitação acelerada</h6><p class="sub">mantém a parcela, encurta o prazo</p><div class="big grn">'+le.quitacao.novoPrazo+' meses</div><div class="note">parcela de '+brl(le.quitacao.parcela)+' · elimina '+le.quitacao.eliminados+' meses</div></div>'+
+    '</div>';
+  /* sorteado */
+  var pctAgio=num("agioPct")/100, agioMes=num("agioMes"), ag=agioNoMes(agioMes,d.cred,d.nc,d.admDec,pctAgio,d.incc,MES_INFLEXAO);
+  var zonaBadge=ag.zona==="VERDE"?'<span class="badge v">Zona verde · realizar o ágio</span>':'<span class="badge a">Zona azul · usar a carta</span>';
+  var reco=ag.zona==="VERDE"?'Capital imobilizado ainda baixo (mês '+agioMes+'). Vender a carta e realizar o lucro do ágio tende a superar o CDI.':'Capital imobilizado já alto (mês '+agioMes+'). Usar a carta para comprar o imóvel e gerar renda passiva tende a valer mais que vender.';
+  document.getElementById("sorteadoOut").innerHTML=
+    '<div class="box"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div><div class="bd" style="margin:0">Lucro do ágio (absoluto)</div><div class="headline grn">'+brl(ag.lucro)+'</div></div>'+zonaBadge+'</div>'+
+      '<div class="mini" style="margin-top:14px">'+met("Capital aportado até aqui",brl(ag.capital))+met("Saldo residual (vai ao comprador)",brl(ag.saldoRes),"cost")+met("ROI sobre capital",ag.roiCap.toFixed(0)+"%",ag.roiConf?"profit":"")+met("ROI anualizado",ag.roiAnual.toFixed(1)+"%",ag.roiConf?"profit":"")+'</div>'+
+      (!ag.roiConf?'<div class="flag warn">ROI pouco confiável nesta janela: o capital aportado ainda é menor que 5% do crédito, o que infla o percentual — olhe o lucro absoluto.</div>':'')+
+      '<div class="flag'+(ag.excedente>d.cred?' warn':'')+'">Sanity-check do comprador: para assumir a carta ele desembolsa '+brl(ag.capital+ag.saldoRes+ag.lucro)+' no total — '+brl(ag.excedente)+' acima do crédito nominal (devolve o seu aporte, paga o ágio e assume '+brl(ag.saldoRes)+' de saldo). '+(ag.excedente>d.cred?'Nesta faixa o prêmio fica difícil de justificar.':'Faz sentido quando ter a carta já contemplada compensa esse prêmio.')+'</div>'+
+      '<div class="patrow" style="margin-top:10px"><span class="q">Recomendação</span><span class="a" style="font-family:var(--text);max-width:60%">'+reco+'</span></div></div>';
+}
+
+/* ===== navegação / telas ===== */
+function setSteps(){
+  var el=document.getElementById("steps");
+  el.classList.toggle("hide",screen===1);
+  el.querySelectorAll(".st").forEach(function(s){
+    var n=+s.dataset.s;
+    s.classList.toggle("on",n===screen);
+    s.classList.toggle("done",n<screen);
+    s.classList.toggle("nav",mode==="corretor");
+  });
+}
+function showScreen(n){
+  if(n===3)renderResultado();
+  if(n===4)renderAnalise();
+  screen=n; if(n>maxReached)maxReached=n;
+  document.querySelectorAll(".screen").forEach(function(s){s.classList.toggle("on",+s.dataset.screen===n);});
+  setSteps();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function goAnalise(){
+  if(mode==="corretor"||unlocked){showScreen(4);} else {document.getElementById("over").classList.add("on");}
+}
+
+document.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){showScreen(+b.dataset.go);};});
+document.getElementById("toAnalise").onclick=goAnalise;
+document.getElementById("steps").querySelectorAll(".st").forEach(function(s){s.onclick=function(){if(mode==="corretor")showScreen(+s.dataset.s);};});
+
+document.getElementById("advToggle").onclick=function(){
+  var a=document.getElementById("adv");a.classList.toggle("hide");
+  this.textContent=(a.classList.contains("hide")?"▸":"▾")+" Ajustes avançados";
+};
+
+/* deep tabs */
+document.querySelectorAll("#tabs button").forEach(function(b){b.onclick=function(){
+  tab=b.dataset.tab;
+  document.querySelectorAll("#tabs button").forEach(function(x){x.classList.toggle("on",x===b);});
+  document.querySelectorAll(".tabpanel").forEach(function(p){p.classList.toggle("on",p.dataset.panel===tab);});
+};});
+document.getElementById("segAgio").querySelectorAll("button").forEach(function(b){b.onclick=function(){
+  document.getElementById("segAgio").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b);});
+  document.getElementById("agioPct").value=b.dataset.v;renderAnalise();};});
+
+/* recompute on input */
+document.querySelectorAll("input,select").forEach(function(el){el.addEventListener("input",function(){
+  syncLabels();
+  if(screen===3)renderResultado();
+  if(screen===4)renderAnalise();
+});});
+
+/* modo cliente/corretor */
+function setMode(m){
+  mode=m;
+  document.querySelectorAll("#modeSeg button").forEach(function(b){b.classList.toggle("on",b.dataset.m===m);});
+  document.getElementById("cbanner").classList.toggle("hide",m!=="corretor");
+  var adv=document.getElementById("adv"), at=document.getElementById("advToggle");
+  if(m==="corretor"){adv.classList.remove("hide");at.textContent="▾ Ajustes avançados";}
+  setSteps();
+  if(screen===3)renderResultado();
+}
+document.querySelectorAll("#modeSeg button").forEach(function(b){b.onclick=function(){setMode(b.dataset.m);};});
+
+/* white-label + tema */
+(function(){var c=document.getElementById("corretor");try{var s=localStorage.getItem("vertice-corretor");if(s)c.value=s;}catch(e){}
+  c.addEventListener("input",function(){try{localStorage.setItem("vertice-corretor",c.value);}catch(e){}});})();
+(function(){var root=document.documentElement,btn=document.getElementById("tgl");
+  function sys(){return matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";}
+  try{var s=localStorage.getItem("vertice-tema");if(s)root.setAttribute("data-theme",s);}catch(e){}
+  btn.onclick=function(){var cur=root.getAttribute("data-theme")||sys();var next=cur==="light"?"dark":"light";root.setAttribute("data-theme",next);try{localStorage.setItem("vertice-tema",next);}catch(e){}};})();
+
+/* cofre */
+function postLead(p){
+  if(CONFIG.supabaseUrl&&CONFIG.supabaseAnonKey){try{fetch(CONFIG.supabaseUrl.replace(/\/+$/,"")+"/rest/v1/"+CONFIG.supabaseTable,{method:"POST",headers:{"apikey":CONFIG.supabaseAnonKey,"Authorization":"Bearer "+CONFIG.supabaseAnonKey,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify(p)});}catch(e){}}
+  else if(CONFIG.webhookUrl){try{fetch(CONFIG.webhookUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});}catch(e){}}
+  else{console.log("LEAD (configure CONFIG):",p);}
+}
+document.getElementById("leadClose").onclick=function(){document.getElementById("over").classList.remove("on");};
+document.getElementById("leadForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var nome=val("lNome").trim(),email=val("lEmail").trim(),tel=val("lTel").trim(),ok=document.getElementById("lConsent").checked,err=document.getElementById("err");
+  if(nome.length<2||!email||tel.length<8){err.textContent="Preencha nome, WhatsApp e e-mail válidos.";return;}
+  if(!ok){err.textContent="É necessário aceitar o tratamento dos dados (LGPD).";return;}
+  err.textContent="";unlocked=true;
+  document.getElementById("over").classList.remove("on");
+  var imv=num("valorImovel"),isVip=imv>=VIP_THRESHOLD;
+  postLead({evento:"simulacao",corretor:val("corretor"),nome:nome,email:email,telefone:tel,consentimento_lgpd:true,consentimento_em:new Date().toISOString(),origem:"vertice",objetivo:val("objetivo"),valor_imovel:imv,valor_credito:num("valorCredito"),parcelas_cons:num("parcelasCons"),taxa_adm:num("taxaAdm"),mes_contemplacao:num("mesContempl"),is_vip:isVip,etiqueta:isVip?"VIP":"Padrão"});
+  showScreen(4);
+});
+
+syncLabels();
+</script>
+</body>
+</html>
