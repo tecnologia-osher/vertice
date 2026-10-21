@@ -70,6 +70,8 @@
   .intro .eyebrow{font-family:var(--mono);font-size:.76rem;color:var(--emerald-ink);margin:0 0 15px}
   .intro .sub{font-size:clamp(1.02rem,2.3vw,1.25rem);color:var(--fg);max-width:46ch;margin:18px 0 0;line-height:1.45}
   .intro .sub b{color:var(--emerald-ink);font-weight:600}
+  .herostat{margin:20px 0 0;font-size:.95rem;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--emerald);border-radius:6px;padding:12px 15px;max-width:52ch}
+  .herostat b{font-family:var(--mono);color:var(--emerald-ink);font-weight:600}
   .proof{display:flex;flex-wrap:wrap;gap:8px 18px;margin:22px 0 0;padding:0;list-style:none}
   .proof li{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:7px}
   .proof li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--emerald);flex:0 0 auto}
@@ -202,6 +204,7 @@
     <p class="eyebrow">a conta aberta · sem conflito de interesse</p>
     <h1>Consórcio ou financiamento? Veja a conta real antes de assinar.</h1>
     <p class="sub">A comparação honesta, em números, de qual caminho <b>menos compromete o seu patrimônio</b> — custo total, liquidez e o que esperar realmente custa. Análise, não venda.</p>
+    <p class="herostat" id="herostat" aria-live="polite"></p>
     <ul class="proof">
       <li>Cálculo auditável, parcela a parcela</li>
       <li>Sem conflito de interesse</li>
@@ -218,26 +221,22 @@
     <p class="lede">Já preenchemos com um exemplo — troque pelos seus valores.</p>
     <form id="form" autocomplete="off">
       <div class="card">
-        <h3 class="ctitle"><span class="dot" style="background:var(--red)"></span>Financiamento</h3>
+        <h3 class="ctitle"><span class="dot" style="background:var(--emerald)"></span>O essencial</h3>
         <div class="fields">
-          <div class="f"><label for="valorImovel">Valor do imóvel</label><input type="number" id="valorImovel" value="1000000" step="50000"></div>
-          <div class="f"><label for="valorEntrada">Entrada</label><input type="number" id="valorEntrada" value="200000" step="10000"></div>
+          <div class="f"><label for="valorImovel">Valor do imóvel</label><input type="number" id="valorImovel" value="500000" step="50000"></div>
+          <div class="f"><label for="valorEntrada">Entrada que você tem</label><input type="number" id="valorEntrada" value="100000" step="10000"></div>
           <div class="f"><label for="objetivo">Objetivo</label><select id="objetivo"><option value="moradia">Moradia</option><option value="troca">Troca</option><option value="investimento">Investimento</option><option value="futura">Compra futura</option></select></div>
-          <div class="f"><label for="jurosAnual">Juros (% a.a.)</label><input type="number" id="jurosAnual" value="11.5" step="0.1"></div>
-          <div class="f wide"><div class="rlab"><span>Prazo do financiamento</span><b id="parcFinLab">360 meses</b></div><input type="range" id="parcelasFin" min="60" max="420" step="12" value="360"></div>
+          <div class="f wide"><div class="rlab"><span>Prazo que você aceita pagar</span><b id="parcFinLab">360 meses</b></div><input type="range" id="parcelasFin" min="60" max="420" step="12" value="360"></div>
         </div>
-      </div>
-      <div class="card">
-        <h3 class="ctitle"><span class="dot" style="background:var(--emerald)"></span>Consórcio</h3>
-        <div class="fields">
-          <div class="f"><label for="valorCredito">Valor do crédito (carta)</label><input type="number" id="valorCredito" value="1000000" step="50000"></div>
-          <div class="f"><label for="taxaAdm">Taxa de adm. (%)</label><input type="number" id="taxaAdm" value="18" step="0.5"><span class="hint">Mercado: 9,5%–25%.</span></div>
-          <div class="f"><div class="rlab"><span>Prazo</span><b id="parcConsLab">200 meses</b></div><input type="range" id="parcelasCons" min="60" max="240" step="12" value="200"></div>
-          <div class="f"><div class="rlab"><span>Contemplação</span><b id="mesContLab">mês 24</b></div><input type="range" id="mesContempl" min="1" max="240" step="1" value="24"></div>
-        </div>
-        <button type="button" class="adv-toggle" id="advToggle">▸ Ajustes avançados</button>
+        <button type="button" class="adv-toggle" id="advToggle">▸ Ajustar as taxas e o consórcio</button>
         <div class="adv hide" id="adv">
+          <p class="hint" style="margin:2px 0 12px">Já usamos parâmetros de mercado (ABAC/BACEN). Mexa só se quiser afinar.</p>
           <div class="fields">
+            <div class="f"><label for="jurosAnual">Juros do financiamento (% a.a.)</label><input type="number" id="jurosAnual" value="11.5" step="0.1"></div>
+            <div class="f"><label for="valorCredito">Crédito do consórcio (carta)</label><input type="number" id="valorCredito" value="500000" step="50000"><span class="hint">Padrão: igual ao valor do imóvel.</span></div>
+            <div class="f"><label for="taxaAdm">Taxa de adm. (%)</label><input type="number" id="taxaAdm" value="18" step="0.5"><span class="hint">Mercado: 9,5%–25%.</span></div>
+            <div class="f"><div class="rlab"><span>Prazo do consórcio</span><b id="parcConsLab">200 meses</b></div><input type="range" id="parcelasCons" min="60" max="240" step="12" value="200"></div>
+            <div class="f"><div class="rlab"><span>Contemplação (estimativa)</span><b id="mesContLab">mês 24</b></div><input type="range" id="mesContempl" min="1" max="240" step="1" value="24"></div>
             <div class="f"><label for="cdiAnual">CDI (% a.a.)</label><input type="number" id="cdiAnual" value="10.5" step="0.1"></div>
             <div class="f"><label for="fundoReserva">Fundo reserva (%)</label><input type="number" id="fundoReserva" value="2" step="0.5"></div>
             <div class="f"><label for="taxaAdesao">Adesão (%)</label><input type="number" id="taxaAdesao" value="1" step="0.5"></div>
@@ -468,7 +467,7 @@ document.getElementById("steps").querySelectorAll(".st").forEach(function(s){s.o
 
 document.getElementById("advToggle").onclick=function(){
   var a=document.getElementById("adv");a.classList.toggle("hide");
-  this.textContent=(a.classList.contains("hide")?"▸":"▾")+" Ajustes avançados";
+  this.textContent=(a.classList.contains("hide")?"▸":"▾")+" Ajustar as taxas e o consórcio";
 };
 
 /* deep tabs */
@@ -486,6 +485,7 @@ document.querySelectorAll("input,select").forEach(function(el){el.addEventListen
   syncLabels();
   if(screen===3)renderResultado();
   if(screen===4)renderAnalise();
+  renderHeroStat();
 });});
 
 /* modo cliente/corretor */
@@ -494,7 +494,7 @@ function setMode(m){
   document.querySelectorAll("#modeSeg button").forEach(function(b){b.classList.toggle("on",b.dataset.m===m);});
   document.getElementById("cbanner").classList.toggle("hide",m!=="corretor");
   var adv=document.getElementById("adv"), at=document.getElementById("advToggle");
-  if(m==="corretor"){adv.classList.remove("hide");at.textContent="▾ Ajustes avançados";}
+  if(m==="corretor"){adv.classList.remove("hide");at.textContent="▾ Ajustar as taxas e o consórcio";}
   setSteps();
   if(screen===3)renderResultado();
 }
@@ -528,6 +528,23 @@ document.getElementById("leadForm").addEventListener("submit",function(e){
 });
 
 syncLabels();
+
+/* carta do consórcio acompanha o valor do imóvel no modo simples (até o usuário editar a carta) */
+(function(){
+  var cartaTouched=false, vc=document.getElementById("valorCredito"), vi=document.getElementById("valorImovel");
+  if(vc&&vi){
+    vc.addEventListener("input",function(){cartaTouched=true;});
+    vi.addEventListener("input",function(){ if(!cartaTouched){ vc.value=vi.value; if(screen===3)renderResultado(); if(screen===4)renderAnalise(); } });
+  }
+})();
+
+/* número de impacto no hero — o TAMANHO da diferença (neutro, não diz quem ganha) */
+function renderHeroStat(){
+  var el=document.getElementById("herostat"); if(!el)return;
+  var d=compute(), refFin=Math.min(d.sacTot,d.prTot), dif=Math.abs(refFin-d.cons.total);
+  el.innerHTML='Num imóvel de <b>'+brl(d.im)+'</b>, a diferença de custo total entre consórcio e financiamento passa de <b>'+brl(dif)+'</b>. De que lado está a sua?';
+}
+renderHeroStat();
 </script>
 </body>
 </html>
