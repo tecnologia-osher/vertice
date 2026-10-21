@@ -33,7 +33,7 @@
   .hide{display:none!important}
 
   .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
-  .bar-in{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:860px;margin-inline:auto;padding:11px clamp(16px,4vw,28px)}
+  .bar-in{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:920px;margin-inline:auto;padding:11px clamp(16px,4vw,28px)}
   .brand{display:flex;align-items:center;gap:10px;min-width:0}
   .brand svg{width:25px;height:25px;flex:0 0 auto}
   .brand .wm{font-family:var(--display);font-weight:800;letter-spacing:.12em;font-size:.92rem}
@@ -50,7 +50,7 @@
 
   .cbanner{background:color-mix(in srgb,var(--emerald) 14%,transparent);border-bottom:1px solid var(--line);font-size:.78rem;color:var(--emerald-ink);text-align:center;padding:7px 16px}
 
-  main{max-width:860px;margin-inline:auto;padding:clamp(18px,3vw,30px) clamp(16px,4vw,28px) 48px}
+  main{max-width:920px;margin-inline:auto;padding:clamp(18px,3vw,30px) clamp(16px,4vw,28px) 48px}
 
   /* progress */
   .steps{display:flex;align-items:center;gap:6px;justify-content:center;margin:0 0 26px;flex-wrap:wrap}
@@ -72,7 +72,22 @@
   .intro .sub{font-size:clamp(1.02rem,2.3vw,1.25rem);color:var(--fg);max-width:46ch;margin:18px 0 0;line-height:1.45}
   .intro .sub b{color:var(--emerald-ink);font-weight:600}
   .herostat{margin:20px 0 0;font-size:.95rem;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--emerald);border-radius:6px;padding:12px 15px;max-width:52ch}
-  .herostat b{font-family:var(--mono);color:var(--emerald-ink);font-weight:600}
+  .herostat b{font-family:var(--mono);color:var(--emerald-ink);font-weight:600;font-variant-numeric:tabular-nums}
+  .hero-grid{display:grid;gap:26px;align-items:center}
+  .hero-left{min-width:0}
+  .hero-visual{display:none}
+  .verdict,.teaser{max-width:70ch}
+  #form{max-width:620px}
+  .hv{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .hv h4{font-family:var(--display);font-weight:700;font-size:.98rem;margin:0 0 3px}
+  .hv .hvsub{font-size:.76rem;color:var(--muted);margin:0 0 16px}
+  .hvbar{display:grid;grid-template-columns:92px 1fr auto;gap:10px;align-items:center;font-size:.8rem;margin-bottom:11px}
+  .hvtrack{height:10px;background:var(--inset);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .hvfill{display:block;height:100%;border-radius:999px}
+  .hvamt{font-weight:600;font-variant-numeric:tabular-nums}
+  .hvdiff{margin-top:6px;padding-top:13px;border-top:1px solid var(--line);font-size:.86rem;color:var(--fg)}
+  .hvdiff b{color:var(--emerald-ink);font-weight:700;font-variant-numeric:tabular-nums}
+  @media(min-width:820px){ .hero-grid{grid-template-columns:1.05fr .95fr;gap:42px} .hero-visual{display:block} .herostat{display:none} }
   .proof{display:flex;flex-wrap:wrap;gap:8px 18px;margin:22px 0 0;padding:0;list-style:none}
   .proof li{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:7px}
   .proof li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--emerald);flex:0 0 auto}
@@ -119,7 +134,7 @@
   .freebars{display:flex;flex-direction:column;gap:9px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:15px;margin-top:12px}
   .fb{display:grid;grid-template-columns:110px 1fr auto;gap:10px;align-items:center;font-size:.79rem}
   .fb .track{height:10px;background:var(--inset);border-radius:999px;overflow:hidden}
-  .fb .fill{height:100%;border-radius:999px}
+  .fb .fill{display:block;height:100%;border-radius:999px}
   .fb .amt{font-family:var(--mono);font-size:.8rem}
   .teaser{margin-top:14px;background:var(--surface2);border:1px dashed var(--line);border-radius:6px;padding:14px 16px;font-size:.86rem;color:var(--muted)}
   .teaser b{color:var(--fg)}
@@ -167,7 +182,7 @@
   .err{color:var(--red);font-size:.75rem;margin:0 0 9px;min-height:1em}
   .leadclose{background:none;border:0;color:var(--muted);font:inherit;font-size:.8rem;cursor:pointer;margin-top:10px;width:100%}
 
-  footer{max-width:860px;margin-inline:auto;padding:22px clamp(16px,4vw,28px) 40px;color:var(--muted);font-size:.73rem;line-height:1.5;border-top:1px solid var(--line)}
+  footer{max-width:920px;margin-inline:auto;padding:22px clamp(16px,4vw,28px) 40px;color:var(--muted);font-size:.73rem;line-height:1.5;border-top:1px solid var(--line)}
 
   @media (max-width:560px){.fields,.dgrid,.mini,.flows{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}.fb{grid-template-columns:84px 1fr auto}}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
@@ -202,18 +217,23 @@
 
   <!-- SCREEN 1 — INTRO -->
   <section class="screen intro on" data-screen="1">
-    <p class="eyebrow">a conta aberta · sem conflito de interesse</p>
-    <h1>Consórcio ou financiamento? Veja a conta real antes de assinar.</h1>
-    <p class="sub">A comparação honesta, em números, de qual caminho <b>menos compromete o seu patrimônio</b> — custo total, liquidez e o que esperar realmente custa. Análise, não venda.</p>
-    <p class="herostat" id="herostat" aria-live="polite"></p>
-    <ul class="proof">
-      <li>Cálculo auditável, parcela a parcela</li>
-      <li>Sem conflito de interesse</li>
-      <li>Parâmetros de mercado (ABAC/BACEN)</li>
-      <li>Seus dados protegidos (LGPD)</li>
-    </ul>
-    <div class="nav" style="justify-content:flex-start"><button class="btn" type="button" data-go="2">Começar a comparação →</button></div>
-    <p class="hint" style="margin-top:12px">Grátis. Leva cerca de 1 minuto.</p>
+    <div class="hero-grid">
+      <div class="hero-left">
+        <p class="eyebrow">a conta aberta · sem conflito de interesse</p>
+        <h1>Consórcio ou financiamento? Veja a conta real antes de assinar.</h1>
+        <p class="sub">A comparação honesta, em números, de qual caminho <b>menos compromete o seu patrimônio</b> — custo total, liquidez e o que esperar realmente custa. Análise, não venda.</p>
+        <p class="herostat" id="herostat" aria-live="polite"></p>
+        <ul class="proof">
+          <li>Cálculo auditável, parcela a parcela</li>
+          <li>Sem conflito de interesse</li>
+          <li>Parâmetros de mercado (ABAC/BACEN)</li>
+          <li>Seus dados protegidos (LGPD)</li>
+        </ul>
+        <div class="nav" style="justify-content:flex-start"><button class="btn" type="button" data-go="2">Começar a comparação →</button></div>
+        <p class="hint" style="margin-top:12px">Grátis. Leva cerca de 1 minuto.</p>
+      </div>
+      <aside class="hero-visual" id="heroVisual" aria-hidden="true"></aside>
+    </div>
   </section>
 
   <!-- SCREEN 2 — INPUTS -->
@@ -489,6 +509,7 @@ document.querySelectorAll("input,select").forEach(function(el){el.addEventListen
   if(screen===3)renderResultado();
   if(screen===4)renderAnalise();
   renderHeroStat();
+  renderHeroVisual();
 });});
 
 /* modo cliente/corretor */
@@ -548,6 +569,13 @@ function renderHeroStat(){
   el.innerHTML='Num imóvel de <b>'+brl(d.im)+'</b>, a diferença de custo total entre consórcio e financiamento passa de <b>'+brl(dif)+'</b>. De que lado está a sua?';
 }
 renderHeroStat();
+function renderHeroVisual(){
+  var el=document.getElementById("heroVisual"); if(!el)return;
+  var d=compute(), refFin=Math.min(d.sacTot,d.prTot), dif=Math.abs(refFin-d.cons.total), mx=Math.max(d.sacTot,d.prTot,d.cons.total,1);
+  function bar(l,v,c){return '<div class="hvbar"><span>'+l+'</span><span class="hvtrack"><span class="hvfill" style="width:'+(v/mx*100).toFixed(1)+'%;background:'+c+'"></span></span><span class="hvamt">'+brl(v)+'</span></div>';}
+  el.innerHTML='<div class="hv"><h4>Custo total, lado a lado</h4><p class="hvsub">No exemplo de '+brl(d.im)+' — troque pelos seus números.</p>'+bar("Financ. SAC",d.sacTot,"var(--red)")+bar("Financ. PRICE",d.prTot,"var(--red)")+bar("Consórcio",d.cons.total,"var(--emerald)")+'<div class="hvdiff">Diferença de custo total: <b>'+brl(dif)+'</b></div></div>';
+}
+renderHeroVisual();
 </script>
 </body>
 </html>
