@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Vértice Terminal</title>
-  <meta name="description" content="Consórcio ou financiamento? Comparação honesta, em passos, de marca neutra — modo cliente e modo corretor.">
+  <title>Vértice</title>
+  <meta name="description" content="Consórcio ou financiamento? A conta real, em números e ao vivo — comparação de marca neutra, sem conflito de interesse.">
   <link rel="icon" href="vertice-favicon.svg" type="image/svg+xml">
   <link rel="icon" sizes="32x32" href="vertice-favicon-32.png">
   <link rel="apple-touch-icon" href="vertice-favicon-180.png">
@@ -17,188 +17,157 @@
     --bg:#F4F4F1; --surface:#FFFFFF; --surface2:#ECECE7; --inset:#FFFFFF;
     --fg:#1B2A24; --muted:#45514A; --line:#E3E3DD;
     --emerald:#13915F; --emerald-ink:#0C6A45; --pine:#0B3A2B;
-    --red:#B4472E; --gold:#9B7726; --azul:#2E6A9E;
+    --red:#B22722; --gold:#9B7726; --azul:#2E6A9E;
     --display:'Figtree',system-ui,sans-serif; --text:'Hanken Grotesk',system-ui,sans-serif; --mono:'Hanken Grotesk',ui-sans-serif,system-ui,sans-serif;
     color-scheme:light;
   }
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-    --bg:#0F1714;--surface:#17211D;--surface2:#1E2A25;--inset:#0C1512;--fg:#EBEFEC;--muted:#93A49B;--line:#293832;--emerald:#2BBD86;--emerald-ink:#15A071;--pine:#0B3A2B;--red:#E0806F;--gold:#C7A86A;--azul:#6FA8D6;color-scheme:dark;}}
-  :root[data-theme="dark"]{--bg:#0F1714;--surface:#17211D;--surface2:#1E2A25;--inset:#0C1512;--fg:#EBEFEC;--muted:#93A49B;--line:#293832;--emerald:#2BBD86;--emerald-ink:#15A071;--pine:#0B3A2B;--red:#E0806F;--gold:#C7A86A;--azul:#6FA8D6;color-scheme:dark;}
+    --bg:#0F1714;--surface:#17211D;--surface2:#1E2A25;--inset:#0C1512;--fg:#EBEFEC;--muted:#93A49B;--line:#293832;--emerald:#2BBD86;--emerald-ink:#15A071;--pine:#0B3A2B;--red:#E27E72;--gold:#C7A86A;--azul:#6FA8D6;color-scheme:dark;}}
+  :root[data-theme="dark"]{--bg:#0F1714;--surface:#17211D;--surface2:#1E2A25;--inset:#0C1512;--fg:#EBEFEC;--muted:#93A49B;--line:#293832;--emerald:#2BBD86;--emerald-ink:#15A071;--pine:#0B3A2B;--red:#E27E72;--gold:#C7A86A;--azul:#6FA8D6;color-scheme:dark;}
 
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--fg);font-family:var(--text);line-height:1.5}
-  .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
-  .cc .tot,.cc .parc b,.headline,.met .v,.flow .big,.rlab b,.fb .amt,.cc .tot,input[type=number]{font-variant-numeric:tabular-nums}
+  .num,.cc .tot,.cc .parc b,.headline,.met .v,.flow .big,.rlab b,.fb .amt,input[type=number],.rl-big,.cardnum{font-variant-numeric:tabular-nums}
   .hide{display:none!important}
 
   .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
-  .bar-in{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:920px;margin-inline:auto;padding:11px clamp(16px,4vw,28px)}
+  .bar-in{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1040px;margin-inline:auto;padding:11px clamp(16px,4vw,28px)}
   .brand{display:flex;align-items:center;gap:10px;min-width:0}
   .brand svg{width:25px;height:25px;flex:0 0 auto}
-  .brand .wm{font-family:var(--display);font-weight:800;letter-spacing:.12em;font-size:.92rem}
-  .cobrand{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);border-left:1px solid var(--line);padding-left:11px}
+  .brand .wm{font-family:var(--display);font-weight:800;letter-spacing:.1em;font-size:.92rem}
+  .cobrand{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);padding-left:11px}
   .cobrand input{font:inherit;font-size:.8rem;color:var(--fg);background:transparent;border:0;border-bottom:1px dashed var(--line);padding:2px;width:9em}
   .cobrand input:focus{outline:none;border-bottom-color:var(--emerald)}
   .barctl{display:flex;align-items:center;gap:8px}
-  .seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
-  .seg button{background:transparent;border:0;color:var(--muted);padding:7px 11px;cursor:pointer;font:inherit;font-size:.76rem}
+  .seg{display:inline-flex;background:var(--surface2);border-radius:5px;padding:2px}
+  .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;cursor:pointer;font:inherit;font-size:.78rem;border-radius:4px}
   .seg button.on{background:var(--emerald-ink);color:#fff;font-weight:600}
-  .toggle{font:inherit;font-size:.72rem;color:var(--muted);background:none;border:1px solid var(--line);padding:7px 11px;cursor:pointer;border-radius:2px}
-  .toggle:hover{color:var(--fg);border-color:var(--muted)}
+  .toggle{font:inherit;font-size:.78rem;color:var(--muted);background:var(--surface2);border:0;padding:7px 12px;cursor:pointer;border-radius:5px}
+  .toggle:hover{color:var(--fg)}
   .toggle:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--emerald);outline-offset:2px}
 
-  .cbanner{background:color-mix(in srgb,var(--emerald) 14%,transparent);border-bottom:1px solid var(--line);font-size:.78rem;color:var(--emerald-ink);text-align:center;padding:7px 16px}
+  .cbanner{background:color-mix(in srgb,var(--emerald) 12%,transparent);font-size:.82rem;color:var(--emerald-ink);text-align:center;padding:9px 16px}
 
-  main{max-width:920px;margin-inline:auto;padding:clamp(18px,3vw,30px) clamp(16px,4vw,28px) 48px}
-
-  /* progress */
-  .steps{display:flex;align-items:center;gap:6px;justify-content:center;margin:0 0 26px;flex-wrap:wrap}
-  .steps .st{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--muted)}
-  .steps .st .n{width:24px;height:24px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.76rem;flex:0 0 auto}
-  .steps .st.on{color:var(--fg)} .steps .st.on .n{border-color:var(--emerald);background:color-mix(in srgb,var(--emerald) 14%,transparent);color:var(--emerald-ink);font-weight:700}
-  .steps .st.done .n{background:var(--emerald-ink);border-color:var(--emerald-ink);color:#fff}
-  .steps .st.nav{cursor:pointer}
-  .steps .ln{width:20px;height:1px;background:var(--line)}
-
+  main{max-width:1040px;margin-inline:auto;padding:clamp(22px,3vw,40px) clamp(16px,4vw,28px) 40px}
   .screen{display:none} .screen.on{display:block}
-  h1{font-family:var(--display);font-weight:800;letter-spacing:-.015em;line-height:1.04;margin:0;text-wrap:balance}
-  h2.title{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,4vw,2rem);letter-spacing:-.01em;margin:0 0 6px}
-  .lede{color:var(--muted);font-size:1rem;margin:0 0 24px;max-width:52ch}
+  h1{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.05;margin:0;text-wrap:balance}
+  h2.title{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,4vw,2rem);letter-spacing:-.015em;margin:0 0 6px}
+  .lede{color:var(--muted);font-size:1rem;margin:0 0 22px;max-width:60ch}
 
-  /* intro */
-  .intro h1{font-size:clamp(2rem,5vw,3.4rem);max-width:15ch;line-height:1.04}
-  .intro .eyebrow{font-family:var(--mono);font-size:.76rem;color:var(--emerald-ink);margin:0 0 15px}
-  .intro .sub{font-size:clamp(1.02rem,2.3vw,1.25rem);color:var(--fg);max-width:46ch;margin:18px 0 0;line-height:1.45}
-  .intro .sub b{color:var(--emerald-ink);font-weight:600}
-  .herostat{margin:20px 0 0;font-size:.98rem;color:var(--fg);background:var(--surface2);border:0;border-radius:9px;padding:14px 16px;max-width:52ch}
-  .herostat b{font-family:var(--mono);color:var(--emerald-ink);font-weight:600;font-variant-numeric:tabular-nums}
-  .hero-grid{display:grid;gap:26px;align-items:center}
-  .hero-left{min-width:0}
-  .hero-visual{display:none}
-  .verdict,.teaser{max-width:70ch}
-  #form{max-width:620px}
-  .hv{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
-  .hv h4{font-family:var(--display);font-weight:700;font-size:.98rem;margin:0 0 3px}
-  .hv .hvsub{font-size:.84rem;color:var(--muted);margin:0 0 16px}
-  .hvbar{display:grid;grid-template-columns:96px 1fr auto;gap:10px;align-items:center;font-size:.86rem;margin-bottom:12px}
-  .hvtrack{height:10px;background:var(--inset);border:1px solid var(--line);border-radius:999px;overflow:hidden}
-  .hvfill{display:block;height:100%;border-radius:999px}
-  .hvamt{font-weight:600;font-variant-numeric:tabular-nums}
-  .hvdiff{margin-top:16px;font-size:.88rem;color:var(--fg)}
-  .hvdiff b{color:var(--emerald-ink);font-weight:700;font-variant-numeric:tabular-nums}
-  @media(min-width:820px){ .hero-grid{grid-template-columns:1.05fr .95fr;gap:42px} .hero-visual{display:block} .herostat{display:none} }
-  @media (prefers-reduced-motion:no-preference){
-    .intro.on .hero-left h1,.intro.on .hero-left .sub,.intro.on .hero-left .proof li,.intro.on .hero-left .nav,.intro.on .hero-left .hint,.intro.on .hero-visual{animation:riseIn .55s both}
-    .intro.on .hero-left .sub{animation-delay:.05s}
-    .intro.on .hero-left .proof li:nth-child(1){animation-delay:.10s}
-    .intro.on .hero-left .proof li:nth-child(2){animation-delay:.14s}
-    .intro.on .hero-left .proof li:nth-child(3){animation-delay:.18s}
-    .intro.on .hero-left .proof li:nth-child(4){animation-delay:.22s}
-    .intro.on .hero-left .nav{animation-delay:.26s}
-    .intro.on .hero-left .hint{animation-delay:.30s}
-    .intro.on .hero-visual{animation-delay:.18s;animation-duration:.6s}
-  }
-  @keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-  .btn{transition:background .15s ease, transform .1s ease}
-  .btn:active{transform:translateY(1px)}
+  /* ===== CALCULADORA (primeira tela) ===== */
+  .calc-grid{display:grid;gap:26px}
+  @media(min-width:900px){ .calc-grid{grid-template-columns:.92fr 1.08fr;gap:44px;align-items:start} }
+  .calc-left{min-width:0}
+  .calc-left h1{font-size:clamp(2rem,4.6vw,3.1rem);max-width:15ch;margin:0 0 16px}
+  .calc-left .sub{font-size:clamp(1.02rem,1.9vw,1.2rem);color:var(--fg);max-width:44ch;margin:0 0 24px;line-height:1.5}
+  .calc-left .sub b{color:var(--emerald-ink);font-weight:600}
+
+  .result-live{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;min-width:0}
+  @media(min-width:900px){ .result-live{position:sticky;top:84px} }
+  .rl-label{font-size:.82rem;color:var(--muted);margin:0}
+  .rl-big{font-family:var(--display);font-weight:800;font-size:clamp(2.3rem,5.5vw,3.3rem);letter-spacing:-.025em;line-height:1;margin:5px 0 4px;color:var(--emerald-ink)}
+  .rl-note{font-size:.98rem;color:var(--fg);margin:0 0 18px;line-height:1.5;max-width:52ch}
+  .rl-note b{color:var(--emerald-ink);font-weight:600}
+  .rl-fine{font-size:.8rem;color:var(--muted);margin:12px 0 0;text-align:center}
+
   .proof{display:flex;flex-wrap:wrap;gap:8px 18px;margin:22px 0 0;padding:0;list-style:none}
   .proof li{font-size:.84rem;color:var(--muted);display:flex;align-items:center;gap:7px}
   .proof li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--emerald);flex:0 0 auto}
 
   /* inputs */
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:20px}
-  .card + .card{margin-top:14px}
-  .ctitle{font-family:var(--display);font-weight:700;font-size:.92rem;margin:0 0 14px;display:flex;align-items:center;gap:8px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .ctitle{font-family:var(--display);font-weight:700;font-size:.9rem;margin:0 0 14px;display:flex;align-items:center;gap:8px;color:var(--fg)}
   .ctitle .dot{width:8px;height:8px;border-radius:50%}
-  .fields{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .f{display:flex;flex-direction:column;gap:5px;min-width:0}
   .f.wide{grid-column:1/-1}
-  .f label{font-size:.78rem;color:var(--fg);font-weight:500}
-  .f .hint{font-size:.69rem;color:var(--muted);line-height:1.3}
-  input[type=number],select,.f input[type=text]{width:100%;background:var(--inset);border:1px solid var(--line);border-radius:4px;color:var(--fg);padding:10px;font-family:var(--mono);font-size:.9rem}
-  select{font-family:var(--text)}
+  .f label{font-size:.82rem;color:var(--fg);font-weight:500}
+  .f .hint{font-size:.74rem;color:var(--muted);line-height:1.3}
+  input[type=number],select,.f input[type=text]{width:100%;background:var(--inset);border:1px solid var(--line);border-radius:7px;color:var(--fg);padding:11px;font-family:var(--text);font-size:.98rem;font-variant-numeric:tabular-nums}
   input[type=range]{width:100%;accent-color:var(--emerald)}
-  .rlab{display:flex;justify-content:space-between;font-size:.78rem;font-weight:500}
-  .rlab b{color:var(--emerald-ink);font-family:var(--mono)}
-  .adv-toggle{margin-top:14px;background:none;border:0;color:var(--muted);font:inherit;font-size:.82rem;cursor:pointer;display:flex;align-items:center;gap:7px;padding:0}
-  .adv-toggle:hover{color:var(--fg)}
-  .adv{margin-top:14px}
+  .rlab{display:flex;justify-content:space-between;font-size:.82rem;font-weight:500}
+  .rlab b{color:var(--emerald-ink)}
+  .adv-toggle{margin-top:16px;background:none;border:0;color:var(--emerald-ink);font:inherit;font-size:.86rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;padding:0}
+  .adv{margin-top:16px}
+  .adv .hint{font-size:.78rem;color:var(--muted);margin:2px 0 12px}
 
-  /* nav */
-  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
-  .btn{background:var(--emerald-ink);color:#fff;border:0;border-radius:5px;padding:13px 22px;font:inherit;font-weight:700;cursor:pointer;font-size:.95rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+  .btn{background:var(--emerald-ink);color:#fff;border:0;border-radius:8px;padding:14px 22px;font:inherit;font-weight:700;cursor:pointer;font-size:.98rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;justify-content:center;transition:background .15s ease, transform .1s ease}
   .btn:hover{background:var(--pine);color:#fff}
+  .btn:active{transform:translateY(1px)}
   .btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line);font-weight:500}
-  .btn.ghost:hover{background:transparent;border-color:var(--muted);color:var(--fg)}
+  .btn.ghost:hover{background:var(--surface2)}
   .btn.block{width:100%}
 
-  /* result */
-  .cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
-  .cc{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:15px;min-width:0}
-  .cc.win{border-color:var(--emerald);box-shadow:inset 0 0 0 1px var(--emerald)}
-  .cc .tag{font-size:.67rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-  .cc .parc{font-size:.77rem;color:var(--muted);margin-top:9px}
-  .cc .parc b{color:var(--fg);font-family:var(--mono);font-size:.95rem;display:block;margin-top:2px}
-  .cc .tot{font-size:1.3rem;font-weight:700;font-family:var(--mono);margin-top:11px;letter-spacing:-.01em}
-  .cc .cap{font-size:.67rem;color:var(--muted);margin-top:5px}
+  /* comparativo (3 cartões) */
+  .cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:4px}
+  .cc{background:var(--surface2);border-radius:10px;padding:14px;min-width:0}
+  .cc.win{background:color-mix(in srgb,var(--emerald) 12%,transparent);box-shadow:inset 0 0 0 1.5px var(--emerald)}
+  .cc .tag{font-size:.74rem;color:var(--muted);font-weight:500}
+  .cc .tot{font-size:1.16rem;font-weight:700;font-family:var(--display);margin-top:8px;letter-spacing:-.01em}
+  .cc .parc{font-size:.76rem;color:var(--muted);margin-top:6px}
+  .cc .parc b{color:var(--fg);font-weight:600;display:block;margin-top:1px;font-size:.92rem}
+  .cc .cap{font-size:.72rem;color:var(--muted);margin-top:5px}
   .red{color:var(--red)} .grn{color:var(--emerald-ink)}
-  .verdict{background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--emerald);border-radius:6px;padding:15px 17px;font-size:1rem;line-height:1.5;margin-top:12px}
-  .verdict b{color:var(--emerald-ink)}
-  .freebars{display:flex;flex-direction:column;gap:9px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:15px;margin-top:12px}
-  .fb{display:grid;grid-template-columns:110px 1fr auto;gap:10px;align-items:center;font-size:.79rem}
-  .fb .track{height:10px;background:var(--inset);border-radius:999px;overflow:hidden}
-  .fb .fill{display:block;height:100%;border-radius:999px}
-  .fb .amt{font-family:var(--mono);font-size:.8rem}
-  .teaser{margin-top:14px;background:var(--surface2);border:1px dashed var(--line);border-radius:6px;padding:14px 16px;font-size:.86rem;color:var(--muted)}
-  .teaser b{color:var(--fg)}
 
-  /* deep tabs */
-  .tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:14px}
-  .tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font:inherit;font-size:.85rem;font-weight:500;padding:9px 12px;cursor:pointer;margin-bottom:-1px}
-  .tabs button.on{color:var(--fg);border-bottom-color:var(--emerald)}
+  /* ===== análise completa ===== */
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px}
+  .tabs button{background:var(--surface2);border:0;color:var(--muted);font:inherit;font-size:.86rem;font-weight:600;padding:9px 14px;cursor:pointer;border-radius:7px}
+  .tabs button.on{color:#fff;background:var(--emerald-ink)}
   .tabpanel{display:none;flex-direction:column;gap:13px} .tabpanel.on{display:flex}
-  .ctrlrow{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:13px 15px}
+  .ctrlrow{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
   .ctrlrow .f{flex:1;min-width:140px}
-  .box{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:15px}
-  .box h5{margin:0 0 2px;font-size:.88rem;font-family:var(--display);font-weight:700}
-  .box .bd{font-size:.74rem;color:var(--muted);margin:0 0 12px}
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:17px}
+  .box h5{margin:0 0 3px;font-size:.95rem;font-family:var(--display);font-weight:700}
+  .box .bd{font-size:.82rem;color:var(--muted);margin:0 0 13px;line-height:1.45}
   .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .mini{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-  .met{background:var(--inset);border:1px solid var(--line);border-radius:4px;padding:9px 10px}
-  .met .k{font-size:.67rem;color:var(--muted)} .met .v{font-size:1rem;font-weight:600;font-family:var(--mono);margin-top:2px}
+  .met{background:var(--surface2);border-radius:8px;padding:10px 11px}
+  .met .k{font-size:.74rem;color:var(--muted)} .met .v{font-size:1.05rem;font-weight:700;font-family:var(--display);margin-top:2px}
   .met .v.cost{color:var(--red)} .met .v.profit{color:var(--emerald-ink)}
-  .patrow{display:flex;justify-content:space-between;gap:12px;font-size:.8rem;padding:9px 0;border-bottom:1px solid var(--line)}
-  .patrow:last-child{border-bottom:0}.patrow .q{color:var(--muted)}.patrow .a{font-family:var(--mono);text-align:right}
-  .headline{font-family:var(--mono);font-size:1.8rem;font-weight:600;letter-spacing:-.02em}
-  .badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:999px}
-  .badge.v{background:color-mix(in srgb,var(--emerald) 18%,transparent);color:var(--emerald-ink)}
-  .badge.a{background:color-mix(in srgb,var(--azul) 20%,transparent);color:var(--azul)}
-  .flag{font-size:.73rem;padding:8px 11px;border-radius:5px;border:1px solid var(--line);background:var(--inset);color:var(--muted);margin-top:4px}
-  .flag.warn{border-color:var(--gold);color:var(--gold)}
+  .patrow{display:flex;justify-content:space-between;gap:12px;font-size:.86rem;padding:10px 0;border-bottom:1px solid var(--line)}
+  .patrow:last-child{border-bottom:0}.patrow .q{color:var(--muted)}.patrow .a{text-align:right;font-weight:600}
+  .headline{font-family:var(--display);font-size:1.9rem;font-weight:800;letter-spacing:-.02em}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;font-weight:600;padding:5px 11px;border-radius:999px}
+  .badge.v{background:color-mix(in srgb,var(--emerald) 16%,transparent);color:var(--emerald-ink)}
+  .badge.a{background:color-mix(in srgb,var(--azul) 18%,transparent);color:var(--azul)}
+  .flag{font-size:.8rem;padding:10px 12px;border-radius:8px;background:var(--surface2);color:var(--muted);margin-top:8px;line-height:1.45}
+  .flag.warn{background:color-mix(in srgb,var(--gold) 14%,transparent);color:var(--gold)}
   .flows{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .flow{background:var(--surface2);border:1px solid var(--line);border-radius:6px;padding:14px}
-  .flow h6{margin:0 0 3px;font-size:.84rem;font-family:var(--display);font-weight:700}
-  .flow .sub{font-size:.7rem;color:var(--muted);margin:0 0 11px}
-  .flow .big{font-family:var(--mono);font-size:1.2rem;font-weight:600}
-  .flow .note{font-size:.73rem;color:var(--muted);margin-top:5px}
+  .flow{background:var(--surface2);border-radius:10px;padding:15px}
+  .flow h6{margin:0 0 3px;font-size:.9rem;font-family:var(--display);font-weight:700}
+  .flow .sub{font-size:.76rem;color:var(--muted);margin:0 0 11px}
+  .flow .big{font-family:var(--display);font-size:1.3rem;font-weight:800}
+  .flow .note{font-size:.78rem;color:var(--muted);margin-top:5px}
+  .anav{display:flex;gap:12px;margin-top:22px}
 
-  /* cofre overlay */
+  /* cofre */
   .over{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:18px;background:color-mix(in srgb,#000 55%,transparent)}
   .over.on{display:flex}
-  .lead{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px;max-width:380px;width:100%}
-  .lead h4{font-family:var(--display);font-weight:700;margin:0 0 4px;font-size:1.08rem}
-  .lead p{font-size:.84rem;color:var(--muted);margin:0 0 14px}
+  .lead{background:var(--surface);border-radius:14px;padding:26px;max-width:400px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.28)}
+  .lead h4{font-family:var(--display);font-weight:800;margin:0 0 5px;font-size:1.2rem;letter-spacing:-.01em}
+  .lead p{font-size:.9rem;color:var(--muted);margin:0 0 15px;line-height:1.45}
   .lead .f{margin-bottom:11px}
-  .lead input{width:100%;background:var(--inset);border:1px solid var(--line);border-radius:4px;color:var(--fg);padding:10px;font:inherit;font-size:.9rem}
-  .consent{display:flex;gap:8px;align-items:flex-start;font-size:.73rem;color:var(--muted);margin:2px 0 13px;cursor:pointer}
-  .lead .proof{margin:0 0 13px;gap:6px 12px}.lead .proof li{font-size:.72rem}
-  .err{color:var(--red);font-size:.75rem;margin:0 0 9px;min-height:1em}
-  .leadclose{background:none;border:0;color:var(--muted);font:inherit;font-size:.8rem;cursor:pointer;margin-top:10px;width:100%}
+  .lead input{width:100%;background:var(--inset);border:1px solid var(--line);border-radius:8px;color:var(--fg);padding:12px;font:inherit;font-size:.98rem}
+  .consent{display:flex;gap:8px;align-items:flex-start;font-size:.8rem;color:var(--muted);margin:4px 0 14px;cursor:pointer;line-height:1.4}
+  .lead .proof{margin:0 0 15px;gap:6px 14px}.lead .proof li{font-size:.78rem}
+  .err{color:var(--red);font-size:.8rem;margin:0 0 9px;min-height:1em}
+  .leadclose{background:none;border:0;color:var(--muted);font:inherit;font-size:.84rem;cursor:pointer;margin-top:12px;width:100%}
 
-  footer{max-width:540px;margin-inline:auto;padding:30px clamp(16px,4vw,28px) 46px;color:var(--muted);font-size:.85rem;line-height:1.55}
+  footer{max-width:560px;margin-inline:auto;padding:30px clamp(16px,4vw,28px) 46px;color:var(--muted);font-size:.85rem;line-height:1.55}
 
-  @media (max-width:560px){.fields,.dgrid,.mini,.flows{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}.fb{grid-template-columns:84px 1fr auto}}
+  @media(prefers-reduced-motion:no-preference){
+    .calc.on .calc-left > *{animation:riseIn .55s both}
+    .calc.on .calc-left > *:nth-child(2){animation-delay:.05s}
+    .calc.on .calc-left > *:nth-child(3){animation-delay:.10s}
+    .calc.on .calc-left > *:nth-child(4){animation-delay:.15s}
+    .calc.on .result-live{animation:riseIn .6s .12s both}
+    .proof li{animation:riseIn .5s both}
+    .proof li:nth-child(2){animation-delay:.05s}.proof li:nth-child(3){animation-delay:.1s}.proof li:nth-child(4){animation-delay:.15s}
+  }
+  @keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+  @media (max-width:560px){.fields,.dgrid,.mini,.flows{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
 </style>
 
@@ -223,79 +192,60 @@
 <div class="cbanner hide" id="cbanner">Modo corretor — análise completa liberada, sem cadastro. Use na frente do cliente para fechar.</div>
 
 <main>
-  <div class="steps hide" id="steps">
-    <span class="st" data-s="2"><span class="n">1</span><span>Seus números</span></span><span class="ln"></span>
-    <span class="st" data-s="3"><span class="n">2</span><span>Resultado</span></span><span class="ln"></span>
-    <span class="st" data-s="4"><span class="n">3</span><span>Análise</span></span>
-  </div>
-
-  <!-- SCREEN 1 — INTRO -->
-  <section class="screen intro on" data-screen="1">
-    <div class="hero-grid">
-      <div class="hero-left">
-        <h1>Consórcio ou financiamento?</h1>
-        <p class="sub">Veja a conta real antes de assinar: a comparação honesta, em números, de qual caminho <b>menos compromete o seu patrimônio</b> — sem conflito de interesse.</p>
-        <p class="herostat" id="herostat" aria-live="polite"></p>
+  <!-- TELA 1 — A CALCULADORA (entradas + resultado ao vivo) -->
+  <section class="screen calc on" data-screen="1">
+    <div class="calc-grid">
+      <div class="calc-left">
+        <h1>A conta real, antes de assinar.</h1>
+        <p class="sub">Consórcio ou financiamento? Compare o custo total dos dois caminhos, em números — <b>sem ninguém te empurrando nada</b>.</p>
+        <form id="form" autocomplete="off">
+          <div class="card" data-ui>
+            <h3 class="ctitle"><span class="dot" style="background:var(--emerald)"></span>Seus números</h3>
+            <div class="fields">
+              <div class="f"><label for="valorImovel">Valor do imóvel</label><input type="number" id="valorImovel" value="500000" step="50000"></div>
+              <div class="f"><label for="valorEntrada">Entrada que você tem</label><input type="number" id="valorEntrada" value="100000" step="10000"></div>
+              <div class="f"><label for="objetivo">Objetivo</label><select id="objetivo"><option value="moradia">Moradia</option><option value="troca">Troca</option><option value="investimento">Investimento</option><option value="futura">Compra futura</option></select></div>
+              <div class="f wide"><div class="rlab"><span>Prazo que você aceita pagar</span><b id="parcFinLab">360 meses</b></div><input type="range" id="parcelasFin" min="60" max="420" step="12" value="360"></div>
+            </div>
+            <button type="button" class="adv-toggle" id="advToggle">▸ Ajustar as taxas e o consórcio</button>
+            <div class="adv hide" id="adv">
+              <p class="hint">Já usamos parâmetros de mercado (ABAC/BACEN). Mexa só se quiser afinar.</p>
+              <div class="fields">
+                <div class="f"><label for="jurosAnual">Juros do financiamento (% a.a.)</label><input type="number" id="jurosAnual" value="11.5" step="0.1"></div>
+                <div class="f"><label for="valorCredito">Crédito do consórcio (carta)</label><input type="number" id="valorCredito" value="500000" step="50000"><span class="hint">Padrão: igual ao valor do imóvel.</span></div>
+                <div class="f"><label for="taxaAdm">Taxa de adm. (%)</label><input type="number" id="taxaAdm" value="18" step="0.5"><span class="hint">Mercado: 9,5%–25%.</span></div>
+                <div class="f"><div class="rlab"><span>Prazo do consórcio</span><b id="parcConsLab">200 meses</b></div><input type="range" id="parcelasCons" min="60" max="240" step="12" value="200"></div>
+                <div class="f"><div class="rlab"><span>Contemplação (estimativa)</span><b id="mesContLab">mês 24</b></div><input type="range" id="mesContempl" min="1" max="240" step="1" value="24"></div>
+                <div class="f"><label for="cdiAnual">CDI (% a.a.)</label><input type="number" id="cdiAnual" value="10.5" step="0.1"></div>
+                <div class="f"><label for="fundoReserva">Fundo reserva (%)</label><input type="number" id="fundoReserva" value="2" step="0.5"></div>
+                <div class="f"><label for="taxaAdesao">Adesão (%)</label><input type="number" id="taxaAdesao" value="1" step="0.5"></div>
+                <div class="f"><label for="inccAnual">Reajuste INCC (%)</label><input type="number" id="inccAnual" value="4.5" step="0.1"></div>
+                <div class="f"><label for="parcelaReduzida">Parcela reduzida (%)</label><input type="number" id="parcelaReduzida" value="0" step="5"></div>
+                <div class="f"><label for="lanceLiquido">Lance do bolso (R$)</label><input type="number" id="lanceLiquido" value="0" step="10000"></div>
+              </div>
+            </div>
+          </div>
+        </form>
         <ul class="proof">
           <li>Cálculo auditável, parcela a parcela</li>
           <li>Sem conflito de interesse</li>
           <li>Parâmetros de mercado (ABAC/BACEN)</li>
           <li>Seus dados protegidos (LGPD)</li>
         </ul>
-        <div class="nav" style="justify-content:flex-start"><button class="btn" type="button" data-go="2">Começar a comparação →</button></div>
-        <p class="hint" style="margin-top:12px">Grátis. Leva cerca de 1 minuto.</p>
       </div>
-      <aside class="hero-visual" id="heroVisual" aria-hidden="true"></aside>
+
+      <div class="result-live" aria-live="polite" data-ui>
+        <p class="rl-label" id="rlLabel">A diferença de custo total, no seu cenário</p>
+        <div class="rl-big" id="rlBig">—</div>
+        <p class="rl-note" id="verdict"></p>
+        <div class="cmp" id="cmp"></div>
+        <button class="btn block" type="button" id="toAnalise" style="margin-top:18px">Ver a análise completa →</button>
+        <p class="rl-fine">Impacto no patrimônio, lance embutido e engenharia de ágio.</p>
+      </div>
     </div>
   </section>
 
-  <!-- SCREEN 2 — INPUTS -->
-  <section class="screen" data-screen="2">
-    <h2 class="title">Seus números</h2>
-    <p class="lede">Já preenchemos com um exemplo — troque pelos seus valores.</p>
-    <form id="form" autocomplete="off">
-      <div class="card">
-        <h3 class="ctitle"><span class="dot" style="background:var(--emerald)"></span>O essencial</h3>
-        <div class="fields">
-          <div class="f"><label for="valorImovel">Valor do imóvel</label><input type="number" id="valorImovel" value="500000" step="50000"></div>
-          <div class="f"><label for="valorEntrada">Entrada que você tem</label><input type="number" id="valorEntrada" value="100000" step="10000"></div>
-          <div class="f"><label for="objetivo">Objetivo</label><select id="objetivo"><option value="moradia">Moradia</option><option value="troca">Troca</option><option value="investimento">Investimento</option><option value="futura">Compra futura</option></select></div>
-          <div class="f wide"><div class="rlab"><span>Prazo que você aceita pagar</span><b id="parcFinLab">360 meses</b></div><input type="range" id="parcelasFin" min="60" max="420" step="12" value="360"></div>
-        </div>
-        <button type="button" class="adv-toggle" id="advToggle">▸ Ajustar as taxas e o consórcio</button>
-        <div class="adv hide" id="adv">
-          <p class="hint" style="margin:2px 0 12px">Já usamos parâmetros de mercado (ABAC/BACEN). Mexa só se quiser afinar.</p>
-          <div class="fields">
-            <div class="f"><label for="jurosAnual">Juros do financiamento (% a.a.)</label><input type="number" id="jurosAnual" value="11.5" step="0.1"></div>
-            <div class="f"><label for="valorCredito">Crédito do consórcio (carta)</label><input type="number" id="valorCredito" value="500000" step="50000"><span class="hint">Padrão: igual ao valor do imóvel.</span></div>
-            <div class="f"><label for="taxaAdm">Taxa de adm. (%)</label><input type="number" id="taxaAdm" value="18" step="0.5"><span class="hint">Mercado: 9,5%–25%.</span></div>
-            <div class="f"><div class="rlab"><span>Prazo do consórcio</span><b id="parcConsLab">200 meses</b></div><input type="range" id="parcelasCons" min="60" max="240" step="12" value="200"></div>
-            <div class="f"><div class="rlab"><span>Contemplação (estimativa)</span><b id="mesContLab">mês 24</b></div><input type="range" id="mesContempl" min="1" max="240" step="1" value="24"></div>
-            <div class="f"><label for="cdiAnual">CDI (% a.a.)</label><input type="number" id="cdiAnual" value="10.5" step="0.1"></div>
-            <div class="f"><label for="fundoReserva">Fundo reserva (%)</label><input type="number" id="fundoReserva" value="2" step="0.5"></div>
-            <div class="f"><label for="taxaAdesao">Adesão (%)</label><input type="number" id="taxaAdesao" value="1" step="0.5"></div>
-            <div class="f"><label for="inccAnual">Reajuste INCC (%)</label><input type="number" id="inccAnual" value="4.5" step="0.1"></div>
-            <div class="f"><label for="parcelaReduzida">Parcela reduzida (%)</label><input type="number" id="parcelaReduzida" value="0" step="5"></div>
-            <div class="f"><label for="lanceLiquido">Lance do bolso (R$)</label><input type="number" id="lanceLiquido" value="0" step="10000"></div>
-          </div>
-        </div>
-      </div>
-    </form>
-    <div class="nav"><button class="btn ghost" type="button" data-go="1">← Voltar</button><button class="btn" type="button" data-go="3">Ver o resultado →</button></div>
-  </section>
-
-  <!-- SCREEN 3 — RESULT -->
-  <section class="screen" data-screen="3">
-    <h2 class="title">O resultado</h2>
-    <p class="lede">O comparativo do custo total — a conta que o banco não abre.</p>
-    <div class="cmp" id="cmp"></div>
-    <div class="verdict" id="verdict"></div>
-    <div class="freebars" id="freebars"></div>
-    <div class="teaser" id="teaser"></div>
-    <div class="nav"><button class="btn ghost" type="button" data-go="2">← Ajustar números</button><button class="btn" type="button" id="toAnalise">Ver a análise completa →</button></div>
-  </section>
-
-  <!-- SCREEN 4 — DEEP ANALYSIS -->
+  <!-- TELA 2 — ANÁLISE COMPLETA -->
   <section class="screen" data-screen="4">
     <h2 class="title">Análise completa</h2>
     <p class="lede">Além do custo: impacto no patrimônio, lance embutido e engenharia de ágio.</p>
@@ -316,14 +266,14 @@
       <div class="ctrlrow"><div class="f"><label>Cenário de ágio</label><span class="seg" id="segAgio"><button type="button" data-v="20" class="on">Rápida 20%</button><button type="button" data-v="40">Máxima 40%</button></span></div><div class="f" style="max-width:110px"><label for="agioPct">Ágio (%)</label><input type="number" id="agioPct" value="20" step="1" min="1" max="60"></div><div class="f" style="flex:2"><div class="rlab"><span>Mês do sorteio</span><b id="agioMesLab">mês 18</b></div><input type="range" id="agioMes" min="1" max="240" step="1" value="18"></div></div>
       <div id="sorteadoOut"></div>
     </div>
-    <div class="nav"><button class="btn ghost" type="button" data-go="3">← Voltar ao resultado</button><button class="btn ghost" type="button" data-go="2">Novos números</button></div>
+    <div class="anav"><button class="btn ghost" type="button" id="toCalc">← Voltar à calculadora</button></div>
   </section>
 </main>
 
 <!-- COFRE -->
 <div class="over" id="over">
   <form class="lead" id="leadForm">
-    <h4>Falta um passo para a sua análise completa</h4>
+    <h4>Falta um passo para a análise completa</h4>
     <p>Impacto no patrimônio, lance embutido e engenharia de ágio — o seu cenário completo, na hora.</p>
     <ul class="proof"><li>Grátis, leva 20 segundos</li><li>Sem conflito de interesse</li><li>Dados protegidos (LGPD)</li></ul>
     <p class="err" id="err"></p>
@@ -341,7 +291,7 @@
 <script>
 var CONFIG={ supabaseUrl:"https://pidzzwlpsffjznbzukhj.supabase.co", supabaseAnonKey:"sb_publishable_P1IyQB54v9tdmUIKR5L44w_uTbs8yzJ", supabaseTable:"leads_calc", webhookUrl:"" };
 var VIP_THRESHOLD=1000000, SEG=120, MES_INFLEXAO=36;
-var screen=1, mode="cliente", unlocked=false, tab="investidor", maxReached=1;
+var screen=1, mode="cliente", unlocked=false, tab="investidor";
 
 var brl=function(n){return (isFinite(n)?n:0).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});};
 function mensal(p){return Math.pow(1+p/100,1/12)-1;}
@@ -419,26 +369,21 @@ function compute(){
     sac:sac,pr:pr,sacTot:sac.total+ent,prTot:pr.total+ent,cons:cons};
 }
 
+/* ===== resultado ao vivo (primeira tela) ===== */
 function renderResultado(){
   var d=compute();
-  var refFin=Math.min(d.sacTot,d.prTot), eco=refFin-d.cons.total;
-  var consSub=d.cons.reduzida?'reduzida · após: '+brl(d.cons.parcelaApos):(d.lanceLiq>0?'após lance: '+brl(d.cons.parcelaApos):(d.cons.adesaoVal>0?'adm '+d.cons.admParc+'% nas parcelas':'sem juros'));
-  document.getElementById("cmp").innerHTML=
-    '<div class="cc"><div class="tag">Financ. SAC</div><div class="parc">1ª parcela<b>'+brl(d.sac.p1)+'</b><span class="cap">cai até '+brl(d.sac.pn)+'</span></div><div class="tot red">'+brl(d.sacTot)+'</div><div class="cap">custo total · '+d.sac.meses+'m</div></div>'+
-    '<div class="cc"><div class="tag">Financ. PRICE</div><div class="parc">parcela fixa<b>'+brl(d.pr.p1)+'</b></div><div class="tot red">'+brl(d.prTot)+'</div><div class="cap">custo total · '+d.pr.meses+'m</div></div>'+
-    '<div class="cc win"><div class="tag">Consórcio</div><div class="parc">parcela<b>'+brl(d.cons.p1)+'</b><span class="cap">'+consSub+'</span></div><div class="tot grn">'+brl(d.cons.total)+'</div><div class="cap">custo total · '+d.nc+'m'+(d.cons.adesaoVal>0?' · +'+brl(d.cons.adesaoVal)+' adesão':'')+'</div></div>';
+  var refFin=Math.min(d.sacTot,d.prTot), eco=refFin-d.cons.total, dif=Math.abs(eco), consWins=eco>0;
+  document.getElementById("rlBig").textContent=brl(dif);
+  document.getElementById("rlLabel").textContent=consWins?"O consórcio sai mais barato em":"O financiamento sai mais barato em";
   var objNote={moradia:"Para moradia, o que mais pesa é não comprometer a segurança da família: olhe a liquidez que sobra.",troca:"Numa troca, considere a venda do imóvel atual e a recomposição do caixa.",investimento:"Como investimento, o retorno precisa compensar o custo, a baixa liquidez e a concentração.",futura:"Para compra futura, o consórcio tende a organizar melhor a aquisição, com disciplina de aporte."}[d.obj]||"";
-  document.getElementById("verdict").innerHTML=(eco>0
-    ? 'O <b>consórcio</b> sai cerca de <b>'+brl(eco)+'</b> mais barato no total — sem juros, só taxa de administração. Em troca, você espera a contemplação (mês '+d.cons.mesCont+'). O financiamento entrega o imóvel agora.'
-    : 'Neste cenário o <b>financiamento</b> tende a sair melhor, sobretudo se você precisa do imóvel imediatamente.')+(objNote?' '+objNote:'');
-  var mx=Math.max(d.sacTot,d.prTot,d.cons.total,1);
-  function bar(l,v,c){return '<div class="fb"><span>'+l+'</span><span class="track"><span class="fill" style="width:'+(v/mx*100)+'%;background:'+c+'"></span></span><span class="amt">'+brl(v)+'</span></div>';}
-  document.getElementById("freebars").innerHTML=bar("Financ. SAC",d.sacTot,"var(--red)")+bar("Financ. PRICE",d.prTot,"var(--red)")+bar("Consórcio",d.cons.total,"var(--emerald)");
-  var destravado=unlocked||mode==="corretor";
-  document.getElementById("teaser").innerHTML=destravado
-    ? '<b>Análise completa liberada.</b> Veja o impacto no patrimônio, o lance embutido e a engenharia de ágio no próximo passo.'
-    : '<b>Esse é só o começo.</b> A análise completa destrava o impacto no seu patrimônio, o custo de oportunidade da espera, o lance embutido e a engenharia de ágio — de graça, em 20 segundos.';
-  var ta=document.getElementById("toAnalise"); if(ta) ta.textContent=destravado?"Ver a análise completa →":"Desbloquear minha análise →";
+  document.getElementById("verdict").innerHTML=(consWins
+    ? 'Sem juros, só taxa de administração. Em troca, você espera a contemplação (mês '+d.cons.mesCont+'); o financiamento entrega o imóvel agora.'
+    : 'O financiamento entrega o imóvel agora; o consórcio exige esperar a contemplação.')+(objNote?' '+objNote:'');
+  var consSub=d.cons.reduzida?'parcela reduzida · após: '+brl(d.cons.parcelaApos):(d.lanceLiq>0?'após lance: '+brl(d.cons.parcelaApos):(d.cons.adesaoVal>0?'adm '+d.cons.admParc+'% nas parcelas':'sem juros'));
+  document.getElementById("cmp").innerHTML=
+    '<div class="cc"><div class="tag">Financ. SAC</div><div class="tot red">'+brl(d.sacTot)+'</div><div class="parc">1ª parcela<b>'+brl(d.sac.p1)+'</b></div><div class="cap">cai até '+brl(d.sac.pn)+' · '+d.sac.meses+'m</div></div>'+
+    '<div class="cc"><div class="tag">Financ. PRICE</div><div class="tot red">'+brl(d.prTot)+'</div><div class="parc">parcela fixa<b>'+brl(d.pr.p1)+'</b></div><div class="cap">custo total · '+d.pr.meses+'m</div></div>'+
+    '<div class="cc win"><div class="tag">Consórcio</div><div class="tot grn">'+brl(d.cons.total)+'</div><div class="parc">parcela<b>'+brl(d.cons.p1)+'</b></div><div class="cap">'+consSub+' · '+d.nc+'m</div></div>';
 }
 
 function renderAnalise(){
@@ -471,35 +416,21 @@ function renderAnalise(){
       '<div class="mini" style="margin-top:14px">'+met("Capital aportado até aqui",brl(ag.capital))+met("Saldo residual (vai ao comprador)",brl(ag.saldoRes),"cost")+met("ROI sobre capital",ag.roiCap.toFixed(0)+"%",ag.roiConf?"profit":"")+met("ROI anualizado",ag.roiAnual.toFixed(1)+"%",ag.roiConf?"profit":"")+'</div>'+
       (!ag.roiConf?'<div class="flag warn">ROI pouco confiável nesta janela: o capital aportado ainda é menor que 5% do crédito, o que infla o percentual — olhe o lucro absoluto.</div>':'')+
       '<div class="flag'+(ag.excedente>d.cred?' warn':'')+'">Sanity-check do comprador: para assumir a carta ele desembolsa '+brl(ag.capital+ag.saldoRes+ag.lucro)+' no total — '+brl(ag.excedente)+' acima do crédito nominal (devolve o seu aporte, paga o ágio e assume '+brl(ag.saldoRes)+' de saldo). '+(ag.excedente>d.cred?'Nesta faixa o prêmio fica difícil de justificar.':'Faz sentido quando ter a carta já contemplada compensa esse prêmio.')+'</div>'+
-      '<div class="patrow" style="margin-top:10px"><span class="q">Recomendação</span><span class="a" style="font-family:var(--text);max-width:60%">'+reco+'</span></div></div>';
+      '<div class="patrow" style="margin-top:10px"><span class="q">Recomendação</span><span class="a" style="font-weight:400;max-width:60%">'+reco+'</span></div></div>';
 }
 
-/* ===== navegação / telas ===== */
-function setSteps(){
-  var el=document.getElementById("steps");
-  el.classList.toggle("hide",screen===1);
-  el.querySelectorAll(".st").forEach(function(s){
-    var n=+s.dataset.s;
-    s.classList.toggle("on",n===screen);
-    s.classList.toggle("done",n<screen);
-    s.classList.toggle("nav",mode==="corretor");
-  });
-}
+/* ===== navegação (só duas telas: calculadora e análise) ===== */
 function showScreen(n){
-  if(n===3)renderResultado();
   if(n===4)renderAnalise();
-  screen=n; if(n>maxReached)maxReached=n;
+  screen=n;
   document.querySelectorAll(".screen").forEach(function(s){s.classList.toggle("on",+s.dataset.screen===n);});
-  setSteps();
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function goAnalise(){
   if(mode==="corretor"||unlocked){showScreen(4);} else {document.getElementById("over").classList.add("on");}
 }
-
-document.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){showScreen(+b.dataset.go);};});
 document.getElementById("toAnalise").onclick=goAnalise;
-document.getElementById("steps").querySelectorAll(".st").forEach(function(s){s.onclick=function(){if(mode==="corretor")showScreen(+s.dataset.s);};});
+document.getElementById("toCalc").onclick=function(){showScreen(1);};
 
 document.getElementById("advToggle").onclick=function(){
   var a=document.getElementById("adv");a.classList.toggle("hide");
@@ -516,14 +447,21 @@ document.getElementById("segAgio").querySelectorAll("button").forEach(function(b
   document.getElementById("segAgio").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b);});
   document.getElementById("agioPct").value=b.dataset.v;renderAnalise();};});
 
-/* recompute on input */
+/* recalcula ao vivo a cada input */
 document.querySelectorAll("input,select").forEach(function(el){el.addEventListener("input",function(){
   syncLabels();
-  if(screen===3)renderResultado();
+  renderResultado();
   if(screen===4)renderAnalise();
-  renderHeroStat();
-  renderHeroVisual();
 });});
+
+/* carta do consórcio acompanha o valor do imóvel até o usuário editá-la */
+(function(){
+  var cartaTouched=false, vc=document.getElementById("valorCredito"), vi=document.getElementById("valorImovel");
+  if(vc&&vi){
+    vc.addEventListener("input",function(){cartaTouched=true;});
+    vi.addEventListener("input",function(){ if(!cartaTouched){ vc.value=vi.value; renderResultado(); if(screen===4)renderAnalise(); } });
+  }
+})();
 
 /* modo cliente/corretor */
 function setMode(m){
@@ -532,8 +470,7 @@ function setMode(m){
   document.getElementById("cbanner").classList.toggle("hide",m!=="corretor");
   var adv=document.getElementById("adv"), at=document.getElementById("advToggle");
   if(m==="corretor"){adv.classList.remove("hide");at.textContent="▾ Ajustar as taxas e o consórcio";}
-  setSteps();
-  if(screen===3)renderResultado();
+  var ta=document.getElementById("toAnalise"); if(ta) ta.textContent=(m==="corretor"||unlocked)?"Ver a análise completa →":"Ver a análise completa →";
 }
 document.querySelectorAll("#modeSeg button").forEach(function(b){b.onclick=function(){setMode(b.dataset.m);};});
 
@@ -564,31 +501,9 @@ document.getElementById("leadForm").addEventListener("submit",function(e){
   showScreen(4);
 });
 
+/* boot */
 syncLabels();
-
-/* carta do consórcio acompanha o valor do imóvel no modo simples (até o usuário editar a carta) */
-(function(){
-  var cartaTouched=false, vc=document.getElementById("valorCredito"), vi=document.getElementById("valorImovel");
-  if(vc&&vi){
-    vc.addEventListener("input",function(){cartaTouched=true;});
-    vi.addEventListener("input",function(){ if(!cartaTouched){ vc.value=vi.value; if(screen===3)renderResultado(); if(screen===4)renderAnalise(); } });
-  }
-})();
-
-/* número de impacto no hero — o TAMANHO da diferença (neutro, não diz quem ganha) */
-function renderHeroStat(){
-  var el=document.getElementById("herostat"); if(!el)return;
-  var d=compute(), refFin=Math.min(d.sacTot,d.prTot), dif=Math.abs(refFin-d.cons.total);
-  el.innerHTML='Num imóvel de <b>'+brl(d.im)+'</b>, a diferença de custo total entre consórcio e financiamento passa de <b>'+brl(dif)+'</b>. De que lado está a sua?';
-}
-renderHeroStat();
-function renderHeroVisual(){
-  var el=document.getElementById("heroVisual"); if(!el)return;
-  var d=compute(), refFin=Math.min(d.sacTot,d.prTot), dif=Math.abs(refFin-d.cons.total), mx=Math.max(d.sacTot,d.prTot,d.cons.total,1);
-  function bar(l,v,c){return '<div class="hvbar"><span>'+l+'</span><span class="hvtrack"><span class="hvfill" style="width:'+(v/mx*100).toFixed(1)+'%;background:'+c+'"></span></span><span class="hvamt">'+brl(v)+'</span></div>';}
-  el.innerHTML='<div class="hv"><h4>Custo total, lado a lado</h4><p class="hvsub">No exemplo de '+brl(d.im)+' — troque pelos seus números.</p>'+bar("Financ. SAC",d.sacTot,"var(--red)")+bar("Financ. PRICE",d.prTot,"var(--red)")+bar("Consórcio",d.cons.total,"var(--emerald)")+'<div class="hvdiff">Diferença de custo total: <b>'+brl(dif)+'</b></div></div>';
-}
-renderHeroVisual();
+renderResultado();
 </script>
 </body>
 </html>
