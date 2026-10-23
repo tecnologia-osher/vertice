@@ -4,174 +4,216 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Vértice</title>
-  <meta name="description" content="A conta que o banco não abre. Consórcio ou financiamento: o custo real dos dois caminhos, em números e ao vivo. Calculadora de marca neutra.">
+  <meta name="description" content="A maior parte do que você paga ao banco não é o imóvel. Consórcio ou financiamento: o custo real dos dois caminhos, em números e ao vivo. Calculadora de marca neutra.">
   <link rel="icon" href="vertice-favicon.svg" type="image/svg+xml">
   <link rel="icon" sizes="32x32" href="vertice-favicon-32.png">
   <link rel="apple-touch-icon" href="vertice-favicon-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Jost:wght@400;500;600&display=swap">
 </head>
 <body>
 <style>
-  /* Direção: "O produto se apresenta". Frame escuro editorial (Libre Franklin + Source Serif 4);
-     o instrumento (a calculadora) vive numa BASE CLARA, legível, como a demonstração. Acento = verde da marca. */
+  /* Direção: "Vestido de outra categoria" — a decisão de consórcio × financiamento com a calma e o
+     requinte de um imóvel de alto padrão / banca privada. Tipo dealado: Bodoni Moda + Jost.
+     Paleta sobrescrita para CLARA (constraint do cliente): papel bone, tinta quente, verde profundo. */
   :root{
-    --bg:#0C100E; --ink:#F0F0F0; --muted:#98A29B; --line-d:#242C28; --accent:#39CD95;
-    --stage:#F3F3F1; --s-surf:#FFFFFF; --s-surf2:#EAEAE5; --s-ink:#18211C; --s-muted:#55615A; --s-line:#E2E2DC;
-    --accent-deep:#0C6A45; --cost:#B22722; --good:#0C6A45;
-    --display:'Libre Franklin',system-ui,sans-serif; --serif:'Source Serif 4',Georgia,serif;
-    --step-small:clamp(.82rem,.8rem + .1vw,.88rem);
-    --step-body:clamp(1.0rem,.96rem + .2vw,1.12rem);
-    --step-lead:clamp(1.18rem,1.05rem + .6vw,1.5rem);
-    color-scheme:dark;
+    --paper:#F3F3F0; --paper2:#FBFBFA; --ink:#1A1813; --muted:#6E685B; --line:#E2E1DB;
+    --surf:#FFFFFF; --surf2:#EDEBE4; --accent:#0C5C3B; --accent-2:#0A4A30; --cost:#9A2B1E; --gold:#8A6E2C;
+    --display:'Bodoni Moda',Georgia,serif; --ui:'Jost',system-ui,sans-serif;
+    --s-small:clamp(.82rem,.8rem + .1vw,.9rem);
+    --s-body:clamp(1.06rem,1rem + .25vw,1.19rem);
+    --s-lead:clamp(1.22rem,1.08rem + .7vw,1.6rem);
+    color-scheme:light;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--step-body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:var(--s-body);line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased}
   .hide{display:none!important}
   .screen{display:none} .screen.on{display:block}
-  .wrap{max-width:1120px;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+  .wrap{max-width:1120px;margin-inline:auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
   .num,input[type=number]{font-variant-numeric:tabular-nums}
-  ::selection{background:var(--accent);color:#06241a}
+  ::selection{background:var(--accent);color:#F6F3EC}
+  a{color:inherit}
 
-  /* top bar — minimal, no chrome */
-  .bar{padding-block:20px}
+  /* top bar */
+  .bar{padding-block:22px}
   .bar-in{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
   .brand{display:flex;align-items:center;gap:9px;min-width:0}
   .brand svg{width:22px;height:22px;flex:0 0 auto}
-  .brand .wm{font-family:var(--display);font-weight:800;letter-spacing:.015em;font-size:1rem}
-  .cobrand{font-size:.8rem;color:var(--muted)}
-  .cobrand input{font:inherit;font-family:var(--serif);font-size:.82rem;font-style:italic;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line-d);padding:2px;width:10em}
-  .cobrand input:focus{outline:none;border-bottom-color:var(--accent)}
-  .seg{display:inline-flex;gap:4px}
-  .seg button{background:transparent;border:1px solid var(--line-d);color:var(--muted);padding:7px 14px;cursor:pointer;font:inherit;font-family:var(--display);font-weight:600;font-size:.76rem;border-radius:0}
-  .seg button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .brand .wm{font-family:var(--display);font-weight:600;letter-spacing:.01em;font-size:1.28rem}
+  .seg{display:inline-flex;gap:0;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surf)}
+  .seg button{background:transparent;border:0;color:var(--muted);padding:6px 16px;cursor:pointer;font:inherit;font-family:var(--ui);font-weight:500;font-size:.82rem;border-radius:999px}
+  .seg button.on{background:var(--ink);color:var(--paper)}
   button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  .cbanner{text-align:center;font-size:.84rem;color:var(--accent);padding:8px 16px}
+  .cbanner{text-align:center;font-size:.86rem;color:var(--accent);padding:9px 16px;border:1px solid color-mix(in srgb,var(--accent) 24%,var(--line));border-radius:6px;margin-bottom:8px;background:color-mix(in srgb,var(--accent) 5%,var(--paper))}
 
-  /* HERO — headline + subsentence + real photograph */
-  .hero{padding-block:clamp(26px,5vw,56px) clamp(22px,3vw,34px)}
-  .hero-grid{display:grid;gap:clamp(22px,4vw,52px);align-items:center}
-  @media(min-width:920px){ .hero-grid{grid-template-columns:1.46fr .54fr} }
-  .hero-copy{min-width:0}
-  h1{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.92;margin:0;font-size:clamp(1.9rem,6.3vw,4.6rem)}
-  h1 .cr{color:var(--accent)}
-  .hero-sub{font-family:var(--serif);font-size:var(--step-lead);color:var(--ink);max-width:40ch;margin:22px 0 0;line-height:1.4}
-  .hero-sub em{font-style:italic;color:var(--accent)}
-  .hero-fig{margin:0;display:none;position:relative;overflow:hidden;border-radius:4px}
-  @media(min-width:920px){ .hero-fig{display:block} }
-  .hero-fig img{display:block;width:100%;height:clamp(340px,40vw,470px);object-fit:cover;object-position:52% 42%;filter:saturate(.9) contrast(1.03) brightness(.98)}
-  .hero-fig::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,16,14,.14),rgba(12,16,14,0) 32%);pointer-events:none}
+  /* shared display type */
+  .kicker{font-family:var(--ui);font-weight:500;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
+  .dhead{font-family:var(--display);font-weight:500;letter-spacing:-.015em;line-height:1.02;margin:0;font-size:clamp(2.1rem,1.3rem + 3.4vw,4rem)}
+  .dhead em{font-style:italic}
+  .dsub{font-family:var(--ui);font-size:var(--s-lead);color:var(--ink);line-height:1.45;font-weight:400}
+  .lead-serif{font-family:var(--display);font-weight:500;font-size:var(--s-lead);line-height:1.4}
 
-  /* STAGE — the light field the instrument sits on */
-  .stage{background:var(--stage);border-radius:4px;padding:clamp(16px,2.4vw,30px);margin-bottom:34px}
-
-  /* INSTRUMENT (data-ui) — its own light world */
-  .instrument{color:var(--s-ink);font-family:var(--serif)}
-  .inst-grid{display:grid;gap:22px}
-  @media(min-width:880px){ .inst-grid{grid-template-columns:.88fr 1.12fr;gap:34px;align-items:start} }
-  .inst-inputs,.inst-result{min-width:0}
-  .ih{font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.02em;text-transform:uppercase;color:var(--s-muted);margin:0 0 14px}
-  .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .f{display:flex;flex-direction:column;gap:6px;min-width:0}
-  .f.wide{grid-column:1/-1}
-  .f label{font-family:var(--display);font-size:.8rem;color:var(--s-ink);font-weight:600}
-  .f .hint{font-size:.76rem;color:var(--s-muted);line-height:1.35;font-style:italic}
-  .instrument input[type=number],.instrument select,.instrument input[type=text]{width:100%;background:var(--s-surf);border:1px solid var(--s-line);border-radius:3px;color:var(--s-ink);padding:11px 12px;font-family:var(--serif);font-size:1rem;font-variant-numeric:tabular-nums}
-  .instrument input[type=range]{width:100%;accent-color:var(--accent-deep)}
-  .rlab{display:flex;justify-content:space-between;font-family:var(--display);font-size:.8rem;font-weight:600}
-  .rlab b{color:var(--accent-deep);font-weight:700}
-  .adv-toggle{margin-top:18px;background:none;border:0;color:var(--accent-deep);font-family:var(--display);font-weight:700;font-size:.82rem;cursor:pointer;padding:0;text-transform:uppercase;letter-spacing:.02em}
-  .adv{margin-top:16px;border-top:1px solid var(--s-line);padding-top:16px}
-  .adv .note{font-size:.8rem;color:var(--s-muted);margin:0 0 14px;font-style:italic}
-
-  /* live result */
-  .rl-label{font-family:var(--display);font-size:.8rem;font-weight:600;color:var(--s-muted);text-transform:uppercase;letter-spacing:.03em;margin:0}
-  .rl-big{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,7vw,4.4rem);letter-spacing:-.03em;line-height:.95;margin:4px 0 10px;color:var(--accent-deep)}
-  .rl-note{font-family:var(--serif);font-size:1.02rem;color:var(--s-ink);margin:0 0 20px;line-height:1.5;max-width:52ch}
-  .rl-note b{color:var(--accent-deep);font-weight:600}
-  .cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--s-line);border:1px solid var(--s-line);border-radius:3px;overflow:hidden}
-  .cc{background:var(--s-surf);padding:15px 14px;min-width:0}
-  .cc.win{background:color-mix(in srgb,var(--accent) 12%,var(--s-surf))}
-  .cc .tag{font-family:var(--display);font-size:.74rem;font-weight:600;color:var(--s-muted)}
-  .cc .tot{font-family:var(--display);font-size:1.22rem;font-weight:800;margin-top:7px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-  .cc .parc{font-size:.8rem;color:var(--s-muted);margin-top:7px}
-  .cc .parc b{color:var(--s-ink);font-weight:600;display:block;margin-top:1px;font-variant-numeric:tabular-nums}
-  .cc .cap{font-size:.76rem;color:var(--s-muted);margin-top:5px;font-style:italic}
-  .cost{color:var(--cost)} .grn{color:var(--accent-deep)}
-
-  /* button — one shape, square, solid */
-  .btn{background:var(--accent-deep);color:#fff;border:0;border-radius:3px;padding:15px 24px;font-family:var(--display);font-weight:700;cursor:pointer;font-size:.98rem;text-decoration:none;display:inline-flex;align-items:center;gap:9px;justify-content:center;transition:background .15s, transform .1s}
-  .btn:hover{background:#09502f}
+  /* buttons */
+  .btn{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:15px 28px;font-family:var(--ui);font-weight:500;cursor:pointer;font-size:1rem;text-decoration:none;display:inline-flex;align-items:center;gap:9px;justify-content:center;transition:background .15s, transform .1s;letter-spacing:.01em}
+  .btn:hover{background:var(--accent-2)}
   .btn:active{transform:translateY(1px)}
   .btn.block{width:100%}
-  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-d)}
-  .btn.ghost:hover{background:#121714}
-  .rl-cta{margin-top:20px}
-  .rl-fine{font-family:var(--serif);font-style:italic;font-size:.82rem;color:var(--s-muted);margin:12px 0 0;text-align:center}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{background:var(--surf2)}
+  .btn.link{background:none;color:var(--ink);border:0;padding:15px 6px;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px;text-decoration-color:var(--line)}
+  .btn.link:hover{text-decoration-color:var(--accent)}
 
-  /* proof — quiet line on the dark */
-  .proof{display:flex;flex-wrap:wrap;gap:6px 22px;margin:0 0 50px;padding:0;list-style:none}
-  .proof li{font-family:var(--display);font-size:1rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:8px}
-  .wl{font-family:var(--serif);font-style:italic;font-size:.84rem;color:var(--s-muted);margin:16px 0 0;text-align:center}
-  .wl input{font:inherit;font-family:var(--serif);font-style:italic;font-size:.84rem;color:var(--s-ink);background:transparent;border:0;border-bottom:1px solid var(--s-line);padding:1px 2px;width:10em;text-align:center}
-  .wl input:focus{outline:none;border-bottom-color:var(--accent-deep)}
-  .proof li::before{content:"";width:6px;height:6px;background:var(--accent);flex:0 0 auto}
+  /* ===== LANDING ===== */
+  .lhero{padding-block:clamp(30px,5vw,64px) clamp(28px,4vw,48px)}
+  .lhero-grid{display:grid;gap:clamp(26px,4vw,56px);align-items:center}
+  @media(min-width:900px){ .lhero-grid{grid-template-columns:1.32fr .68fr} }
+  .lhero h1{font-family:var(--display);font-weight:500;letter-spacing:-.018em;line-height:1.03;margin:0;font-size:clamp(2.3rem,1.2rem + 4.6vw,4.3rem)}
+  .lhero .dsub{margin:26px 0 0;max-width:42ch}
+  .lhero-cta{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:30px}
+  .lhero-fig{margin:0;position:relative;overflow:hidden;border-radius:6px}
+  .lhero-fig img{display:block;width:100%;height:clamp(340px,46vw,540px);object-fit:cover;object-position:52% 42%}
 
-  /* ANÁLISE — on a light stage */
-  .ana-head h2{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(1.6rem,4vw,2.4rem);margin:0 0 6px}
-  .ana-head .lede{font-family:var(--serif);color:var(--muted);font-size:var(--step-lead);margin:0 0 24px;max-width:56ch}
-  .ana-stage{color:var(--s-ink);font-family:var(--serif)}
-  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
-  .tabs button{background:var(--s-surf2);border:0;color:var(--s-muted);font-family:var(--display);font-weight:700;font-size:.82rem;padding:9px 15px;cursor:pointer;border-radius:3px;text-transform:uppercase;letter-spacing:.02em}
-  .tabs button.on{color:#fff;background:var(--accent-deep)}
-  .tabpanel{display:none;flex-direction:column;gap:13px} .tabpanel.on{display:flex}
-  .ctrlrow{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;background:var(--s-surf);border:1px solid var(--s-line);border-radius:3px;padding:14px 16px}
+  .mani{padding-block:clamp(40px,5vw,74px)}
+  .mani-grid{display:grid;gap:clamp(22px,3vw,44px)}
+  @media(min-width:860px){ .mani-grid.split{grid-template-columns:1fr 1fr;align-items:center} .mani-grid.split.rev>.mg-fig{order:-1} }
+  .mani .dhead{max-width:18ch}
+  .mani .body{font-size:var(--s-body);color:var(--ink);line-height:1.6;margin:20px 0 0;max-width:52ch}
+  .mani .body + .body{margin-top:14px}
+  .mg-fig{margin:0;border-radius:6px;overflow:hidden}
+  .mg-fig img{display:block;width:100%;height:clamp(240px,30vw,360px);object-fit:cover}
+
+  /* receipt (stat) */
+  .receipt{background:var(--surf);border:0;border-radius:10px;padding:clamp(24px,3vw,42px);max-width:560px}
+  .receipt .rk{font-family:var(--ui);font-weight:500;font-size:.84rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0}
+  .rline{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0}
+  .rline .q{font-size:1rem;color:var(--muted);max-width:18ch}
+  .rline .a{font-family:var(--display);font-weight:600;font-size:clamp(1.5rem,1rem + 2vw,2.3rem);letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1}
+  .rline.big .a{font-size:clamp(2rem,1.2rem + 3vw,3.1rem)}
+  .rline .a.cost{color:var(--cost)}
+  .receipt .foot{font-size:.9rem;color:var(--muted);font-style:italic;margin:16px 0 0;line-height:1.45}
+
+  /* preview fragment (data-ui) */
+  .mg-fig.preview{background:var(--surf);border:1px solid var(--line);border-radius:10px;overflow:hidden;height:auto;align-self:center}
+  .pv{padding:24px}
+  .pv-k{font-size:.82rem;color:var(--muted);margin:0 0 18px}
+  .pv-label{font-size:.82rem;color:var(--muted);margin:0}
+  .pv-big{font-family:var(--display);font-weight:600;font-size:clamp(2.1rem,5vw,2.9rem);color:var(--accent);letter-spacing:-.02em;line-height:1;margin:7px 0 18px}
+  .pv-cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .pv-cmp .c{background:var(--surf);padding:12px 11px;min-width:0}
+  .pv-cmp .c.win{background:color-mix(in srgb,var(--accent) 7%,var(--surf))}
+  .pv-cmp .t{font-size:.72rem;color:var(--muted)}
+  .pv-cmp .v{font-family:var(--display);font-weight:600;font-size:1.02rem;margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+
+  /* ===== CALC heading ===== */
+  .calc-head{padding-block:clamp(14px,2vw,26px) clamp(16px,2vw,26px)}
+  .calc-head .dhead{font-size:clamp(1.9rem,1.3rem + 2.4vw,3rem)}
+  .calc-head .dsub{margin:12px 0 0;color:var(--muted);max-width:50ch;font-size:var(--s-body)}
+
+  /* stage + instrument (now on paper) */
+  .stage{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:clamp(18px,2.4vw,32px);margin-bottom:30px}
+  .instrument{color:var(--ink);font-family:var(--ui)}
+  .inst-grid{display:grid;gap:24px}
+  @media(min-width:880px){ .inst-grid{grid-template-columns:.9fr 1.1fr;gap:38px;align-items:start} }
+  .inst-inputs,.inst-result{min-width:0}
+  .inst-result{padding-top:24px}
+  @media(min-width:880px){ .inst-result{padding-top:0;padding-left:8px} }
+  .ih{font-family:var(--ui);font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 16px}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+  .f{display:flex;flex-direction:column;gap:6px;min-width:0}
+  .f.wide{grid-column:1/-1}
+  .f label{font-family:var(--ui);font-size:.86rem;color:var(--ink);font-weight:500}
+  .f .hint{font-size:.78rem;color:var(--muted);line-height:1.35}
+  .instrument input[type=number],.instrument select,.instrument input[type=text]{width:100%;background:var(--paper2);border:1px solid var(--line);border-radius:6px;color:var(--ink);padding:11px 12px;font-family:var(--ui);font-size:1rem;font-variant-numeric:tabular-nums}
+  .instrument input:focus,.instrument select:focus{outline:none;border-color:var(--accent);background:var(--surf)}
+  .instrument input[type=range]{width:100%;accent-color:var(--accent)}
+  .rlab{display:flex;justify-content:space-between;font-family:var(--ui);font-size:.84rem;font-weight:500}
+  .rlab b{color:var(--accent);font-weight:600}
+  .adv-toggle{margin-top:20px;background:none;border:0;color:var(--accent);font-family:var(--ui);font-weight:500;font-size:.88rem;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:4px}
+  .adv{margin-top:18px;border-top:1px solid var(--line);padding-top:18px}
+  .adv .note{font-size:.84rem;color:var(--muted);margin:0 0 15px;font-style:italic}
+
+  /* live result */
+  .rl-label{font-family:var(--ui);font-size:.82rem;font-weight:500;color:var(--muted);letter-spacing:.04em;margin:0}
+  .rl-big{font-family:var(--display);font-weight:600;font-size:clamp(2.6rem,7vw,4.2rem);letter-spacing:-.02em;line-height:1;margin:8px 0 14px;color:var(--accent)}
+  .rl-note{font-family:var(--ui);font-size:1.02rem;color:var(--ink);margin:0 0 22px;line-height:1.55;max-width:52ch}
+  .rl-note b{color:var(--accent);font-weight:600}
+  .cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .cc{background:var(--surf);padding:16px 15px;min-width:0}
+  .cc.win{background:color-mix(in srgb,var(--accent) 7%,var(--surf))}
+  .cc .tag{font-family:var(--ui);font-size:.76rem;font-weight:500;color:var(--muted)}
+  .cc .tot{font-family:var(--display);font-size:1.4rem;font-weight:600;margin-top:8px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .cc .parc{font-size:.82rem;color:var(--muted);margin-top:8px}
+  .cc .parc b{color:var(--ink);font-weight:600;display:block;margin-top:1px;font-variant-numeric:tabular-nums}
+  .cc .cap{font-size:.78rem;color:var(--muted);margin-top:6px;font-style:italic}
+  .cost{color:var(--cost)} .grn{color:var(--accent)}
+  .rl-cta{margin-top:24px}
+  .rl-fine{font-family:var(--ui);font-size:.84rem;color:var(--muted);margin:13px 0 0;text-align:center}
+  .wl{font-family:var(--ui);font-size:.86rem;color:var(--muted);margin:18px 0 0;text-align:center}
+  .wl input{font:inherit;font-family:var(--display);font-style:italic;font-size:.95rem;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);padding:1px 2px;width:12em;text-align:center}
+  .wl input:focus{outline:none;border-bottom-color:var(--accent)}
+
+  /* proof */
+  .proof{display:flex;flex-wrap:wrap;gap:10px 26px;margin:0;padding:0;list-style:none}
+  .proof li{font-family:var(--ui);font-size:.98rem;font-weight:500;color:var(--muted);display:flex;align-items:center;gap:9px}
+  .proof li::before{content:"";width:5px;height:5px;background:var(--accent);border-radius:999px;flex:0 0 auto}
+
+  /* ANÁLISE */
+  .ana-head{padding-block:8px 4px}
+  .ana-head .dhead{font-size:clamp(1.8rem,1.3rem + 2.2vw,2.8rem)}
+  .ana-head .lede{font-family:var(--ui);color:var(--muted);font-size:var(--s-lead);margin:12px 0 24px;max-width:56ch;line-height:1.45}
+  .ana-stage{color:var(--ink);font-family:var(--ui)}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+  .tabs button{background:var(--surf2);border:0;color:var(--muted);font-family:var(--ui);font-weight:500;font-size:.86rem;padding:9px 16px;cursor:pointer;border-radius:999px}
+  .tabs button.on{color:#fff;background:var(--accent)}
+  .tabpanel{display:none;flex-direction:column;gap:14px} .tabpanel.on{display:flex}
+  .ctrlrow{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:15px 16px}
   .ctrlrow .f{flex:1;min-width:140px}
-  .box{background:var(--s-surf);border:1px solid var(--s-line);border-radius:3px;padding:18px}
-  .box h5{margin:0 0 4px;font-size:1rem;font-family:var(--display);font-weight:700}
-  .box .bd{font-size:.86rem;color:var(--s-muted);margin:0 0 14px;line-height:1.45;font-style:italic}
-  .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .mini{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--s-line);border:1px solid var(--s-line);border-radius:3px;overflow:hidden}
-  .met{background:var(--s-surf);padding:11px 12px}
-  .met .k{font-size:.76rem;color:var(--s-muted)} .met .v{font-size:1.1rem;font-weight:800;font-family:var(--display);margin-top:3px;font-variant-numeric:tabular-nums}
-  .met .v.cost{color:var(--cost)} .met .v.profit{color:var(--accent-deep)}
-  .patrow{display:flex;justify-content:space-between;gap:12px;font-size:.9rem;padding:11px 0;border-bottom:1px solid var(--s-line)}
-  .patrow:last-child{border-bottom:0}.patrow .q{color:var(--s-muted)}.patrow .a{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;font-family:var(--display)}
-  .patrow .a.red{color:var(--cost)} .patrow .a.grn{color:var(--accent-deep)}
-  .headline{font-family:var(--display);font-size:2rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-  .badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-size:.78rem;font-weight:700;padding:5px 12px;border-radius:3px}
-  .badge.v{background:color-mix(in srgb,var(--accent) 18%,var(--s-surf));color:var(--accent-deep)}
-  .badge.a{background:color-mix(in srgb,var(--azul,#2E6A9E) 16%,var(--s-surf));color:#2E6A9E}
-  .flag{font-size:.84rem;padding:11px 13px;border-radius:3px;background:var(--s-surf2);color:var(--s-muted);margin-top:9px;line-height:1.45}
-  .flag.warn{background:color-mix(in srgb,#9B7726 14%,var(--s-surf));color:#8a6a1f}
-  .flows{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .flow{background:var(--s-surf2);border-radius:3px;padding:16px}
-  .flow h6{margin:0 0 3px;font-size:.92rem;font-family:var(--display);font-weight:700}
-  .flow .sub{font-size:.78rem;color:var(--s-muted);margin:0 0 11px;font-style:italic}
-  .flow .big{font-family:var(--display);font-size:1.4rem;font-weight:800;font-variant-numeric:tabular-nums}
-  .flow .note{font-size:.8rem;color:var(--s-muted);margin-top:5px}
-  .anav{margin-top:26px}
+  .box{background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:20px}
+  .box h5{margin:0 0 5px;font-size:1.18rem;font-family:var(--display);font-weight:600;letter-spacing:-.01em}
+  .box .bd{font-size:.9rem;color:var(--muted);margin:0 0 15px;line-height:1.5}
+  .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .mini{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .met{background:var(--surf);padding:12px 13px}
+  .met .k{font-size:.78rem;color:var(--muted)} .met .v{font-size:1.2rem;font-weight:600;font-family:var(--display);margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .met .v.cost{color:var(--cost)} .met .v.profit{color:var(--accent)}
+  .patrow{display:flex;justify-content:space-between;gap:12px;font-size:.94rem;padding:12px 0;border-bottom:1px solid var(--line)}
+  .patrow:last-child{border-bottom:0}.patrow .q{color:var(--muted)}.patrow .a{text-align:right;font-weight:500;font-variant-numeric:tabular-nums;font-family:var(--ui)}
+  .patrow .a.red{color:var(--cost)} .patrow .a.grn{color:var(--accent)}
+  .headline{font-family:var(--display);font-size:2.1rem;font-weight:600;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--ui);font-size:.8rem;font-weight:500;padding:6px 14px;border-radius:999px}
+  .badge.v{background:color-mix(in srgb,var(--accent) 12%,var(--surf));color:var(--accent)}
+  .badge.a{background:color-mix(in srgb,#2E6A9E 12%,var(--surf));color:#2E6A9E}
+  .flag{font-size:.88rem;padding:12px 14px;border-radius:6px;background:var(--surf2);color:var(--muted);margin-top:10px;line-height:1.5}
+  .flag.warn{background:color-mix(in srgb,#9B7726 12%,var(--surf));color:#7a5e1a}
+  .flows{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .flow{background:var(--surf2);border-radius:8px;padding:18px}
+  .flow h6{margin:0 0 4px;font-size:1rem;font-family:var(--ui);font-weight:600}
+  .flow .sub{font-size:.82rem;color:var(--muted);margin:0 0 12px;font-style:italic}
+  .flow .big{font-family:var(--display);font-size:1.55rem;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .flow .note{font-size:.82rem;color:var(--muted);margin-top:6px}
+  .anav{margin-top:28px}
 
   /* cofre */
-  .over{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:18px;background:color-mix(in srgb,#000 68%,transparent)}
+  .over{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:18px;background:color-mix(in srgb,#1A1813 52%,transparent)}
   .over.on{display:flex}
-  .lead{background:var(--stage);color:var(--s-ink);border-radius:4px;padding:28px;max-width:408px;width:100%}
-  .lead h4{font-family:var(--display);font-weight:800;margin:0 0 6px;font-size:1.3rem;text-transform:uppercase;letter-spacing:-.01em;line-height:1.05}
-  .lead p{font-size:.95rem;color:var(--s-muted);margin:0 0 15px;line-height:1.45}
-  .lead .f{margin-bottom:11px}
-  .lead input{width:100%;background:var(--s-surf);border:1px solid var(--s-line);border-radius:3px;color:var(--s-ink);padding:12px;font-family:var(--serif);font-size:1rem}
-  .lead .proof{margin:0 0 15px;gap:5px 14px;flex-direction:column}.lead .proof li{color:var(--s-muted)}.lead .proof li::before{background:var(--accent-deep)}
-  .consent{display:flex;gap:8px;align-items:flex-start;font-size:.82rem;color:var(--s-muted);margin:4px 0 15px;cursor:pointer;line-height:1.4}
-  .err{color:var(--cost);font-size:.82rem;margin:0 0 9px;min-height:1em}
-  .leadclose{background:none;border:0;color:var(--s-muted);font:inherit;font-family:var(--display);font-weight:600;font-size:.84rem;cursor:pointer;margin-top:12px;width:100%}
+  .lead{background:var(--surf);color:var(--ink);border-radius:10px;padding:30px;max-width:412px;width:100%;border:1px solid var(--line)}
+  .lead h4{font-family:var(--display);font-weight:600;margin:0 0 8px;font-size:1.7rem;letter-spacing:-.01em;line-height:1.08}
+  .lead p{font-size:.98rem;color:var(--muted);margin:0 0 17px;line-height:1.5}
+  .lead .f{margin-bottom:12px}
+  .lead input{width:100%;background:var(--paper2);border:1px solid var(--line);border-radius:6px;color:var(--ink);padding:12px;font-family:var(--ui);font-size:1rem}
+  .lead input:focus{outline:none;border-color:var(--accent);background:var(--surf)}
+  .lead .proof{margin:0 0 17px;gap:7px 14px;flex-direction:column;border-top:0;padding-top:0}.lead .proof li{color:var(--muted)}
+  .consent{display:flex;gap:8px;align-items:flex-start;font-size:.84rem;color:var(--muted);margin:4px 0 16px;cursor:pointer;line-height:1.4}
+  .err{color:var(--cost);font-size:.84rem;margin:0 0 10px;min-height:1em}
+  .leadclose{background:none;border:0;color:var(--muted);font:inherit;font-family:var(--ui);font-weight:500;font-size:.86rem;cursor:pointer;margin-top:13px;width:100%}
 
-  /* footer — one quiet line */
-  footer{display:grid;grid-template-columns:1fr;gap:7px;padding:46px 0 40px;margin-top:20px;font-family:var(--display);font-size:1rem;color:var(--muted);line-height:1.5}
-  footer b{color:var(--ink);font-weight:600}
-  footer .disc{font-family:var(--serif);font-style:italic;max-width:70ch}
-  footer .cred{font-size:.84rem;color:#949d96}
+  /* footer */
+  footer{display:grid;grid-template-columns:1fr;gap:8px;padding:clamp(40px,5vw,64px) 0 44px;margin-top:56px;font-family:var(--ui);font-size:.98rem;color:var(--muted);line-height:1.55}
+  footer .fbrand{font-family:var(--display);font-weight:600;font-size:1.2rem;color:var(--ink)}
+  footer .disc{max-width:72ch}
+  footer .cred{font-size:.84rem;color:#726d61}
 
   @media(prefers-reduced-motion:no-preference){
     .reveal{animation:riseIn .7s both}
@@ -199,21 +241,85 @@
   </div></div>
   <div class="cbanner hide" id="cbanner">Modo corretor — análise completa liberada, sem cadastro. Use na frente do cliente.</div>
 
-  <!-- TELA 1 — A CALCULADORA -->
-  <section class="screen calc" data-screen="1">
-    <div class="hero">
-     <div class="hero-grid">
-      <div class="hero-copy">
-       <h1 class="reveal">A conta que<br><span class="cr">o banco não abre</span>.</h1>
-       <p class="hero-sub reveal d1">Consórcio ou financiamento — o custo real dos dois caminhos, em números e ao vivo. <em>Sem ninguém te empurrando nada.</em></p>
+  <!-- TELA 0 — LANDING / ARGUMENTO -->
+  <section class="screen landing" data-screen="0">
+    <div class="lhero">
+     <div class="lhero-grid">
+      <div class="lhero-copy">
+        <h1 class="reveal">Você paga mais juros que imóvel.</h1>
+        <p class="dsub reveal d1">Num financiamento longo, os juros costumam passar do valor do próprio imóvel. Essa conta raramente aparece antes da assinatura. Aqui ela aparece primeiro — e você decide com ela na mão.</p>
+        <div class="lhero-cta reveal d1">
+          <button class="btn" type="button" id="toCalc0">Fazer a minha conta</button>
+          <a class="btn link" href="#argumento">Entender a conta ↓</a>
+        </div>
       </div>
-      <figure class="hero-fig reveal d2">
-       <img src="assets/chave-casa.jpg" width="1920" height="2880" alt="Mão segurando a chave da casa própria na fechadura da porta" decoding="async">
+      <figure class="lhero-fig reveal d2">
+        <img src="assets/chave-casa.jpg" width="1920" height="2880" alt="Mão segurando a chave da casa própria na fechadura da porta" decoding="async">
       </figure>
      </div>
     </div>
 
-    <div class="stage reveal d2">
+    <div class="mani" id="argumento">
+      <div class="mani-grid split">
+        <h2 class="dhead" style="max-width:12ch">O banco vende tempo.</h2>
+        <div>
+          <p class="body" style="margin-top:0">Quando você financia, o banco adianta um dinheiro que você devolve, com juros, por vinte ou trinta anos. O imóvel é seu desde o primeiro dia — mas boa parte da sua parcela, por muitos anos, é só o custo de ter pego esse dinheiro emprestado.</p>
+          <p class="body">É um produto legítimo. Só costuma vir sem a etiqueta de preço à vista.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mani">
+      <h2 class="dhead" style="max-width:20ch">O recibo que o banco não mostra.</h2>
+      <p class="dsub" style="color:var(--muted);margin-top:14px;max-width:42ch">Financiar R$ 400 mil, a 11,5% ao ano, por 30 anos:</p>
+      <div class="receipt reveal" style="margin-top:26px">
+        <div class="rline big"><span class="q">Você paga ao todo</span><span class="a" id="mfTotal">—</span></div>
+        <div class="rline big"><span class="q">Desses, viram só juros</span><span class="a cost" id="mfJuros">—</span></div>
+        <div class="rline"><span class="q">Ou seja</span><span class="a" id="mfPct" style="font-size:1.3rem;color:var(--cost)">—</span></div>
+        <p class="foot">Sistema PRICE, parcela fixa, sem a entrada. Os números mudam com o seu caso — é exatamente o que a calculadora faz a seguir.</p>
+      </div>
+    </div>
+
+    <div class="mani">
+      <div class="mani-grid split rev">
+        <figure class="mg-fig preview reveal" data-ui aria-hidden="true">
+          <div class="pv">
+            <p class="pv-k">Com um imóvel de R$ 500 mil e R$ 100 mil de entrada</p>
+            <p class="pv-label">O consórcio sai mais barato em</p>
+            <div class="pv-big" id="pvBig">—</div>
+            <div class="pv-cmp" id="pvCmp"></div>
+          </div>
+        </figure>
+        <div>
+          <h2 class="dhead">Sem juro. O preço é esperar.</h2>
+          <p class="body">No consórcio você não paga juros — paga uma taxa de administração, em geral bem menor que os juros de um financiamento longo. Em troca, você espera ser contemplado para pegar o imóvel.</p>
+          <p class="body">Não é melhor nem pior: é uma troca diferente. Quando dá para abrir mão da pressa, a economia costuma ser grande. Quando você precisa da chave agora, o financiamento tem o seu lugar.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mani" style="text-align:center">
+      <h2 class="dhead" style="max-width:18ch;margin-inline:auto">Qual das duas contas é a sua?</h2>
+      <p class="dsub" style="max-width:46ch;margin:18px auto 0;color:var(--muted)">Coloque os seus números. A calculadora mostra os dois caminhos lado a lado, sem ninguém te empurrando nada.</p>
+      <div style="margin-top:28px"><button class="btn" type="button" id="toCalc1">Abrir a calculadora →</button></div>
+      <ul class="proof" style="justify-content:center;margin-top:44px">
+        <li>Cálculo auditável, parcela a parcela</li>
+        <li>Sem conflito de interesse</li>
+        <li>Parâmetros de mercado (ABAC/BACEN)</li>
+        <li>Dados protegidos (LGPD)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TELA 1 — A CALCULADORA -->
+  <section class="screen calc" data-screen="1">
+    <div class="calc-head">
+      <button class="btn link" type="button" id="backToLanding" style="padding-left:0;margin-bottom:10px">← Voltar ao argumento</button>
+      <h2 class="dhead">A sua conta</h2>
+      <p class="dsub">Os dois caminhos, com os seus números, lado a lado e ao vivo.</p>
+    </div>
+
+    <div class="stage">
       <div class="instrument">
         <div class="inst-grid">
           <div class="inst-inputs" data-ui>
@@ -257,19 +363,12 @@
         </div>
       </div>
     </div>
-
-    <ul class="proof">
-      <li>Cálculo auditável, parcela a parcela</li>
-      <li>Sem conflito de interesse</li>
-      <li>Parâmetros de mercado (ABAC/BACEN)</li>
-      <li>Dados protegidos (LGPD)</li>
-    </ul>
   </section>
 
   <!-- TELA 2 — ANÁLISE COMPLETA -->
   <section class="screen" data-screen="4">
     <div class="ana-head">
-      <h2>Análise completa</h2>
+      <h2 class="dhead">Análise completa</h2>
       <p class="lede">Além do custo: impacto no patrimônio, lance embutido e engenharia de ágio.</p>
     </div>
     <div class="stage">
@@ -297,7 +396,8 @@
   </section>
 
   <footer class="reveal">
-    <div><b>Vértice</b> · calculadora de marca neutra · {ano}</div>
+    <div class="fbrand">Vértice</div>
+    <div><b style="color:var(--ink);font-weight:500">Calculadora de marca neutra</b> · {ano}</div>
     <div class="disc">Material com finalidade educativa. Não constitui recomendação de investimento, crédito, consórcio ou financiamento, nem promessa de contemplação — o mês é estimativa. As alternativas dependem do seu contexto.</div>
     <div class="cred">Fotografia: “house keys” por Shixart1985, CC BY 2.0, via Wikimedia Commons.</div>
   </footer>
@@ -322,7 +422,7 @@
 <script>
 var CONFIG={ supabaseUrl:"https://pidzzwlpsffjznbzukhj.supabase.co", supabaseAnonKey:"sb_publishable_P1IyQB54v9tdmUIKR5L44w_uTbs8yzJ", supabaseTable:"leads_calc", webhookUrl:"" };
 var VIP_THRESHOLD=1000000, SEG=120, MES_INFLEXAO=36;
-var screen=1, mode="cliente", unlocked=false, tab="investidor";
+var screen=0, mode="cliente", unlocked=false, tab="investidor";
 
 var brl=function(n){return (isFinite(n)?n:0).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});};
 function mensal(p){return Math.pow(1+p/100,1/12)-1;}
@@ -400,6 +500,29 @@ function compute(){
     sac:sac,pr:pr,sacTot:sac.total+ent,prTot:pr.total+ent,cons:cons};
 }
 
+/* ===== manifesto (recibo ao vivo na landing) ===== */
+function renderManifesto(){
+  var ex=finCET(400000,360,11.5,SEG,"PRICE",500000);
+  var total=ex.total, juros=ex.juros, pct=total>0?Math.round(juros/total*100):0;
+  var t=document.getElementById("mfTotal"); if(!t)return;
+  t.textContent=brl(total);
+  document.getElementById("mfJuros").textContent=brl(juros);
+  document.getElementById("mfPct").textContent=pct+"% de tudo que sai do seu bolso são juros";
+}
+
+/* ===== prévia estática do resultado (landing) ===== */
+function renderPreview(){
+  var pb=document.getElementById("pvBig"); if(!pb)return;
+  var d=compute();
+  var refFin=Math.min(d.sacTot,d.prTot), eco=refFin-d.cons.total, dif=Math.abs(eco), consWins=eco>0;
+  pb.textContent=brl(dif);
+  var lbl=document.querySelector(".pv-label"); if(lbl)lbl.textContent=consWins?"O consórcio sai mais barato em":"O financiamento sai mais barato em";
+  document.getElementById("pvCmp").innerHTML=
+    '<div class="c"><div class="t">Financ. SAC</div><div class="v cost">'+brl(d.sacTot)+'</div></div>'+
+    '<div class="c"><div class="t">Financ. PRICE</div><div class="v cost">'+brl(d.prTot)+'</div></div>'+
+    '<div class="c win"><div class="t">Consórcio</div><div class="v grn">'+brl(d.cons.total)+'</div></div>';
+}
+
 /* ===== resultado ao vivo ===== */
 function renderResultado(){
   var d=compute();
@@ -444,7 +567,7 @@ function renderAnalise(){
       '<div class="mini" style="margin-top:14px">'+met("Capital aportado até aqui",brl(ag.capital))+met("Saldo residual (vai ao comprador)",brl(ag.saldoRes),"cost")+met("ROI sobre capital",ag.roiCap.toFixed(0)+"%",ag.roiConf?"profit":"")+met("ROI anualizado",ag.roiAnual.toFixed(1)+"%",ag.roiConf?"profit":"")+'</div>'+
       (!ag.roiConf?'<div class="flag warn">ROI pouco confiável nesta janela: o capital aportado ainda é menor que 5% do crédito, o que infla o percentual — olhe o lucro absoluto.</div>':'')+
       '<div class="flag'+(ag.excedente>d.cred?' warn':'')+'">Sanity-check do comprador: para assumir a carta ele desembolsa '+brl(ag.capital+ag.saldoRes+ag.lucro)+' no total — '+brl(ag.excedente)+' acima do crédito nominal (devolve o seu aporte, paga o ágio e assume '+brl(ag.saldoRes)+' de saldo). '+(ag.excedente>d.cred?'Nesta faixa o prêmio fica difícil de justificar.':'Faz sentido quando ter a carta já contemplada compensa esse prêmio.')+'</div>'+
-      '<div class="patrow" style="margin-top:10px"><span class="q">Recomendação</span><span class="a" style="font-weight:400;font-family:var(--serif);max-width:60%">'+reco+'</span></div></div>';
+      '<div class="patrow" style="margin-top:10px"><span class="q">Recomendação</span><span class="a" style="font-weight:400;font-family:var(--ui);max-width:60%">'+reco+'</span></div></div>';
 }
 
 /* ===== navegação ===== */
@@ -457,6 +580,9 @@ function showScreen(n){
 function goAnalise(){ if(mode==="corretor"||unlocked){showScreen(4);} else {document.getElementById("over").classList.add("on");} }
 document.getElementById("toAnalise").onclick=goAnalise;
 document.getElementById("toCalc").onclick=function(){showScreen(1);};
+document.getElementById("toCalc0").onclick=function(){showScreen(1);};
+document.getElementById("toCalc1").onclick=function(){showScreen(1);};
+document.getElementById("backToLanding").onclick=function(){showScreen(0);};
 document.getElementById("advToggle").onclick=function(){
   var a=document.getElementById("adv");a.classList.toggle("hide");
   this.textContent=(a.classList.contains("hide")?"+":"–")+" Ajustar taxas e consórcio";
@@ -487,7 +613,7 @@ function setMode(m){
   document.querySelectorAll("#modeSeg button").forEach(function(b){b.classList.toggle("on",b.dataset.m===m);});
   document.getElementById("cbanner").classList.toggle("hide",m!=="corretor");
   var adv=document.getElementById("adv"), at=document.getElementById("advToggle");
-  if(m==="corretor"){adv.classList.remove("hide");at.textContent="– Ajustar taxas e consórcio";}
+  if(m==="corretor"){adv.classList.remove("hide");at.textContent="– Ajustar taxas e consórcio";if(screen===0)showScreen(1);}
 }
 document.querySelectorAll("#modeSeg button").forEach(function(b){b.onclick=function(){setMode(b.dataset.m);};});
 
@@ -513,10 +639,9 @@ document.getElementById("leadForm").addEventListener("submit",function(e){
 });
 
 /* boot */
-try{var fo=document.querySelector("footer .disc");}catch(e){}
 document.querySelectorAll("footer div").forEach(function(d){d.innerHTML=d.innerHTML.replace("{ano}",new Date().getFullYear());});
-document.querySelector('.screen.calc').classList.add('on');
-syncLabels(); renderResultado();
+document.querySelector('.screen.landing').classList.add('on');
+syncLabels(); renderResultado(); renderManifesto(); renderPreview();
 </script>
 </body>
 </html>
