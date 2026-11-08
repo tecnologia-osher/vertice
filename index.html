@@ -306,6 +306,7 @@
               <div class="f"><label for="inccAnual">Reajuste INCC (%)</label><input type="number" id="inccAnual" value="4.5" step="0.1"></div>
               <div class="f"><label for="parcelaReduzida">Parcela reduzida (%)</label><input type="number" id="parcelaReduzida" value="0" step="5"></div>
               <div class="f"><label for="lanceLiquido">Lance do bolso (R$)</label><input type="number" id="lanceLiquido" value="0" step="10000"></div>
+              <div class="f"><label for="aluguelEspera" title="Se você mora de aluguel, o que paga até ser contemplado é um custo real da espera. Entra só no número a valor de hoje.">Aluguel na espera (R$/mês)</label><input type="number" id="aluguelEspera" value="0" step="100"></div>
             </div>
           </div>
         </div>
@@ -503,9 +504,13 @@ function compute(){
   var P=Math.max(im-ent,0);
   var sac=finCET(P,nf,j,SEG,"SAC",im,disc), pr=finCET(P,nf,j,SEG,"PRICE",im,disc);
   var cons=consorcio(cred,nc,mesC,incc,adm,fundo,lanceLiq,adesao,reducao,disc);
+  // Aluguel pago enquanto espera a contemplação: custo real do caminho consórcio para quem mora de aluguel.
+  // Opt-in (0 por padrão), entra só no valor presente (a manchete), não nas barras de custo do produto.
+  var aluguel=num("aluguelEspera"), rentPV=0;
+  for(var rm=1;rm<cons.mesCont;rm++){rentPV+=aluguel/Math.pow(1+disc,rm);}
   return {im:im,ent:ent,cdi:cdi,nf:nf,obj:obj,cred:cred,nc:nc,adm:adm,fundo:fundo,incc:incc,mesC:mesC,lanceLiq:lanceLiq,admDec:admDec,
-    sac:sac,pr:pr,sacTot:sac.total+ent,prTot:pr.total+ent,cons:cons,
-    sacPV:sac.pv+ent,prPV:pr.pv+ent,consPV:cons.pv};
+    sac:sac,pr:pr,sacTot:sac.total+ent,prTot:pr.total+ent,cons:cons,aluguel:aluguel,rentPV:rentPV,
+    sacPV:sac.pv+ent,prPV:pr.pv+ent,consPV:cons.pv+rentPV};
 }
 
 /* ===== recibo ao vivo (landing) ===== */
@@ -539,9 +544,10 @@ function renderResultado(){
   var big=document.getElementById("rlBig"); big.textContent=brl(difPV); big.style.color=consWins?'var(--good)':'var(--navy)';
   document.getElementById("rlLabel").textContent=(consWins?"O consórcio sai mais barato em":"O financiamento sai mais barato em")+" (a valor de hoje)";
   var objNote={moradia:"Para moradia, o que mais pesa é não comprometer a segurança da família: olhe a liquidez que sobra.",troca:"Numa troca, considere a venda do imóvel atual e a recomposição do caixa.",investimento:"Como investimento, o retorno precisa compensar o custo, a baixa liquidez e a concentração.",futura:"Para compra futura, o consórcio tende a organizar melhor a aquisição, com disciplina de aporte."}[d.obj]||"";
+  var rentNote=(d.aluguel>0?' Já considerado o aluguel de '+brl(d.aluguel)+'/mês pago até a contemplação ('+brl(d.rentPV)+' a valor de hoje), que é um custo real da espera no consórcio.':'');
   document.getElementById("verdict").innerHTML=(consWins
     ? 'Sem juros, só taxa de administração. Em troca, você espera ser contemplado (estimativa em torno do mês '+d.cons.mesCont+', sem garantia de prazo); o financiamento entrega o imóvel agora.'
-    : 'O financiamento entrega o imóvel agora; o consórcio exige esperar a contemplação.')+(objNote?' '+objNote:'');
+    : 'O financiamento entrega o imóvel agora; o consórcio exige esperar a contemplação.')+rentNote+(objNote?' '+objNote:'');
   var max=Math.max(d.sacTot,d.prTot,d.cons.total)||1;
   setBar("barSac",d.sacTot/max,"barSacVal",d.sacTot);
   setBar("barPrice",d.prTot/max,"barPriceVal",d.prTot);
