@@ -388,7 +388,7 @@
             <div class="barrow"><div class="brow-top"><span class="n"><i class="i2"></i>Financiamento PRICE</span><span class="amt num" id="barPriceVal">—</span></div><div class="track"><div class="fill c2" id="barPrice"></div></div></div>
             <div class="barrow"><div class="brow-top"><span class="n"><i class="i3"></i>Consórcio</span><span class="amt num" id="barConsVal">—</span></div><div class="track"><div class="fill c3" id="barCons"></div></div></div>
           </div>
-          <p style="font-size:.78rem;color:var(--muted);margin:-4px 0 14px">PRICE: parcela fixa. SAC: começa maior e cai com o tempo. Os valores são nominais (não ajustados ao tempo).</p>
+          <p style="font-size:.78rem;color:var(--muted);margin:-4px 0 14px">O número grande é <b>a valor de hoje</b> (considera que o dinheiro rende, ~CDI). As barras mostram o <b>total nominal</b>: a soma das parcelas ao longo do tempo. PRICE: parcela fixa; SAC: começa maior e cai.</p>
           <div class="rl-parc" id="rlParc"></div>
           <button class="btn block" type="button" id="toAnalise">Ver a análise completa com um consultor →</button>
           <p class="rl-fine">Impacto no patrimônio, lance embutido e ágio, com a orientação de um especialista Osher.</p>
@@ -462,7 +462,7 @@
 
 <script>
 var CONFIG={ supabaseUrl:"https://pidzzwlpsffjznbzukhj.supabase.co", supabaseAnonKey:"sb_publishable_P1IyQB54v9tdmUIKR5L44w_uTbs8yzJ", supabaseTable:"leads_calc", webhookUrl:"" };
-var VIP_THRESHOLD=1000000, SEG=120, MES_INFLEXAO=36;
+var VIP_THRESHOLD=1000000, SEG=0, MES_INFLEXAO=36;
 var screen=0, unlocked=false, tab="investidor", lastDif=0;
 
 var brl=function(n){return (isFinite(n)?n:0).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});};
@@ -474,30 +474,29 @@ function countUp(el,target,prefix){ if(!el)return; var dur=950,t0=null; function
 function setBar(id,frac,valId,val){var b=document.getElementById(id);if(b)b.style.width=Math.max(frac*100,2).toFixed(1)+'%';var v=document.getElementById(valId);if(v)v.textContent=brl(val);}
 
 /* ===== Motor (fiel ao calculator.ts) ===== */
-function finCET(P,n,j,seg,sistema,aval){
-  var i=mensal(j),s=P,jt=0,sg=0,tot=0,p1=0,pn=0,A=P/n,meses=n;
+function finCET(P,n,j,seg,sistema,aval,disc){
+  var i=mensal(j),s=P,jt=0,sg=0,tot=0,pvt=0,p1=0,pn=0,A=P/n,meses=n;
   var pmt=i===0?P/n:P*(i*Math.pow(1+i,n))/(Math.pow(1+i,n)-1);
-  var dias=Math.min(n/12*365,365),iof=0.0038*P+0.000082*P*dias;
   for(var m=1;m<=n && s>0.01;m++){
     var ju=s*i,am=sistema==="PRICE"?(pmt-ju):A; if(am>s)am=s;
     var mip=s*0.00035,dfi=aval*0.000025,p=am+ju+seg+mip+dfi;
-    if(m==1)p1=p; jt+=ju;sg+=mip+dfi;tot+=p;s-=am;meses=m;pn=p;
+    if(m==1)p1=p; jt+=ju;sg+=mip+dfi+seg;tot+=p;pvt+=p/Math.pow(1+(disc||0),m);s-=am;meses=m;pn=p;
   }
-  return {p1:p1,pn:pn,total:tot,juros:jt,seguros:sg,iof:iof,meses:meses};
+  return {p1:p1,pn:pn,total:tot,juros:jt,seguros:sg,pv:pvt,meses:meses};
 }
-function consorcio(gross,n,mesCont,incc,adm,fundo,lanceLiq,adesao,reducao){
+function consorcio(gross,n,mesCont,incc,adm,fundo,lanceLiq,adesao,reducao,disc){
   var adesaoEff=Math.min(Math.max(adesao||0,0),adm), admParc=adm-adesaoEff;
   var adesaoVal=gross*adesaoEff/100, red=Math.min(Math.max(reducao||0,0),60)/100;
-  var custo=gross*(1+(admParc+fundo)/100),base=custo/n,p1=base*(1-red),t=0,s=custo,parcelaApos=base;
+  var custo=gross*(1+(admParc+fundo)/100),base=custo/n,p1=base*(1-red),t=0,pvt=0,s=custo,parcelaApos=base;
   mesCont=Math.max(1,Math.min(mesCont||Math.floor(n/2),n));
   for(var m=1;m<=n;m++){
     if(m>1&&(m-1)%12===0){var r=n-(m-1);if(r>0){s*=(1+incc/100);base=s/r;}}
     var pay;
     if(m<mesCont){pay=base*(1-red);}
-    else{if(m===mesCont){if(lanceLiq>0){t+=lanceLiq;s=Math.max(s-lanceLiq,0);}var rem=n-(m-1);if(rem>0)base=s/rem;parcelaApos=base;}pay=base;}
-    t+=pay;s-=pay;
+    else{if(m===mesCont){if(lanceLiq>0){t+=lanceLiq;pvt+=lanceLiq/Math.pow(1+(disc||0),m);s=Math.max(s-lanceLiq,0);}var rem=n-(m-1);if(rem>0)base=s/rem;parcelaApos=base;}pay=base;}
+    t+=pay;pvt+=pay/Math.pow(1+(disc||0),m);s-=pay;
   }
-  return {p1:p1,total:t+adesaoVal,custo:custo,adm:gross*(adm+fundo)/100,adesaoVal:adesaoVal,admParc:admParc,mesCont:mesCont,parcelaApos:parcelaApos,reduzida:red>0};
+  return {p1:p1,total:t+adesaoVal,pv:pvt+adesaoVal,custo:custo,adm:gross*(adm+fundo)/100,adesaoVal:adesaoVal,admParc:admParc,mesCont:mesCont,parcelaApos:parcelaApos,reduzida:red>0};
 }
 function custoOportunidade(entrada,valorImovel,cdi,valoriz,meses){
   var anos=meses/12, r=entrada*(Math.pow(1+cdi/100,anos)-1), v=valorImovel*(Math.pow(1+valoriz/100,anos)-1);
@@ -535,12 +534,13 @@ function syncLabels(){
 function compute(){
   var im=num("valorImovel"),ent=num("valorEntrada"),j=num("jurosAnual"),cdi=num("cdiAnual"),nf=num("parcelasFin"),obj=val("objetivo");
   var cred=num("valorCredito"),nc=num("parcelasCons"),adm=num("taxaAdm"),fundo=num("fundoReserva"),incc=num("inccAnual"),mesC=num("mesContempl"),adesao=num("taxaAdesao");
-  var lanceLiq=num("lanceLiquido"),reducao=num("parcelaReduzida"),admDec=(adm+fundo)/100;
+  var lanceLiq=num("lanceLiquido"),reducao=num("parcelaReduzida"),admDec=(adm+fundo)/100, disc=mensal(cdi);
   var P=Math.max(im-ent,0);
-  var sac=finCET(P,nf,j,SEG,"SAC",im), pr=finCET(P,nf,j,SEG,"PRICE",im);
-  var cons=consorcio(cred,nc,mesC,incc,adm,fundo,lanceLiq,adesao,reducao);
+  var sac=finCET(P,nf,j,SEG,"SAC",im,disc), pr=finCET(P,nf,j,SEG,"PRICE",im,disc);
+  var cons=consorcio(cred,nc,mesC,incc,adm,fundo,lanceLiq,adesao,reducao,disc);
   return {im:im,ent:ent,cdi:cdi,nf:nf,obj:obj,cred:cred,nc:nc,adm:adm,fundo:fundo,incc:incc,mesC:mesC,lanceLiq:lanceLiq,admDec:admDec,
-    sac:sac,pr:pr,sacTot:sac.total+ent,prTot:pr.total+ent,cons:cons};
+    sac:sac,pr:pr,sacTot:sac.total+ent,prTot:pr.total+ent,cons:cons,
+    sacPV:sac.pv+ent,prPV:pr.pv+ent,consPV:cons.pv};
 }
 
 /* ===== recibo ao vivo (landing) ===== */
@@ -556,9 +556,9 @@ function renderManifesto(){
 function renderPreview(){
   var pb=document.getElementById("pvBig"); if(!pb)return;
   var d=compute();
-  var refFin=Math.min(d.sacTot,d.prTot), eco=refFin-d.cons.total, dif=Math.abs(eco), consWins=eco>0;
+  var refPV=Math.min(d.sacPV,d.prPV), eco=refPV-d.consPV, dif=Math.abs(eco), consWins=eco>0;
   pb.textContent=brl(dif);
-  var lbl=document.querySelector(".pv-label"); if(lbl)lbl.textContent=consWins?"O consórcio sai mais barato em":"O financiamento sai mais barato em";
+  var lbl=document.querySelector(".pv-label"); if(lbl)lbl.textContent=(consWins?"O consórcio sai mais barato em":"O financiamento sai mais barato em")+" (a valor de hoje)";
   var max=Math.max(d.sacTot,d.prTot,d.cons.total)||1;
   function pvbar(nm,v,cls){return '<div class="pvb"><div class="pvb-t"><span>'+nm+'</span><span class="num">'+brl(v)+'</span></div><div class="pvb-tr"><div class="pvb-f '+cls+'" style="width:'+Math.max(v/max*100,2).toFixed(1)+'%"></div></div></div>';}
   document.getElementById("pvCmp").innerHTML=pvbar('Financ. SAC',d.sacTot,'c1')+pvbar('Financ. PRICE',d.prTot,'c2')+pvbar('Consórcio',d.cons.total,'c3');
@@ -569,10 +569,10 @@ function renderResultado(){
   var d=compute();
   var vi=document.getElementById("valImovelLab"); if(vi)vi.textContent=brl(d.im);
   var ve=document.getElementById("valEntradaLab"); if(ve)ve.textContent=brl(d.ent);
-  var refFin=Math.min(d.sacTot,d.prTot), eco=refFin-d.cons.total, dif=Math.abs(eco), consWins=eco>0;
-  lastDif=dif;
-  var big=document.getElementById("rlBig"); big.textContent=brl(dif); big.style.color=consWins?'var(--good)':'var(--navy)';
-  document.getElementById("rlLabel").textContent=consWins?"O consórcio sai mais barato em":"O financiamento sai mais barato em";
+  var refPV=Math.min(d.sacPV,d.prPV), ecoPV=refPV-d.consPV, difPV=Math.abs(ecoPV), consWins=ecoPV>0;
+  lastDif=difPV;
+  var big=document.getElementById("rlBig"); big.textContent=brl(difPV); big.style.color=consWins?'var(--good)':'var(--navy)';
+  document.getElementById("rlLabel").textContent=(consWins?"O consórcio sai mais barato em":"O financiamento sai mais barato em")+" (a valor de hoje)";
   var objNote={moradia:"Para moradia, o que mais pesa é não comprometer a segurança da família: olhe a liquidez que sobra.",troca:"Numa troca, considere a venda do imóvel atual e a recomposição do caixa.",investimento:"Como investimento, o retorno precisa compensar o custo, a baixa liquidez e a concentração.",futura:"Para compra futura, o consórcio tende a organizar melhor a aquisição, com disciplina de aporte."}[d.obj]||"";
   document.getElementById("verdict").innerHTML=(consWins
     ? 'Sem juros, só taxa de administração. Em troca, você espera ser contemplado (estimativa em torno do mês '+d.cons.mesCont+', sem garantia de prazo); o financiamento entrega o imóvel agora.'
@@ -666,23 +666,29 @@ document.querySelectorAll("input,select").forEach(function(el){el.addEventListen
 })();
 
 function postLead(p){
-  if(CONFIG.supabaseUrl&&CONFIG.supabaseAnonKey){try{fetch(CONFIG.supabaseUrl.replace(/\/+$/,"")+"/rest/v1/"+CONFIG.supabaseTable,{method:"POST",headers:{"apikey":CONFIG.supabaseAnonKey,"Authorization":"Bearer "+CONFIG.supabaseAnonKey,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify(p)});}catch(e){}}
-  else if(CONFIG.webhookUrl){try{fetch(CONFIG.webhookUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});}catch(e){}}
-  else{console.log("LEAD (configure CONFIG):",p);}
+  if(CONFIG.supabaseUrl&&CONFIG.supabaseAnonKey){return fetch(CONFIG.supabaseUrl.replace(/\/+$/,"")+"/rest/v1/"+CONFIG.supabaseTable,{method:"POST",headers:{"apikey":CONFIG.supabaseAnonKey,"Authorization":"Bearer "+CONFIG.supabaseAnonKey,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify(p)}).then(function(r){return r.ok;}).catch(function(){return false;});}
+  if(CONFIG.webhookUrl){return fetch(CONFIG.webhookUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)}).then(function(r){return r.ok;}).catch(function(){return false;});}
+  console.log("LEAD (configure CONFIG):",p); return Promise.resolve(true);
 }
 document.getElementById("leadClose").onclick=function(){document.getElementById("over").classList.remove("on");};
 document.getElementById("leadForm").addEventListener("submit",function(e){
   e.preventDefault();
   var nome=val("lNome").trim(),email=val("lEmail").trim(),tel=val("lTel").trim(),ok=document.getElementById("lConsent").checked,err=document.getElementById("err");
-  if(nome.length<2||!email||tel.length<8){err.textContent="Preencha nome, WhatsApp e e-mail válidos.";return;}
+  var emailOk=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email), telD=tel.replace(/\D/g,"");
+  if(nome.length<2||!emailOk||telD.length<10){err.textContent="Preencha nome, WhatsApp com DDD e um e-mail válido.";return;}
   if(!ok){err.textContent="É necessário aceitar o tratamento dos dados (LGPD).";return;}
-  err.textContent="";unlocked=true;
+  err.textContent="";
+  var btn=document.getElementById("unlock"); btn.disabled=true; var btxt=btn.textContent; btn.textContent="Enviando...";
   var imv=num("valorImovel"),isVip=imv>=VIP_THRESHOLD;
-  postLead({evento:"simulacao",nome:nome,email:email,telefone:tel,consentimento_lgpd:true,consentimento_em:new Date().toISOString(),origem:"vertice",objetivo:val("objetivo"),valor_imovel:imv,valor_credito:num("valorCredito"),parcelas_cons:num("parcelasCons"),taxa_adm:num("taxaAdm"),mes_contemplacao:num("mesContempl"),is_vip:isVip,etiqueta:isVip?"VIP":"Padrão"});
-  var primeiro=nome.split(" ")[0];
-  document.getElementById("okTitle").textContent="Pronto, "+primeiro+"! Um consultor vai te chamar.";
-  document.getElementById("leadForm").classList.add("hide");
-  document.getElementById("leadOk").classList.remove("hide");
+  postLead({evento:"simulacao",nome:nome,email:email,telefone:tel,consentimento_lgpd:true,consentimento_em:new Date().toISOString(),origem:"vertice",objetivo:val("objetivo"),valor_imovel:imv,valor_credito:num("valorCredito"),parcelas_cons:num("parcelasCons"),taxa_adm:num("taxaAdm"),mes_contemplacao:num("mesContempl"),is_vip:isVip,etiqueta:isVip?"VIP":"Padrão"}).then(function(sent){
+    btn.disabled=false; btn.textContent=btxt;
+    if(!sent){ err.textContent="Não conseguimos registrar agora. Tente de novo em instantes ou chame a Osher no WhatsApp.";return; }
+    unlocked=true;
+    var primeiro=nome.split(" ")[0];
+    document.getElementById("okTitle").textContent="Pronto, "+primeiro+"! Um consultor vai te chamar.";
+    document.getElementById("leadForm").classList.add("hide");
+    document.getElementById("leadOk").classList.remove("hide");
+  });
 });
 document.getElementById("okSeeAnalise").onclick=function(){document.getElementById("over").classList.remove("on");showScreen(4);};
 document.getElementById("okClose").onclick=function(){document.getElementById("over").classList.remove("on");};
