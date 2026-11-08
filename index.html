@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Vértice</title>
-  <meta name="description" content="A maior parte do que você paga ao banco não é o imóvel. Consórcio ou financiamento: o custo real dos dois caminhos, em números e ao vivo. Calculadora de marca neutra.">
+  <title>Vértice · Osher</title>
+  <meta name="description" content="A maior parte do que você paga ao banco não é o imóvel. Consórcio ou financiamento: o custo real dos dois caminhos, em números e ao vivo. Uma ferramenta Osher, com a orientação de um consultor.">
   <link rel="icon" href="vertice-favicon.svg" type="image/svg+xml">
   <link rel="icon" sizes="32x32" href="vertice-favicon-32.png">
   <link rel="apple-touch-icon" href="vertice-favicon-180.png">
@@ -19,7 +19,7 @@
      Paleta sobrescrita para CLARA (constraint do cliente): papel bone, tinta quente, verde profundo. */
   :root{
     --paper:#F3F3F0; --paper2:#FBFBFA; --ink:#1A1813; --muted:#6E685B; --line:#E2E1DB;
-    --surf:#FFFFFF; --surf2:#EDEBE4; --accent:#0C5C3B; --accent-2:#0A4A30; --cost:#9A2B1E; --gold:#8A6E2C;
+    --surf:#FFFFFF; --surf2:#EDEBE4; --accent:#0B2C51; --accent-2:#081D36; --cost:#9A2B1E; --gold:#A89E86; --gold-ink:#6B5A2E; --good:#0C5C3B;
     --display:'Bodoni Moda',Georgia,serif; --ui:'Jost',system-ui,sans-serif;
     --s-small:clamp(.82rem,.8rem + .1vw,.9rem);
     --s-body:clamp(1.06rem,1rem + .25vw,1.19rem);
@@ -42,6 +42,9 @@
   .brand{display:flex;align-items:center;gap:9px;min-width:0}
   .brand svg{width:22px;height:22px;flex:0 0 auto}
   .brand .wm{font-family:var(--display);font-weight:600;letter-spacing:.01em;font-size:1.28rem}
+  .brand .byosher{font-family:var(--ui);font-weight:500;font-size:.78rem;color:var(--gold-ink);letter-spacing:.02em;align-self:center;padding-left:9px;margin-left:3px;border-left:1px solid var(--line)}
+  .slogan{font-family:var(--ui);font-weight:400;font-size:.82rem;color:var(--muted);font-style:italic}
+  @media(max-width:720px){ .slogan{display:none} }
   .seg{display:inline-flex;gap:0;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surf)}
   .seg button{background:transparent;border:0;color:var(--muted);padding:6px 16px;cursor:pointer;font:inherit;font-family:var(--ui);font-weight:500;font-size:.82rem;border-radius:999px}
   .seg button.on{background:var(--ink);color:var(--paper)}
@@ -102,7 +105,7 @@
   .pv-big{font-family:var(--display);font-weight:600;font-size:clamp(2.1rem,5vw,2.9rem);color:var(--accent);letter-spacing:-.02em;line-height:1;margin:7px 0 18px}
   .pv-cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
   .pv-cmp .c{background:var(--surf);padding:12px 11px;min-width:0}
-  .pv-cmp .c.win{background:color-mix(in srgb,var(--accent) 7%,var(--surf))}
+  .pv-cmp .c.win{background:color-mix(in srgb,var(--good) 7%,var(--surf))}
   .pv-cmp .t{font-size:.72rem;color:var(--muted)}
   .pv-cmp .v{font-family:var(--display);font-weight:600;font-size:1.02rem;margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 
@@ -141,13 +144,13 @@
   .rl-note b{color:var(--accent);font-weight:600}
   .cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
   .cc{background:var(--surf);padding:16px 15px;min-width:0}
-  .cc.win{background:color-mix(in srgb,var(--accent) 7%,var(--surf))}
+  .cc.win{background:color-mix(in srgb,var(--good) 7%,var(--surf))}
   .cc .tag{font-family:var(--ui);font-size:.76rem;font-weight:500;color:var(--muted)}
   .cc .tot{font-family:var(--display);font-size:1.4rem;font-weight:600;margin-top:8px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
   .cc .parc{font-size:.82rem;color:var(--muted);margin-top:8px}
   .cc .parc b{color:var(--ink);font-weight:600;display:block;margin-top:1px;font-variant-numeric:tabular-nums}
   .cc .cap{font-size:.78rem;color:var(--muted);margin-top:6px;font-style:italic}
-  .cost{color:var(--cost)} .grn{color:var(--accent)}
+  .cost{color:var(--cost)} .grn{color:var(--good)}
   .rl-cta{margin-top:24px}
   .rl-fine{font-family:var(--ui);font-size:.84rem;color:var(--muted);margin:13px 0 0;text-align:center}
   .wl{font-family:var(--ui);font-size:.86rem;color:var(--muted);margin:18px 0 0;text-align:center}
@@ -177,13 +180,13 @@
   .mini{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
   .met{background:var(--surf);padding:12px 13px}
   .met .k{font-size:.78rem;color:var(--muted)} .met .v{font-size:1.2rem;font-weight:600;font-family:var(--display);margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-  .met .v.cost{color:var(--cost)} .met .v.profit{color:var(--accent)}
+  .met .v.cost{color:var(--cost)} .met .v.profit{color:var(--good)}
   .patrow{display:flex;justify-content:space-between;gap:12px;font-size:.94rem;padding:12px 0;border-bottom:1px solid var(--line)}
   .patrow:last-child{border-bottom:0}.patrow .q{color:var(--muted)}.patrow .a{text-align:right;font-weight:500;font-variant-numeric:tabular-nums;font-family:var(--ui)}
-  .patrow .a.red{color:var(--cost)} .patrow .a.grn{color:var(--accent)}
+  .patrow .a.red{color:var(--cost)} .patrow .a.grn{color:var(--good)}
   .headline{font-family:var(--display);font-size:2.1rem;font-weight:600;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
   .badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--ui);font-size:.8rem;font-weight:500;padding:6px 14px;border-radius:999px}
-  .badge.v{background:color-mix(in srgb,var(--accent) 12%,var(--surf));color:var(--accent)}
+  .badge.v{background:color-mix(in srgb,var(--good) 12%,var(--surf));color:var(--good)}
   .badge.a{background:color-mix(in srgb,#2E6A9E 12%,var(--surf));color:#2E6A9E}
   .flag{font-size:.88rem;padding:12px 14px;border-radius:6px;background:var(--surf2);color:var(--muted);margin-top:10px;line-height:1.5}
   .flag.warn{background:color-mix(in srgb,#9B7726 12%,var(--surf));color:#7a5e1a}
@@ -208,6 +211,11 @@
   .consent{display:flex;gap:8px;align-items:flex-start;font-size:.84rem;color:var(--muted);margin:4px 0 16px;cursor:pointer;line-height:1.4}
   .err{color:var(--cost);font-size:.84rem;margin:0 0 10px;min-height:1em}
   .leadclose{background:none;border:0;color:var(--muted);font:inherit;font-family:var(--ui);font-weight:500;font-size:.86rem;cursor:pointer;margin-top:13px;width:100%}
+  .leadok{text-align:center}
+  .leadok .ok-ic{width:56px;height:56px;margin:0 auto 16px;border-radius:999px;background:color-mix(in srgb,var(--good) 12%,var(--surf));display:flex;align-items:center;justify-content:center}
+  .leadok .ok-ic svg{width:28px;height:28px;stroke:var(--good);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .leadok h4{font-family:var(--display);font-weight:600;font-size:1.6rem;margin:0 0 8px;letter-spacing:-.01em}
+  .leadok p{font-size:1rem;color:var(--muted);margin:0 0 20px;line-height:1.5}
 
   /* footer */
   footer{display:grid;grid-template-columns:1fr;gap:8px;padding:clamp(40px,5vw,64px) 0 44px;margin-top:56px;font-family:var(--ui);font-size:.98rem;color:var(--muted);line-height:1.55}
@@ -236,10 +244,9 @@
 
 <div class="wrap">
   <div class="bar"><div class="bar-in">
-    <div class="brand"><svg><use href="#vx"/></svg><span class="wm">Vértice</span></div>
-    <span class="seg" id="modeSeg" role="group" aria-label="Modo"><button type="button" data-m="cliente" class="on">Cliente</button><button type="button" data-m="corretor">Corretor</button></span>
+    <div class="brand"><svg><use href="#vx"/></svg><span class="wm">Vértice</span><span class="byosher">por Osher</span></div>
+    <span class="slogan">Investir com segurança, conquistar com muita inteligência.</span>
   </div></div>
-  <div class="cbanner hide" id="cbanner">Modo corretor — análise completa liberada, sem cadastro. Use na frente do cliente.</div>
 
   <!-- TELA 0 — LANDING / ARGUMENTO -->
   <section class="screen landing" data-screen="0">
@@ -247,7 +254,7 @@
      <div class="lhero-grid">
       <div class="lhero-copy">
         <h1 class="reveal">Você paga mais juros que imóvel.</h1>
-        <p class="dsub reveal d1">Num financiamento longo, os juros costumam passar do valor do próprio imóvel. Essa conta raramente aparece antes da assinatura. Aqui ela aparece primeiro — e você decide com ela na mão.</p>
+        <p class="dsub reveal d1">Num financiamento longo, os juros costumam passar do valor do próprio imóvel. Essa conta raramente aparece antes da assinatura. Aqui ela aparece primeiro, e você decide com ela na mão.</p>
         <div class="lhero-cta reveal d1">
           <button class="btn" type="button" id="toCalc0">Fazer a minha conta</button>
           <a class="btn link" href="#argumento">Entender a conta ↓</a>
@@ -263,7 +270,7 @@
       <div class="mani-grid split">
         <h2 class="dhead" style="max-width:12ch">O banco vende tempo.</h2>
         <div>
-          <p class="body" style="margin-top:0">Quando você financia, o banco adianta um dinheiro que você devolve, com juros, por vinte ou trinta anos. O imóvel é seu desde o primeiro dia — mas boa parte da sua parcela, por muitos anos, é só o custo de ter pego esse dinheiro emprestado.</p>
+          <p class="body" style="margin-top:0">Quando você financia, o banco adianta um dinheiro que você devolve, com juros, por vinte ou trinta anos. O imóvel é seu desde o primeiro dia, mas boa parte da sua parcela, por muitos anos, é só o custo de ter pego esse dinheiro emprestado.</p>
           <p class="body">É um produto legítimo. Só costuma vir sem a etiqueta de preço à vista.</p>
         </div>
       </div>
@@ -276,7 +283,7 @@
         <div class="rline big"><span class="q">Você paga ao todo</span><span class="a" id="mfTotal">—</span></div>
         <div class="rline big"><span class="q">Desses, viram só juros</span><span class="a cost" id="mfJuros">—</span></div>
         <div class="rline"><span class="q">Ou seja</span><span class="a" id="mfPct" style="font-size:1.3rem;color:var(--cost)">—</span></div>
-        <p class="foot">Sistema PRICE, parcela fixa, sem a entrada. Os números mudam com o seu caso — é exatamente o que a calculadora faz a seguir.</p>
+        <p class="foot">Sistema PRICE, parcela fixa, sem a entrada. Os números mudam com o seu caso. É exatamente o que a calculadora faz a seguir.</p>
       </div>
     </div>
 
@@ -292,7 +299,7 @@
         </figure>
         <div>
           <h2 class="dhead">Sem juro. O preço é esperar.</h2>
-          <p class="body">No consórcio você não paga juros — paga uma taxa de administração, em geral bem menor que os juros de um financiamento longo. Em troca, você espera ser contemplado para pegar o imóvel.</p>
+          <p class="body">No consórcio você não paga juros, paga uma taxa de administração, em geral bem menor que os juros de um financiamento longo. Em troca, você espera ser contemplado para pegar o imóvel.</p>
           <p class="body">Não é melhor nem pior: é uma troca diferente. Quando dá para abrir mão da pressa, a economia costuma ser grande. Quando você precisa da chave agora, o financiamento tem o seu lugar.</p>
         </div>
       </div>
@@ -304,7 +311,7 @@
       <div style="margin-top:28px"><button class="btn" type="button" id="toCalc1">Abrir a calculadora →</button></div>
       <ul class="proof" style="justify-content:center;margin-top:44px">
         <li>Cálculo auditável, parcela a parcela</li>
-        <li>Sem conflito de interesse</li>
+        <li>Sem promessa de contemplação</li>
         <li>Parâmetros de mercado (ABAC/BACEN)</li>
         <li>Dados protegidos (LGPD)</li>
       </ul>
@@ -356,9 +363,8 @@
             <div class="rl-big" id="rlBig">—</div>
             <p class="rl-note" id="verdict"></p>
             <div class="cmp" id="cmp"></div>
-            <button class="btn block rl-cta" type="button" id="toAnalise">Ver a análise completa →</button>
-            <p class="rl-fine">Impacto no patrimônio, lance embutido e engenharia de ágio.</p>
-            <p class="wl">Preparado por <input id="corretor" type="text" value="Imobiliária Parceira" aria-label="Nome do corretor"></p>
+            <button class="btn block rl-cta" type="button" id="toAnalise">Ver a análise completa com um consultor →</button>
+            <p class="rl-fine">Impacto no patrimônio, lance embutido e engenharia de ágio, com a orientação de um especialista Osher.</p>
           </div>
         </div>
       </div>
@@ -396,9 +402,10 @@
   </section>
 
   <footer class="reveal">
-    <div class="fbrand">Vértice</div>
-    <div><b style="color:var(--ink);font-weight:500">Calculadora de marca neutra</b> · {ano}</div>
-    <div class="disc">Material com finalidade educativa. Não constitui recomendação de investimento, crédito, consórcio ou financiamento, nem promessa de contemplação — o mês é estimativa. As alternativas dependem do seu contexto.</div>
+    <div class="fbrand">Vértice <span style="font-family:var(--ui);font-weight:500;font-size:.9rem;color:var(--gold-ink);letter-spacing:.02em">por Osher</span></div>
+    <div style="font-family:var(--ui);font-style:italic;color:var(--gold-ink);font-size:.92rem">Investir com segurança, conquistar com muita inteligência.</div>
+    <div><b style="color:var(--ink);font-weight:500">Uma ferramenta Osher</b> · {ano}</div>
+    <div class="disc">Material com finalidade educativa. Não constitui recomendação de investimento, crédito, consórcio ou financiamento, nem promessa de contemplação. O mês é estimativa e as alternativas dependem do seu contexto.</div>
     <div class="cred">Fotografia: “house keys” por Shixart1985, CC BY 2.0, via Wikimedia Commons.</div>
   </footer>
 </div>
@@ -406,17 +413,24 @@
 <!-- COFRE -->
 <div class="over" id="over">
   <form class="lead" id="leadForm">
-    <h4>Falta um passo para a análise completa</h4>
-    <p>Impacto no patrimônio, lance embutido e engenharia de ágio — o seu cenário completo, na hora.</p>
-    <ul class="proof"><li>Grátis, leva 20 segundos</li><li>Sem conflito de interesse</li><li>Dados protegidos (LGPD)</li></ul>
+    <h4>Receba a sua análise e a orientação de um consultor</h4>
+    <p>Um consultor da Osher revisa o seu caso e te mostra o melhor caminho, sem compromisso.</p>
+    <ul class="proof"><li>Atendimento de um especialista Osher</li><li>Grátis, leva 20 segundos</li><li>Dados protegidos (LGPD)</li></ul>
     <p class="err" id="err"></p>
     <div class="f"><input type="text" id="lNome" placeholder="Seu nome" aria-label="Nome"></div>
     <div class="f"><input type="text" id="lTel" placeholder="WhatsApp" aria-label="WhatsApp"></div>
     <div class="f"><input type="email" id="lEmail" placeholder="E-mail" aria-label="E-mail"></div>
-    <label class="consent"><input type="checkbox" id="lConsent"> Autorizo o contato e o tratamento dos meus dados, conforme a LGPD.</label>
-    <button class="btn block" type="submit" id="unlock">Ver minha análise completa</button>
+    <label class="consent"><input type="checkbox" id="lConsent"> Autorizo o contato de um consultor e o tratamento dos meus dados, conforme a LGPD.</label>
+    <button class="btn block" type="submit" id="unlock">Quero falar com um consultor</button>
     <button class="leadclose" type="button" id="leadClose">Agora não</button>
   </form>
+  <div class="lead leadok hide" id="leadOk">
+    <div class="ok-ic"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <h4 id="okTitle">Pronto! Um consultor vai te chamar.</h4>
+    <p id="okMsg">Um consultor da Osher vai entrar em contato no seu WhatsApp em breve. Enquanto isso, veja a sua análise completa.</p>
+    <button class="btn block" type="button" id="okSeeAnalise">Ver minha análise completa</button>
+    <button class="leadclose" type="button" id="okClose">Fechar</button>
+  </div>
 </div>
 
 <script>
@@ -577,7 +591,7 @@ function showScreen(n){
   document.querySelectorAll(".screen").forEach(function(s){s.classList.toggle("on",+s.dataset.screen===n);});
   window.scrollTo({top:0,behavior:"smooth"});
 }
-function goAnalise(){ if(mode==="corretor"||unlocked){showScreen(4);} else {document.getElementById("over").classList.add("on");} }
+function goAnalise(){ if(unlocked){showScreen(4);} else {document.getElementById("over").classList.add("on");} }
 document.getElementById("toAnalise").onclick=goAnalise;
 document.getElementById("toCalc").onclick=function(){showScreen(1);};
 document.getElementById("toCalc0").onclick=function(){showScreen(1);};
@@ -608,18 +622,6 @@ document.querySelectorAll("input,select").forEach(function(el){el.addEventListen
   }
 })();
 
-function setMode(m){
-  mode=m;
-  document.querySelectorAll("#modeSeg button").forEach(function(b){b.classList.toggle("on",b.dataset.m===m);});
-  document.getElementById("cbanner").classList.toggle("hide",m!=="corretor");
-  var adv=document.getElementById("adv"), at=document.getElementById("advToggle");
-  if(m==="corretor"){adv.classList.remove("hide");at.textContent="– Ajustar taxas e consórcio";if(screen===0)showScreen(1);}
-}
-document.querySelectorAll("#modeSeg button").forEach(function(b){b.onclick=function(){setMode(b.dataset.m);};});
-
-(function(){var c=document.getElementById("corretor");try{var s=localStorage.getItem("vertice-corretor");if(s)c.value=s;}catch(e){}
-  c.addEventListener("input",function(){try{localStorage.setItem("vertice-corretor",c.value);}catch(e){}});})();
-
 function postLead(p){
   if(CONFIG.supabaseUrl&&CONFIG.supabaseAnonKey){try{fetch(CONFIG.supabaseUrl.replace(/\/+$/,"")+"/rest/v1/"+CONFIG.supabaseTable,{method:"POST",headers:{"apikey":CONFIG.supabaseAnonKey,"Authorization":"Bearer "+CONFIG.supabaseAnonKey,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify(p)});}catch(e){}}
   else if(CONFIG.webhookUrl){try{fetch(CONFIG.webhookUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});}catch(e){}}
@@ -632,11 +634,15 @@ document.getElementById("leadForm").addEventListener("submit",function(e){
   if(nome.length<2||!email||tel.length<8){err.textContent="Preencha nome, WhatsApp e e-mail válidos.";return;}
   if(!ok){err.textContent="É necessário aceitar o tratamento dos dados (LGPD).";return;}
   err.textContent="";unlocked=true;
-  document.getElementById("over").classList.remove("on");
   var imv=num("valorImovel"),isVip=imv>=VIP_THRESHOLD;
-  postLead({evento:"simulacao",corretor:val("corretor"),nome:nome,email:email,telefone:tel,consentimento_lgpd:true,consentimento_em:new Date().toISOString(),origem:"vertice",objetivo:val("objetivo"),valor_imovel:imv,valor_credito:num("valorCredito"),parcelas_cons:num("parcelasCons"),taxa_adm:num("taxaAdm"),mes_contemplacao:num("mesContempl"),is_vip:isVip,etiqueta:isVip?"VIP":"Padrão"});
-  showScreen(4);
+  postLead({evento:"simulacao",nome:nome,email:email,telefone:tel,consentimento_lgpd:true,consentimento_em:new Date().toISOString(),origem:"vertice",objetivo:val("objetivo"),valor_imovel:imv,valor_credito:num("valorCredito"),parcelas_cons:num("parcelasCons"),taxa_adm:num("taxaAdm"),mes_contemplacao:num("mesContempl"),is_vip:isVip,etiqueta:isVip?"VIP":"Padrão"});
+  var primeiro=nome.split(" ")[0];
+  document.getElementById("okTitle").textContent="Pronto, "+primeiro+"! Um consultor vai te chamar.";
+  document.getElementById("leadForm").classList.add("hide");
+  document.getElementById("leadOk").classList.remove("hide");
 });
+document.getElementById("okSeeAnalise").onclick=function(){document.getElementById("over").classList.remove("on");showScreen(4);};
+document.getElementById("okClose").onclick=function(){document.getElementById("over").classList.remove("on");};
 
 /* boot */
 document.querySelectorAll("footer div").forEach(function(d){d.innerHTML=d.innerHTML.replace("{ano}",new Date().getFullYear());});
