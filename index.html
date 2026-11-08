@@ -84,6 +84,7 @@
   .mani .dhead{max-width:16ch}
   .mani .body{font-size:1.08rem;color:var(--ink);line-height:1.6;margin-top:18px;max-width:52ch}
   .mani .body + .body{margin-top:14px}
+  .trust{margin-top:22px;font-size:.9rem;color:var(--muted);max-width:52ch;line-height:1.5}
 
   /* receipt card */
   .receipt{background:var(--navy);color:#fff;border-radius:var(--r-lg);padding:clamp(24px,3vw,40px);max-width:600px;box-shadow:0 20px 50px rgba(11,44,81,.22)}
@@ -258,85 +259,12 @@
     <span class="slogan">Investir com segurança, conquistar com muita inteligência.</span>
   </div></div>
 
-  <!-- TELA 0 — LANDING -->
-  <section class="screen landing" data-screen="0">
-    <div class="lhero">
-     <div class="lhero-grid">
-      <div class="lhero-copy">
-        <h1 class="reveal">Você paga mais <span class="hl">juros</span> que imóvel.</h1>
-        <p class="dsub reveal d1">Num financiamento longo, os juros costumam passar do valor do próprio imóvel. Essa conta raramente aparece antes da assinatura. Aqui ela aparece primeiro, e você decide com ela na mão.</p>
-        <div class="lhero-cta reveal d1">
-          <button class="btn" type="button" id="toCalc0">Fazer a minha conta</button>
-          <a class="btn link" href="#argumento">Entender a conta ↓</a>
-        </div>
-      </div>
-      <figure class="lhero-fig reveal d2">
-        <img src="assets/chave-casa.jpg" width="1920" height="2880" alt="Mão segurando a chave da casa própria na fechadura da porta" decoding="async">
-      </figure>
-     </div>
-    </div>
-
-    <div class="mani" id="argumento">
-      <div class="mani-grid split">
-        <div>
-          <p class="kick">O juro é o produto</p>
-          <h2 class="dhead">O banco vende tempo.</h2>
-        </div>
-        <div>
-          <p class="body" style="margin-top:0">Quando você financia, o banco adianta um dinheiro que você devolve, com juros, por vinte ou trinta anos. O imóvel é seu desde o primeiro dia, mas boa parte da sua parcela, por muitos anos, é só o custo de ter pego esse dinheiro emprestado.</p>
-          <p class="body">É um produto legítimo. Só costuma vir sem a etiqueta de preço à vista.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="mani">
-      <p class="kick">Um exemplo honesto</p>
-      <h2 class="dhead" style="max-width:22ch">O recibo que o banco não mostra.</h2>
-      <p class="dsub" style="margin-top:12px;max-width:44ch">Financiar R$ 400 mil, a 11,5% ao ano, por 30 anos:</p>
-      <div class="receipt reveal" style="margin-top:24px">
-        <div class="rrow"><span class="q">Você paga ao todo</span><span class="a num" id="mfTotal">—</span></div>
-        <div class="rrow"><span class="q">Desses, viram só juros</span><span class="a cost num" id="mfJuros">—</span></div>
-        <div class="hl-line"><b class="num" id="mfPct">—</b> de tudo que sai do seu bolso são juros.</div>
-        <p class="foot">Sistema PRICE, parcela fixa, sem a entrada. Os números mudam com o seu caso. É exatamente o que a calculadora faz a seguir.</p>
-      </div>
-    </div>
-
-    <div class="mani">
-      <div class="mani-grid split rev">
-        <figure class="mg-first preview reveal" aria-hidden="true">
-          <p class="pv-k">Com um imóvel de R$ 500 mil e R$ 100 mil de entrada</p>
-          <p class="pv-label">O consórcio sai mais barato em</p>
-          <div class="pv-big num" id="pvBig">—</div>
-          <div id="pvCmp"></div>
-        </figure>
-        <div>
-          <p class="kick">Existe outro caminho</p>
-          <h2 class="dhead">Sem juro. O preço é esperar.</h2>
-          <p class="body">No consórcio você não paga juros, paga uma taxa de administração, em geral bem menor que os juros de um financiamento longo. Em troca, você espera ser contemplado para pegar o imóvel.</p>
-          <p class="body">Não é melhor nem pior: é uma troca diferente. Quando dá para abrir mão da pressa, a economia costuma ser grande. Quando você precisa da chave agora, o financiamento tem o seu lugar.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="mani" style="text-align:center">
-      <h2 class="dhead" style="max-width:20ch;margin-inline:auto">Qual das duas contas é a sua?</h2>
-      <p class="dsub" style="max-width:48ch;margin:16px auto 0">Coloque os seus números. A calculadora mostra os dois caminhos lado a lado, e um consultor da Osher te ajuda a decidir.</p>
-      <div style="margin-top:26px"><button class="btn" type="button" id="toCalc1">Abrir a calculadora →</button></div>
-      <ul class="proof" style="justify-content:center;margin-top:40px">
-        <li>Cálculo auditável, parcela a parcela</li>
-        <li>Sem promessa de contemplação</li>
-        <li>Parâmetros de mercado (ABAC/BACEN)</li>
-        <li>Dados protegidos (LGPD)</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- TELA 1 — CALCULADORA -->
+  <!-- HOME — CALCULADORA PRIMEIRO -->
   <section class="screen calc" data-screen="1">
     <div class="calc-head">
-      <button class="btn link" type="button" id="backToLanding" style="padding-left:0;margin-bottom:8px">← Voltar ao argumento</button>
-      <h2 class="dhead">A sua conta</h2>
-      <p class="dsub">Arraste e veja, ao vivo, quanto cada caminho custa de verdade.</p>
+      <p class="kick">Consórcio ou financiamento</p>
+      <h2 class="dhead">A conta real, em 30 segundos.</h2>
+      <p class="dsub">Arraste e veja, ao vivo, quanto cada caminho custa de verdade. Grátis e sem compromisso, com a orientação de um consultor Osher quando você quiser.</p>
     </div>
 
     <div class="stage">
@@ -371,7 +299,7 @@
               <div class="f"><label for="valorCredito">Crédito do consórcio (carta)</label><input type="number" id="valorCredito" value="500000" step="50000"><span class="hint">Padrão: igual ao imóvel.</span></div>
               <div class="f"><label for="taxaAdm">Taxa de adm. (%)</label><input type="number" id="taxaAdm" value="18" step="0.5"><span class="hint">Mercado: 9,5%–25%.</span></div>
               <div class="f"><div class="rlab"><span>Prazo do consórcio</span><b id="parcConsLab">200 meses</b></div><input type="range" id="parcelasCons" min="60" max="240" step="12" value="200"></div>
-              <div class="f"><div class="rlab"><span>Contemplação (estim.)</span><b id="mesContLab">mês 24</b></div><input type="range" id="mesContempl" min="1" max="240" step="1" value="24"></div>
+              <div class="f"><div class="rlab"><span title="Contemplação: o mês em que você recebe a carta de crédito, por sorteio ou lance, e pode comprar o imóvel." style="cursor:help;border-bottom:1px dotted var(--muted)">Contemplação (estim.)</span><b id="mesContLab">mês 24</b></div><input type="range" id="mesContempl" min="1" max="240" step="1" value="24"></div>
               <div class="f"><label for="cdiAnual">CDI (% a.a.)</label><input type="number" id="cdiAnual" value="10.5" step="0.1"></div>
               <div class="f"><label for="fundoReserva">Fundo reserva (%)</label><input type="number" id="fundoReserva" value="2" step="0.5"></div>
               <div class="f"><label for="taxaAdesao">Adesão (%)</label><input type="number" id="taxaAdesao" value="1" step="0.5"></div>
@@ -397,6 +325,36 @@
           <p class="rl-fine">Um resumo pra morar, e a opção de falar com um especialista Osher.</p>
         </div>
       </div>
+    </div>
+
+    <div class="mani" id="porque">
+      <div class="mani-grid split">
+        <div>
+          <p class="kick">Por que a sua conta deu isso</p>
+          <h2 class="dhead">O banco vende tempo.</h2>
+        </div>
+        <div>
+          <p class="body" style="margin-top:0">Quando você financia, o banco adianta um dinheiro que você devolve, com juros, por vinte ou trinta anos. O imóvel é seu desde o primeiro dia, mas boa parte da sua parcela, por muitos anos, é só o custo de ter pego esse dinheiro emprestado. É um produto legítimo. Só costuma vir sem a etiqueta de preço à vista.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mani">
+      <h2 class="dhead" style="max-width:22ch">O recibo que o banco não mostra.</h2>
+      <p class="dsub" style="margin-top:12px;max-width:44ch">Financiar R$ 400 mil, a 11,5% ao ano, por 30 anos:</p>
+      <div class="receipt" style="margin-top:24px">
+        <div class="rrow"><span class="q">Você paga ao todo</span><span class="a num" id="mfTotal">—</span></div>
+        <div class="rrow"><span class="q">Desses, viram só juros</span><span class="a cost num" id="mfJuros">—</span></div>
+        <div class="hl-line"><b class="num" id="mfPct">—</b> de tudo que sai do seu bolso são juros.</div>
+        <p class="foot">Sistema PRICE, parcela fixa, sem a entrada. Juros e taxas com base em referências de mercado (ABAC e BACEN, 2026). Os números mudam com o seu caso. É exatamente o que a calculadora acima faz com os seus.</p>
+      </div>
+      <ul class="proof" style="margin-top:28px">
+        <li>Cálculo auditável, parcela a parcela</li>
+        <li>Sem promessa de contemplação</li>
+        <li>Parâmetros de mercado (ABAC/BACEN)</li>
+        <li>Dados protegidos (LGPD)</li>
+      </ul>
+      <p class="trust">Atendimento e simulação conduzidos por consultores da Osher, especializada em consórcio e crédito.</p>
     </div>
   </section>
 
@@ -510,8 +468,10 @@ function custoOportunidade(entrada,valorImovel,cdi,valoriz,meses){
 function lanceEmbutido(credLiq,lanceBolso,pctEmb,taxaAdmDec,prazo,mesCont){
   var pct=Math.min(Math.max(pctEmb,0.01),0.99);
   var carta=(credLiq-lanceBolso)/(1-pct);
-  var vLance=carta*pct, saldoRes=carta*(1+taxaAdmDec)-vLance-lanceBolso;
-  var parcOrig=carta*(1+taxaAdmDec)/prazo, mesesRest=Math.max(prazo-mesCont,1);
+  var vLance=carta*pct, custoTotal=carta*(1+taxaAdmDec), parcOrig=custoTotal/prazo;
+  var pagoAteCont=parcOrig*Math.max(mesCont-1,0);
+  var saldoRes=Math.max(custoTotal-vLance-lanceBolso-pagoAteCont,0);
+  var mesesRest=Math.max(prazo-mesCont,1);
   var novaParc=saldoRes/mesesRest, novoPrazoRest=Math.max(1,Math.ceil(saldoRes/parcOrig));
   return {carta:carta,recebeLiq:carta*(1-pct),vLance:vLance,saldoRes:saldoRes,
     alivio:{prazo:mesesRest,parcela:novaParc,reducao:parcOrig-novaParc},
@@ -599,14 +559,15 @@ function animateResult(){
 
 function renderAnalise(){
   var d=compute();
-  var valoriz=num("valorizAnual"), co=custoOportunidade(d.ent,d.im,d.cdi,valoriz,d.mesC), difParcela=d.sac.p1-d.cons.p1;
+  var valoriz=num("valorizAnual"), co=custoOportunidade(d.ent,d.im,d.cdi,valoriz,d.mesC), difParcela=d.pr.p1-d.cons.p1;
+  var _i=mensal(d.cdi), _D=Math.max(difParcela,0), _fv12=_i>0?_D*((Math.pow(1+_i,12)-1)/_i):_D*12;
   document.getElementById("investOut").innerHTML=
     '<div class="box"><h5>Custo de oportunidade da espera</h5><div class="bd">Enquanto você espera, o imóvel valoriza — mas a sua entrada, aplicada, também rende. O líquido é o que pesa.</div>'+
       '<div class="mini">'+met("Valorização perdida",brl(co.valoriz),"cost")+met("Entrada rendendo no CDI",brl(co.rendEntrada),"profit")+'</div>'+
       '<div class="patrow" style="margin-top:12px"><span class="q">Custo de oportunidade líquido</span><span class="a '+(co.liquido>0?'red':'grn')+'">'+brl(co.liquido)+(co.liquido>0?' (pesa a antecipar)':' (pesa ao consórcio)')+'</span></div></div>'+
     '<div class="dgrid">'+
       '<div class="box"><h5>SAC × PRICE</h5><div class="bd">O mesmo financiamento nos dois sistemas.</div><div class="mini">'+met("SAC · 1ª parcela",brl(d.sac.p1))+met("PRICE · fixa",brl(d.pr.p1))+met("SAC · total",brl(d.sacTot),"cost")+met("PRICE · total",brl(d.prTot),"cost")+'</div></div>'+
-      '<div class="box"><h5>Aporte preservado</h5><div class="bd">A diferença de parcela que sobra para investir.</div><div class="mini">'+met("Parcela financ. (SAC)",brl(d.sac.p1))+met("Parcela consórcio",brl(d.cons.p1))+met("Diferença/mês",(difParcela>0?brl(difParcela):"—"),difParcela>0?"profit":"")+met("Em 12m no CDI",brl(custoOportunidade(Math.max(difParcela,0),0,d.cdi,0,12).rendEntrada+Math.max(difParcela,0)*12))+'</div></div>'+
+      '<div class="box"><h5>Aporte preservado</h5><div class="bd">A diferença entre a parcela fixa do financiamento (PRICE) e a do consórcio é o que sobra por mês para investir.</div><div class="mini">'+met("Parcela financ. (PRICE)",brl(d.pr.p1))+met("Parcela consórcio",brl(d.cons.p1))+met("Diferença/mês",(difParcela>0?brl(difParcela):"—"),difParcela>0?"profit":"")+met("Investindo 12m no CDI",brl(_fv12),difParcela>0?"profit":"")+'</div></div>'+
     '</div>';
   var embPct=num("embutidoPct")/100, le=lanceEmbutido(d.cred,d.lanceLiq,embPct,d.admDec,d.nc,d.mesC);
   document.getElementById("lanceOut").innerHTML=
@@ -651,9 +612,6 @@ function showScreen(n){
 function goAnalise(){ showScreen(4); }
 document.getElementById("toAnalise").onclick=goAnalise;
 document.getElementById("toCalc").onclick=function(){showScreen(1);};
-document.getElementById("toCalc0").onclick=function(){showScreen(1);};
-document.getElementById("toCalc1").onclick=function(){showScreen(1);};
-document.getElementById("backToLanding").onclick=function(){showScreen(0);};
 document.getElementById("advToggle").onclick=function(){
   var a=document.getElementById("adv");a.classList.toggle("hide");
   this.textContent=(a.classList.contains("hide")?"+":"–")+" Ajustar taxas e consórcio";
@@ -715,8 +673,8 @@ document.getElementById("okClose").onclick=function(){document.getElementById("o
 
 /* boot */
 document.querySelectorAll("footer div").forEach(function(d){d.innerHTML=d.innerHTML.replace("{ano}",new Date().getFullYear());});
-document.querySelector('.screen.landing').classList.add('on');
-syncLabels(); renderResultado(); renderManifesto(); renderPreview();
+document.querySelector('.screen.calc').classList.add('on');
+syncLabels(); renderResultado(); renderManifesto(); setTimeout(animateResult,140);
 </script>
 </body>
 </html>
